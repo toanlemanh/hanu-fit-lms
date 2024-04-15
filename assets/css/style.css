@@ -1,0 +1,26 @@
+:root {
+	--accent-yellow: #fff012;
+	--primary800: #700404;
+	--primary500: #823838;
+}
+
+.button {
+	background-color: var(--primary800);
+	color: var(--accent-yellow);
+	border: 0px;
+	padding-block: 1%;
+	padding-inline: 2%;
+	font-family: Georgia, "Times New Roman", Times, serif;
+	border-radius: 5px;
+	font-size: medium;
+}
+
+.button:hover {
+	background-color: var(--primary500);
+	transition: background-color 0.3s ease;
+}
+
+.button:active {
+	background-color: var(--primary800);
+	transition: background-color 0.05s ease;
+}

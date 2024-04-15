@@ -1,0 +1,26 @@
+- Nghĩa: Manage Course for Lecturers | Extra: View Course List, Access a Course, Search for a Course
+- Toản: Manage Course Resources (Topics, Notifications, maybe Forum)
+- Sỹ: Manage Account for Admin + Manage Announcement on Home Page
+- Phương: Update Profile for Students & Lecturers
+- Ly (19-: Handle Submissions for Students
+- Hiền: Authenticate (Log In, Log Out) + Manage Course for Students (Enroll, Unenroll)
+
+- UC Diagram, Activity Diagram, UC Spec, Feature nộp cho Nghĩa
+
+ERD: **Postponed**
+
+Checkpoint 2: 
+1. Chia role design các page:
+- Nghĩa: MY COURSES (for lecturer, show danh sách các course mà lecturer quản lý), CREATE NEW COURSE (chuyên để tạo 1 course mới),
+EDIT COURSE (chuyên để edit 1 course đã có trong hệ thống), COURSE DETAIL (đã enrol), NAVBAR cho tất cả page, SEARCH RESULT
+- Toản: COURSE DETAILS
+- Ly: ASSIGNMENT SUBMISSION
+- Hiền: LOG IN, MY COURSES (for student), COURSE OVERVIEW (chưa enrol)
+- Phương: PROFILE (for S and L), HOME PAGE
+- Sỹ: ACCOUNT MANAGEMENT (dùng để create edit delete các account), FACULTY ANNOUNCEMENTS (k phải HOME PAGE)
+
+2. Chia role làm entity cho class diagram:
+- Nghĩa: course_resonsibility, lecturer_faculty, lecturer, course, faculty
+- Toản: 
+Ly tổng hợp lại và vẽ class diagram
+
