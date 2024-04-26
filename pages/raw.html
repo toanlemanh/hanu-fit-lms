@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>UI Practice Range</title>
+  <link rel="stylesheet" href="./assets/css/_layout.css">
+  <link rel="stylesheet" href="./assets/fontawesome-free-6.5.2-web/css/all.css">
+  <script>
+    // Function to toggle the dropdown menu
+    function toggleDropdown(event) {
+      var dropdownContent = document.getElementById("dropdownContent");
+      dropdownContent.style.display = dropdownContent.style.display === "block" ? "none" : "block";
+
+      // Stop propagation if the event originated from the chevron icon
+      if (event.target.id === "chevron-icon") {
+        event.stopPropagation();
+      }
+    }
+
+    // Function to hide the dropdown menu if clicked outside
+    document.addEventListener("click", function(event) {
+      var dropdownContent = document.getElementById("dropdownContent");
+      var target = event.target;
+
+      // Check if the clicked element is not inside the dropdown content and if the dropdown is open
+      if (dropdownContent.style.display === "block" && !dropdownContent.contains(target)) {
+        dropdownContent.style.display = "none";
+      }
+    });
+  </script>
+</head>
+
+<body>
+<div class="CourseDetails" style="width: 1440px; height: 1851px; position: relative; background: white; box-shadow: 0px 3px 6px rgba(18, 15, 40, 0.12)">
+  <div class="Fit3se2SoftwareEngineering2" style="left: 130px; top: 130px; position: absolute; color: #171A1F; font-size: 32px; font-family: Lexend; font-weight: 700; line-height: 48px; word-wrap: break-word">61FIT3SE2 - Software Engineering 2</div>
+  <div class="CourseAnnouncements" style="left: 130px; top: 679px; position: absolute; color: #171A1F; font-size: 20px; font-family: Lexend; font-weight: 700; line-height: 1.50px; word-wrap: break-word">Course Announcements</div>
+  <div class="LoremIpsumDolorSitAmetConsecteturAdipiscingElitLoremLoremAliquamSedLaciniaQuisNibhDictumstVulputateOdioPellentesqueSitQuisAcSitIpsumSitRhoncusVelitInSedMassaArcuSitEuVitaeEtVitaeEgetLoremNonDuiSollicitudinUtMiAdipiscingDuisConvallisInSemperLaoreetNibhLeoVivamusMalesuadaIpsumPulvinarNonRutrumRisusDuiRisusPurusMassaVelitIaculisTinciduntTortorRisusScelerisqueRisusInAtLoremPellentesqueOrciAeneanDictumDignissimInAeneanPulvinarDiamInterdumUllamcorperVelUrnaTortorMassaMetusPurusMetusMaecenasMollisInVelitAuctorCursusScelerisqueEgetNibhFaucibusPurusElementumUltricesElementumUrna" style="width: 1180px; left: 130px; top: 725px; position: absolute; color: #171A1F; font-size: 14px; font-family: Manrope; font-weight: 400; line-height: 22px; word-wrap: break-word">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Lorem lorem aliquam sed lacinia quis. Nibh dictumst vulputate odio pellentesque sit quis ac, sit ipsum. Sit rhoncus velit in sed massa arcu sit eu. Vitae et vitae eget lorem non dui. Sollicitudin ut mi adipiscing duis. <br/><br/>Convallis in semper laoreet nibh leo. Vivamus malesuada ipsum pulvinar non rutrum risus dui, risus. Purus massa velit iaculis tincidunt tortor, risus, scelerisque risus. In at lorem pellentesque orci aenean dictum dignissim in. Aenean pulvinar diam interdum ullamcorper. Vel urna, tortor, massa metus purus metus. Maecenas mollis in velit auctor cursus scelerisque eget. Nibh faucibus purus elementum ultrices elementum, urna. </div>
+  <div class="HomeDesignUiUxDesign" style="left: 130px; top: 88px; position: absolute"><span style="color: #9095A1; font-size: 14px; font-family: Manrope; font-weight: 400; line-height: 22px; word-wrap: break-word">Home/ Design / </span><span style="color: #171A1F; font-size: 14px; font-family: Manrope; font-weight: 400; line-height: 22px; word-wrap: break-word">UI/UX Design</span></div>
+  <div class="Avatar7" style="width: 44px; height: 44px; left: 924px; top: 246px; position: absolute; background: #FFF99E; border-radius: 22px; overflow: hidden; justify-content: center; align-items: center; display: inline-flex">
+    <img class="Rectangle" style="width: 44px; height: 44px" src="https://via.placeholder.com/44x44" />
+  </div>
+  <div class="KlaraWeaver" style="left: 980px; top: 246px; position: absolute; color: #171A1F; font-size: 16px; font-family: Manrope; font-weight: 700; line-height: 26px; word-wrap: break-word">Klara Weaver</div>
+  <div class="Tag9" style="width: 78px; height: 24px; left: 980px; top: 272px; position: absolute; background: rgba(0, 0, 0, 0); justify-content: center; align-items: center; display: inline-flex">
+    <div class="Frame" style="flex: 1 1 0; align-self: stretch; padding-top: 3px; padding-bottom: 3px; padding-left: 8px; padding-right: 3px; background: #700404; border-radius: 12px; overflow: hidden; justify-content: flex-end; align-items: center; display: inline-flex">
+      <div class="TopTeacher" style="color: #FFF012; font-size: 12px; font-family: Manrope; font-weight: 400; line-height: 18px; word-wrap: break-word">Top teacher</div>
+    </div>
+  </div>
+  <div class="NgNhQuN" style="left: 130px; top: 193px; position: absolute; color: #700404; font-size: 14px; font-family: Manrope; font-weight: 400; line-height: 22px; word-wrap: break-word">Đặng Đình Quân</div>
+  <div style="left: 237px; top: 193px; position: absolute; color: #9095A1; font-size: 14px; font-family: Manrope; font-weight: 400; line-height: 22px; word-wrap: break-word">|</div>
+  <img class="Image31" style="width: 750px; height: 413px; left: 130px; top: 246px; position: absolute" src="https://via.placeholder.com/750x413" />
+  <div class="Avatar7" style="width: 44px; height: 44px; left: 924px; top: 316px; position: absolute; background: #FFF99E; border-radius: 22px; overflow: hidden; justify-content: center; align-items: center; display: inline-flex">
+    <img class="Rectangle" style="width: 44px; height: 44px" src="https://via.placeholder.com/44x44" />
+  </div>
+  <div class="KlaraWeaver" style="left: 980px; top: 316px; position: absolute; color: #171A1F; font-size: 16px; font-family: Manrope; font-weight: 700; line-height: 26px; word-wrap: break-word">Klara Weaver</div>
+  <div class="Tag9" style="width: 78px; height: 24px; left: 980px; top: 342px; position: absolute; background: rgba(0, 0, 0, 0); justify-content: center; align-items: center; display: inline-flex">
+    <div class="Frame" style="flex: 1 1 0; align-self: stretch; padding-top: 3px; padding-bottom: 3px; padding-left: 8px; padding-right: 3px; background: #700404; border-radius: 12px; overflow: hidden; justify-content: flex-end; align-items: center; display: inline-flex">
+      <div class="TopTeacher" style="color: #FFF012; font-size: 12px; font-family: Manrope; font-weight: 400; line-height: 18px; word-wrap: break-word">Top teacher</div>
+    </div>
+  </div>
+  <div class="Avatar7" style="width: 44px; height: 44px; left: 924px; top: 386px; position: absolute; background: #FFF99E; border-radius: 22px; overflow: hidden; justify-content: center; align-items: center; display: inline-flex">
+    <img class="Rectangle" style="width: 44px; height: 44px" src="https://via.placeholder.com/44x44" />
+  </div>
+  <div class="KlaraWeaver" style="left: 980px; top: 386px; position: absolute; color: #171A1F; font-size: 16px; font-family: Manrope; font-weight: 700; line-height: 26px; word-wrap: break-word">Klara Weaver</div>
+  <div class="Tag9" style="width: 78px; height: 24px; left: 980px; top: 412px; position: absolute; background: rgba(0, 0, 0, 0); justify-content: center; align-items: center; display: inline-flex">
+    <div class="Frame" style="flex: 1 1 0; align-self: stretch; padding-top: 3px; padding-bottom: 3px; padding-left: 8px; padding-right: 3px; background: #700404; border-radius: 12px; overflow: hidden; justify-content: flex-end; align-items: center; display: inline-flex">
+      <div class="TopTeacher" style="color: #FFF012; font-size: 12px; font-family: Manrope; font-weight: 400; line-height: 18px; word-wrap: break-word">Top teacher</div>
+    </div>
+  </div>
+  <div class="Avatar7" style="width: 44px; height: 44px; left: 924px; top: 456px; position: absolute; background: #FFF99E; border-radius: 22px; overflow: hidden; justify-content: center; align-items: center; display: inline-flex">
+    <img class="Rectangle" style="width: 44px; height: 44px" src="https://via.placeholder.com/44x44" />
+  </div>
+  <div class="KlaraWeaver" style="left: 980px; top: 456px; position: absolute; color: #171A1F; font-size: 16px; font-family: Manrope; font-weight: 700; line-height: 26px; word-wrap: break-word">Klara Weaver</div>
+  <div class="Tag9" style="width: 78px; height: 24px; left: 980px; top: 482px; position: absolute; background: rgba(0, 0, 0, 0); justify-content: center; align-items: center; display: inline-flex">
+    <div class="Frame" style="flex: 1 1 0; align-self: stretch; padding-top: 3px; padding-bottom: 3px; padding-left: 8px; padding-right: 3px; background: #700404; border-radius: 12px; overflow: hidden; justify-content: flex-end; align-items: center; display: inline-flex">
+      <div class="TopTeacher" style="color: #FFF012; font-size: 12px; font-family: Manrope; font-weight: 400; line-height: 18px; word-wrap: break-word">Top teacher</div>
+    </div>
+  </div>
+  <div class="NgNhQuN" style="left: 244px; top: 193px; position: absolute; color: #700404; font-size: 14px; font-family: Manrope; font-weight: 400; line-height: 22px; word-wrap: break-word">Đặng Đình Quân</div>
+  <div class="Button22" style="width: 1174px; padding-top: 12px; padding-bottom: 12px; padding-left: 20px; padding-right: 1098px; left: 130px; top: 926px; position: absolute; background: #700404; box-shadow: 0px 17px 35px rgba(112, 4, 4, 0.24); border-radius: 4px; overflow: hidden; justify-content: flex-start; align-items: center; display: inline-flex">
+    <div class="Topic1" style="color: white; font-size: 18px; font-family: Manrope; font-weight: 400; line-height: 28px; word-wrap: break-word">Topic 1</div>
+  </div>
+  <div class="Button27" style="width: 36px; padding-left: 10px; padding-right: 10px; padding-top: 7px; padding-bottom: 7px; left: 1274px; top: 136px; position: absolute; background: #700404; border-radius: 4px; overflow: hidden; justify-content: center; align-items: center; display: inline-flex">
+    <div class="SettingsGear" style="flex: 1 1 0; height: 16px; padding-left: 2px; padding-right: 2px; padding-top: 1.60px; padding-bottom: 1.60px; justify-content: center; align-items: center; display: inline-flex">
+      <div class="Vector" style="width: 11.99px; height: 12.80px; background: white"></div>
+    </div>
+    <div class="Text"></div>
+  </div>
+  <div class="CourseResources" style="left: 130px; top: 880px; position: absolute; color: #171A1F; font-size: 20px; font-family: Lexend; font-weight: 700; line-height: 1.50px; word-wrap: break-word">Course Resources</div>
+  <div class="Frame" style="width: 216px; height: 193px; left: 1088px; top: 990px; position: absolute; background: rgba(0, 0, 0, 0); box-shadow: 0px 4px 9px rgba(23, 26, 31, 0.11); border-radius: 4px">
+    <div class="Vector" style="width: 16px; height: 8px; left: 190px; top: -8px; position: absolute; background: white; border: 1px rgba(0, 0, 0, 0) solid"></div>
+    <div class="Container167" style="width: 216px; height: 193px; padding: 8px; left: 0px; top: 0px; position: absolute; background: white; border-radius: 4px; flex-direction: column; justify-content: center; align-items: flex-start; gap: 8px; display: inline-flex">
+      <div class="SidebarMenu3" style="align-self: stretch; flex: 1 1 0; background: rgba(0, 0, 0, 0); flex-direction: column; justify-content: center; align-items: flex-start; display: inline-flex">
+        <div class="Frame" style="align-self: stretch; flex: 1 1 0; padding-left: 16px; padding-right: 16px; padding-top: 8px; padding-bottom: 8px; background: #FEF0F0; border-radius: 4px; overflow: hidden; justify-content: center; align-items: flex-start; gap: 8px; display: inline-flex">
+          <div class="Layout11" style="width: 24px; height: 24px; position: relative; flex-direction: column; justify-content: flex-start; align-items: flex-start; display: flex">
+            <div class="Vector" style="width: 6px; height: 10.29px; border: 2.06px #700404 solid"></div>
+            <div class="Vector" style="width: 6px; height: 5.14px; border: 2.06px #700404 solid"></div>
+            <div class="Vector" style="width: 6px; height: 10.29px; border: 2.06px #700404 solid"></div>
+            <div class="Vector" style="width: 6px; height: 5.14px; border: 2.06px #700404 solid"></div>
+          </div>
+          <div class="CreateTopicItem" style="width: 136px; color: #700404; font-size: 14px; font-family: Manrope; font-weight: 700; line-height: 22px; word-wrap: break-word">Create Topic Item</div>
+        </div>
+        <div class="Frame" style="align-self: stretch; flex: 1 1 0; padding-left: 16px; padding-right: 16px; padding-top: 8px; padding-bottom: 8px; background: rgba(0, 0, 0, 0); border-radius: 4px; overflow: hidden; justify-content: center; align-items: flex-start; gap: 8px; display: inline-flex">
+          <div class="Edit" style="width: 24px; height: 24px; position: relative; flex-direction: column; justify-content: flex-start; align-items: flex-start; display: flex">
+            <div class="Vector" style="width: 13.71px; height: 13.71px; border: 2.06px #565D6D solid"></div>
+            <div class="Vector" style="width: 3.43px; height: 3.43px; border: 2.06px #565D6D solid"></div>
+            <div class="Vector" style="width: 17.14px; height: 0px; border: 2.06px #565D6D solid"></div>
+          </div>
+          <div class="EditTopic" style="width: 136px; color: #565D6D; font-size: 14px; font-family: Manrope; font-weight: 400; line-height: 22px; word-wrap: break-word">Edit Topic</div>
+        </div>
+        <div class="Frame" style="align-self: stretch; flex: 1 1 0; padding-left: 16px; padding-right: 16px; padding-top: 8px; padding-bottom: 8px; background: rgba(0, 0, 0, 0); border-radius: 4px; overflow: hidden; justify-content: center; align-items: flex-start; gap: 8px; display: inline-flex">
+          <div class="Bin" style="width: 24px; height: 24px; position: relative; flex-direction: column; justify-content: flex-start; align-items: flex-start; display: flex">
+            <div class="Vector" style="width: 6.86px; height: 3.43px; border: 2.06px #565D6D solid"></div>
+            <div class="Vector" style="width: 18.86px; height: 0px; border: 2.06px #565D6D solid"></div>
+            <div class="Vector" style="width: 13.71px; height: 12px; border: 2.06px #565D6D solid"></div>
+            <div class="Vector" style="width: 0px; height: 5.14px; border: 2.06px #565D6D solid"></div>
+            <div class="Vector" style="width: 0px; height: 5.14px; border: 2.06px #565D6D solid"></div>
+            <div class="Vector" style="width: 0px; height: 5.14px; border: 2.06px #565D6D solid"></div>
+          </div>
+          <div class="RemoveTopic" style="width: 136px; color: #565D6D; font-size: 14px; font-family: Manrope; font-weight: 400; line-height: 22px; word-wrap: break-word">Remove Topic</div>
+        </div>
+      </div>
+      <div class="Line16" style="width: 200px; height: 1px; border: 1px #DEE1E6 solid"></div>
+      <div class="SidebarMenu4" style="align-self: stretch; height: 40px; background: rgba(0, 0, 0, 0); justify-content: center; align-items: center; display: inline-flex">
+        <div class="Frame" style="flex: 1 1 0; align-self: stretch; padding-left: 16px; padding-right: 16px; padding-top: 8px; padding-bottom: 8px; background: rgba(0, 0, 0, 0); justify-content: center; align-items: flex-start; gap: 8px; display: inline-flex">
+          <div class="SettingsGear" style="width: 24px; height: 24px; position: relative; flex-direction: column; justify-content: flex-start; align-items: flex-start; display: flex">
+            <div class="Vector" style="width: 18.04px; height: 18.86px; border: 2.06px #565D6D solid"></div>
+            <div class="Vector" style="width: 5.14px; height: 5.14px; border: 2.06px #565D6D solid"></div>
+          </div>
+          <div class="MenuItem4" style="width: 136px; color: #565D6D; font-size: 14px; font-family: Manrope; font-weight: 400; line-height: 22px; word-wrap: break-word">Menu item 4</div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="Button27" style="width: 48px; padding-left: 16px; padding-right: 16px; padding-top: 15px; padding-bottom: 15px; left: 1257px; top: 865px; position: absolute; background: #700404; border-radius: 4px; overflow: hidden; justify-content: center; align-items: center; display: inline-flex">
+    <div class="DAdd" style="flex: 1 1 0; height: 16px; padding: 1.60px; justify-content: center; align-items: center; display: inline-flex">
+      <div class="Vector" style="width: 12.80px; height: 12.80px; background: white"></div>
+    </div>
+    <div class="Text"></div>
+  </div>
+  <div class="DropdownButton3" style="width: 191px; height: 43px; left: 1046px; top: 867px; position: absolute; background: white; border-radius: 4px; border: 1px #700404 solid">
+    <div class="Rectangle" style="width: 199px; height: 51px; left: -4px; top: -4px; position: absolute; background: rgba(0, 0, 0, 0); border-radius: 4px; border: 5px rgba(112, 4, 4, 0.20) solid"></div>
+    <div class="Options" style="left: 16px; top: 9px; position: absolute; color: #171A1F; font-size: 16px; font-family: Manrope; font-weight: 400; line-height: 26px; word-wrap: break-word">Options</div>
+    <div class="ChevronDownLarge" style="width: 16px; height: 16px; padding-top: 4.67px; padding-bottom: 4.26px; padding-left: 2px; padding-right: 2px; left: 160px; top: 14px; position: absolute; justify-content: center; align-items: center; display: inline-flex">
+      <div class="Vector" style="width: 12px; height: 7.07px; background: #171A1F"></div>
+    </div>
+  </div>
+  <div class="ComponentsNavbar" style="width: 1440px; height: 56px; left: 0px; top: 0px; position: absolute; background: #8E3838">
+    <div class="Group2" style="width: 175px; height: 36px; left: 1252px; top: 10px; position: absolute">
+      <div class="Bell2" style="width: 24px; height: 24px; padding-top: 2.57px; padding-bottom: 1.72px; padding-left: 3.43px; padding-right: 3.43px; left: 0px; top: 6px; position: absolute; flex-direction: column; justify-content: center; align-items: center; gap: 1.63px; display: inline-flex">
+        <div class="Vector" style="width: 17.14px; height: 16.29px; border: 2.06px #FFF012 solid"></div>
+        <div class="Vector" style="width: 4.89px; height: 1.80px; background: #FFF012"></div>
+      </div>
+      <div class="ChevronDownLarge2" style="width: 12px; height: 12px; padding-top: 3.50px; padding-bottom: 3.20px; padding-left: 1.50px; padding-right: 1.50px; left: 163px; top: 12px; position: absolute; justify-content: center; align-items: center; display: inline-flex">
+        <div class="Vector" style="width: 9px; height: 5.30px; background: #FFF012"></div>
+      </div>
+      <div class="Avatar6" style="width: 36px; height: 36px; left: 121px; top: 0px; position: absolute; background: #FB9595; border-radius: 18px; overflow: hidden; justify-content: center; align-items: center; display: inline-flex">
+        <img class="Rectangle" style="width: 36px; height: 36px" src="https://via.placeholder.com/36x36" />
+      </div>
+      <div class="KlaraWeaver" style="left: 30px; top: 7px; position: absolute; color: #FFF012; font-size: 14px; font-family: Manrope; font-weight: 400; line-height: 22px; word-wrap: break-word">Klara Weaver</div>
+    </div>
+    <div class="Group3" style="height: 38px; left: 11px; top: 9px; position: absolute">
+      <div class="HanuLms" style="left: 47px; top: 8px; position: absolute; color: #FFF012; font-size: 12px; font-family: Abril Fatface; font-weight: 400; line-height: 22px; word-wrap: break-word">HANU LMS</div>
+      <img class="LogoHHNIHanu1" style="width: 37px; height: 38px; left: 0px; top: 0px; position: absolute" src="https://via.placeholder.com/37x38" />
+    </div>
+    <div class="ComponentSearchBar" style="width: 255px; height: 35px; padding-top: 7px; padding-bottom: 6px; padding-left: 12px; padding-right: 164px; left: 980px; top: 10px; position: absolute; background: #700404; border-radius: 4px; justify-content: flex-start; align-items: center; gap: 6px; display: inline-flex">
+      <div class="Search" style="width: 16px; height: 16px; position: relative; flex-direction: column; justify-content: flex-start; align-items: flex-start; display: flex">
+        <div class="Vector" style="width: 9.60px; height: 9.60px; border: 0.80px #FFF012 solid"></div>
+        <div class="Vector" style="width: 2.40px; height: 2.40px; border: 0.80px #FFF012 solid"></div>
+      </div>
+      <div class="Search" style="color: #FFF012; font-size: 14px; font-family: Manrope; font-weight: 400; line-height: 22px; word-wrap: break-word">Search...</div>
+    </div>
+    <div class="NavbarItem" style="left: 176px; top: 17px; position: absolute; border-top: 1px #FFF012 solid; border-bottom: 1px #FFF012 solid; justify-content: center; align-items: center; gap: 10px; display: inline-flex">
+      <div class="Home" style="text-align: center; color: #FFF012; font-size: 15px; font-family: Radley; font-weight: 400; line-height: 22px; word-wrap: break-word">Home</div>
+    </div>
+    <div class="NavbarItem" style="left: 265px; top: 17px; position: absolute; border-top: 1px #FFF012 solid; border-bottom: 1px #FFF012 solid; justify-content: center; align-items: center; gap: 10px; display: inline-flex">
+      <div class="Home" style="text-align: center; color: #FFF012; font-size: 15px; font-family: Radley; font-weight: 400; line-height: 22px; word-wrap: break-word">My Courses</div>
+    </div>
+    <div class="NavbarItem" style="left: 391px; top: 17px; position: absolute; border-top: 1px #FFF012 solid; border-bottom: 1px #FFF012 solid; justify-content: center; align-items: center; gap: 10px; display: inline-flex">
+      <div class="Home" style="text-align: center; color: #FFF012; font-size: 15px; font-family: Radley; font-weight: 400; line-height: 22px; word-wrap: break-word">Faculty Announcements</div>
+    </div>
+  </div>
+  <div class="ComponentFooter" style="width: 1440px; height: 75px; left: 0px; top: 1776px; position: absolute; background: #F8F9FA">
+    <div class="Sitemap" style="left: 820px; top: 30px; position: absolute; color: #171A1F; font-size: 14px; font-family: Manrope; font-weight: 400; line-height: 22px; word-wrap: break-word">Sitemap</div>
+    <div style="width: 7px; left: 809px; top: 32px; position: absolute; color: #9095A1; font-size: 12px; font-family: Manrope; font-weight: 400; line-height: 18px; word-wrap: break-word">•</div>
+    <div class="2024Se204Group2Inc" style="left: 511px; top: 30px; position: absolute; color: #171A1F; font-size: 14px; font-family: Manrope; font-weight: 400; line-height: 22px; word-wrap: break-word">© 2024 SE204 Group 2, Inc.</div>
+    <div class="Privacy" style="left: 700px; top: 30px; position: absolute; color: #171A1F; font-size: 14px; font-family: Manrope; font-weight: 400; line-height: 22px; word-wrap: break-word">Privacy</div>
+    <div class="Terms" style="left: 764px; top: 30px; position: absolute; color: #171A1F; font-size: 14px; font-family: Manrope; font-weight: 400; line-height: 22px; word-wrap: break-word">Terms</div>
+    <div style="width: 7px; left: 753px; top: 32px; position: absolute; color: #9095A1; font-size: 12px; font-family: Manrope; font-weight: 400; line-height: 18px; word-wrap: break-word">•</div>
+    <div style="width: 7px; left: 689px; top: 32px; position: absolute; color: #9095A1; font-size: 12px; font-family: Manrope; font-weight: 400; line-height: 18px; word-wrap: break-word">•</div>
+  </div>
+</div>
+</body>
+
+</html>
