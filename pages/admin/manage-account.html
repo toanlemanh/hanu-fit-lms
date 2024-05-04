@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+    layout:decorate="_layout">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Account Management</title>
+    <script src="/js/jquery-3.7.0.js"></script>
+    <link rel="stylesheet" href="/css/bootstrap.min.css">
+    <script src="/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link rel="stylesheet" href="/assets/css/accountManagement.css">
+    <script src="assets/jsaccountManagement.js"></script>
+</head>
+
+<body>
+    <div layout:fragment="content">
+        <div class="list-accounts container">
+            <div class="row path-container mt-3">
+                <a href="" class="path">Home</a> /
+                <a href="" class="path">Accounts Management</a>
+            </div>
+            <div class="row title-container my-2">
+                <h3 class="title">ACCOUNTS MANAGEMENT</h3>
+            </div>
+
+            <div class="">
+                <div class="row my-3">
+                    <div
+                        class="input-group px-0 d-flex justify-content-center col-8 col-sm-8 col-md-8 col-lg-8 col-xl-8 col-xxl-8">
+                        <button class="btn btn-outline-secondary" type="button" id="search-btn">
+                            <i class="fa-solid fa-magnifying-glass"></i>
+                        </button>
+                        <input type="text" class="form-control" placeholder="Search...">
+                    </div>
+                    <div
+                        class="px-0 d-flex justify-content-center col-4 col-sm-4 col-md-4 col-lg-4 col-xl-4 col-xxl-4 ">
+                        <button class="btn btn-outline-secondary" type="button" id="createAcc-btn">Create new
+                            Account</button>
+                    </div>
+                </div>
+                <div class="row">
+                    <table class="table table-hover" border="1">
+                        <tr class="properties">
+                            <th>Name</th>
+                            <th>ID</th>
+                            <th>Faculty</th>
+                            <th>Email</th>
+                            <th>Role</th>
+                            <th>Update</th>
+                            <th>Delete</th>
+                        </tr>
+                        <tr th:each="account : ${accounts}">
+                            <!-- <td th:text="${account.id}" />
+                        <td>
+                            <a th:href="'/account/' + ${account.id}" th:text="${account.name}" />
+                        </td>
+                        <td th:text="${account.faculty}" />
+                        <td th:text="${account.email}" />
+                        <td th:text="${account.role}" /> -->
+                            <td>
+                                <p>Tran Van A</p>
+                            </td>
+                            <td>
+                                <p>2101040159</p>
+                            </td>
+                            <td>
+                                <p>Information and Technology</p>
+                            </td>
+                            <td>
+                                <p>tranvana@gmail.com</p>
+                            </td>
+                            <td>
+                                <p>Student</p>
+                            </td>
+                            <td><a th:href="'/account/update/' + ${account.id}">UPDATE</a></td>
+                            <td><a th:href="'/account/delete/' + ${account.id}">DELETE</a></td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+
+        </div>
+</body>
+
+</html>

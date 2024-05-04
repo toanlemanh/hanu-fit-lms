@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>UI Practice Range</title>
+  <link rel="stylesheet" href="./assets/css/_layout.css">
+  <link rel="stylesheet" href="./assets/fontawesome-free-6.5.2-web/css/all.css">
+  <script>
+    // Function to toggle the dropdown menu
+    function toggleDropdown(event) {
+      var dropdownContent = document.getElementById("dropdownContent");
+      dropdownContent.style.display = dropdownContent.style.display === "block" ? "none" : "block";
+
+      // Stop propagation if the event originated from the chevron icon
+      if (event.target.id === "chevron-icon") {
+        event.stopPropagation();
+      }
+    }
+
+    // Function to hide the dropdown menu if clicked outside
+    document.addEventListener("click", function (event) {
+      var dropdownContent = document.getElementById("dropdownContent");
+      var target = event.target;
+
+      // Check if the clicked element is not inside the dropdown content and if the dropdown is open
+      if (dropdownContent.style.display === "block" && !dropdownContent.contains(target)) {
+        dropdownContent.style.display = "none";
+      }
+    });
+  </script>
+</head>
+
+<body>
+
+  <div id="body-container">
+
+    <div id="left-cluster">
+      <img src="./assets/images/HANU.png" alt="HANU Logo" id="logo">
+      <p id="logo-title">HANU LMS</p>
+      <a href="" class="navbar-item">Home</a>
+      <a href="" class="navbar-item">My Courses</a>
+      <a href="" class="navbar-item">Faculty Announcements</a>
+    </div>
+
+    <div id="right-cluster">
+      <div id="searchbar-container">
+        <i class="fa fa-search" aria-hidden="true" id="search-icon"></i>
+        <input type="text" placeholder="Search..." id="searchbar">
+      </div>
+      <button class="button">
+        <i class="fa-solid fa-bell" id="noti-icon"></i>
+      </button>
+      <p id="username">Trần Trung Nghĩa</p>
+      <div id="avatar-container">
+        <img src="./assets/images/HANU.png" alt="HANU Logo">
+      </div>
+      <button class="button" onclick="toggleDropdown(event)">
+        <i class="fa-solid fa-chevron-down" id="chevron-icon"></i>
+      </button>
+      <div class="dropdown-content" id="dropdownContent">
+        <a href="#">Item 1</a>
+        <a href="#">Item 2</a>
+        <a href="#">Item 3</a>
+      </div>
+    </div>
+
+  </div>
+  <div id="footer-container">
+    &copy; 2024 SE204 Group 2, Inc
+  </div>
+</body>
+
+</html>

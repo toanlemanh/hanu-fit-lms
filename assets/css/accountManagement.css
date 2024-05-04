@@ -1,0 +1,19 @@
+.properties {
+    background-color: #700404;
+    color: white;
+}
+
+.path {
+    color: black;
+    text-decoration: none;
+}
+
+.path:hover {
+    color: #700404;
+    text-decoration: none;
+}
+
+.table th,
+.table td {
+    text-align: center;
+}
