@@ -179,6 +179,16 @@ header {
   background-color: var(--primary800);
 }
 
+
+.top-teacher-button {
+  width: 100px;
+  height: auto;
+  line-height: auto;
+  color: var(--accent-yellow);
+  background-color: var(--primary800);
+}
+
+
 #footer-container {
   background-color: #f8f9fa;
   height: 8vh;
