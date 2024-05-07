@@ -10,15 +10,16 @@ body {
 
 #body-container {
 	background-color: var(--primary500);
-	height: 8vh;
+	height: fit-content;
 	align-items: center;
-	justify-content: center;
+	justify-content: space-between;
 	display: flex;
 	padding-inline: 0.5vw;
+	padding-block: 0.5vw;
 }
 
 #logo {
-	width: 2.5vw;
+	width: clamp(30px, 2.5vw, 100%);
 	margin-inline: 0.5vw;
 }
 
@@ -30,12 +31,10 @@ body {
 	justify-content: flex-start;
 }
 
-#left-cluster i {
+#body-container i {
 	color: var(--accent-yellow);
-}
-
-#right-cluster i {
-	color: var(--accent-yellow);
+	/* font-size: 1.5rem; */
+	/* font-size: clamp(20px, 1rem, 60px); */
 }
 
 #right-cluster {
@@ -47,49 +46,50 @@ body {
 }
 
 #logo-title {
-	font-size: 1.5vw;
+	font-size: clamp(0.7rem, 1.5vw, 3rem);
 	font-family: Georgia, "Times New Roman", Times, serif;
 	color: var(--accent-yellow);
 	margin-left: 0.5vw;
-	margin-right: 4vw;
+	/* margin-right: 4vw; */
 }
 
 .navbar-item {
 	text-decoration: none;
 	color: var(--accent-yellow);
-	margin-inline: 1.5vw;
+	/* margin-inline: 1.5vw; */
 	border-top: 0px solid transparent;
 	border-bottom: 0px solid transparent;
-	font-size: 1vw;
+	font-size: clamp(0.7rem, 1vw, 2rem);
 	font-family: Georgia, "Times New Roman", Times, serif;
 }
 
 .navbar-item:hover {
+	text-decoration: none;
 	border-top: 1px solid var(--accent-yellow);
 	border-bottom: 1px solid var(--accent-yellow);
 	transition: border-color 0.3s ease;
-}
-
-#search-icon {
-	margin-right: 0.5vw;
+	color: var(--accent-yellow);
 }
 
 #searchbar {
 	background-color: #70040400;
-	height: 5vh;
+	height: fit-content;
 	border: none;
 	outline: none;
 	color: var(--accent-yellow);
+	font-size: small;
 }
 
 #searchbar::placeholder {
 	color: #ffef14af;
+	font-size: clamp(0.5rem, 1vw, 2rem);
 }
 
 #searchbar-container i {
 	color: var(--accent-yellow);
 	pointer-events: none;
-	font-size: small;
+	font-size: clamp(0.8rem, 1vw, 2rem);
+	margin-right: 0.5vw;
 }
 
 #searchbar-container {
@@ -102,7 +102,9 @@ body {
 	margin-inline: 0.5vw;
 	display: flex;
 	align-items: center;
-	min-width: 3vw;
+	max-width: 40%;
+	height: fit-content;
+	overflow: hidden;
 }
 
 #searchbar-container:hover {
@@ -112,14 +114,13 @@ body {
 #username {
 	color: var(--accent-yellow);
 	margin-inline: 0.5vw;
-	font-size: 1vw;
 }
 
 #avatar-container {
 	/* background-color: #000000; */
 	border-radius: 50%;
-	width: 2.5vw;
-	height: 2.5vw;
+	width: clamp(30px, 2.5vw, 40px);
+	aspect-ratio: 1;
 	overflow: hidden;
 	display: flex;
 	justify-content: center;
@@ -141,7 +142,7 @@ body {
 	min-width: 100px;
 	box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.2);
 	z-index: 1;
-	top: 9vh;
+	top: 8vh;
 	border-radius: 3px;
 	overflow: hidden;
 }
@@ -163,4 +164,9 @@ body {
 	display: flex;
 	justify-content: center;
 	align-items: center;
+}
+
+a {
+	font-family: "Times New Roman", Times, serif;
+	font-size: clamp(0.8rem, 1vw, 2rem);
 }

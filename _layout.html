@@ -4,9 +4,10 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>UI Practice Range</title>
+  <title>HANU LMS Layout</title>
+  <link rel="stylesheet" href="./svgs/bootstrap-icons-1.11.3/font/bootstrap-icons.css">
+  <link rel="stylesheet" href="./css/bootstrap.css">
   <link rel="stylesheet" href="./assets/css/_layout.css">
-  <link rel="stylesheet" href="./assets/fontawesome-free-6.5.2-web/css/all.css">
   <script>
     // Function to toggle the dropdown menu
     function toggleDropdown(event) {
@@ -35,40 +36,82 @@
 <body>
   <div id="body-container">
 
-    <div id="left-cluster">
-      <img src="./assets/images/HANU.png" alt="HANU Logo" id="logo">
-      <p id="logo-title">HANU LMS</p>
-      <a href="" class="navbar-item">Home</a>
-      <a href="" class="navbar-item">My Courses</a>
-      <a href="" class="navbar-item">Faculty Announcements</a>
-    </div>
+    <div class="row align-items-center justify-content-between mx-1">
 
-    <div id="right-cluster">
-      <div id="searchbar-container">
-        <i class="fa fa-search" aria-hidden="true" id="search-icon"></i>
-        <input type="text" placeholder="Search..." id="searchbar">
+      <div class="col-md my-1">
+        <div class="row align-items-center">
+          <div class="col-md-4">
+            <div class="row align-items-center bg-primary">
+              <img src="./assets/images/HANU.png" alt="HANU Logo" id="logo">
+              <span id="logo-title">HANU LMS</span>
+            </div>
+          </div>
+          <div class="col-md-8">
+            <div class="row align-items-center justify-content-around">
+              <div class="row-sm">
+                <a href="" class="navbar-item px-2 my-1">Home</a>
+              </div>
+              <div class="row-sm">
+                <a href="" class="navbar-item px-2 my-1">My Courses</a>
+              </div>
+              <div class="row-sm">
+                <a href="" class="navbar-item px-2 my-1">Faculty Announcements</a>
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
-      <button class="button">
-        <i class="fa-solid fa-bell" id="noti-icon"></i>
-      </button>
-      <p id="username">Trần Trung Nghĩa</p>
-      <div id="avatar-container">
-        <img src="./assets/images/HANU.png" alt="HANU Logo">
+
+      <div class="col-md bg-primary">
+        <div class="row align-items-center justify-content-end">
+          <div id="searchbar-container" class="py-2">
+            <i class="bi bi-search" aria-hidden="true" id="search-icon"></i>
+            <input type="text" value="Search..." id="searchbar">
+          </div>
+          <button class="button">
+            <i class="bi bi-bell-fill"></i>
+          </button>
+          <a id="username">Trần Trung Nghĩa</a>
+          <div id="avatar-container">
+            <img src="./assets/images/HANU.png" alt="HANU Logo">
+          </div>
+          <button class="button" onclick="toggleDropdown(event)">
+            <i class="bi bi-chevron-down" id="chevron-icon"></i>
+          </button>
+          <div class="dropdown-content" id="dropdownContent">
+            <a href="#">Item 1</a>
+            <a href="#">Item 2</a>
+            <a href="#">Item 3</a>
+          </div>
+        </div>
       </div>
-      <button class="button" onclick="toggleDropdown(event)">
-        <i class="fa-solid fa-chevron-down" id="chevron-icon"></i>
-      </button>
-      <div class="dropdown-content" id="dropdownContent">
-        <a href="#">Item 1</a>
-        <a href="#">Item 2</a>
-        <a href="#">Item 3</a>
-      </div>
+
     </div>
 
   </div>
   <div id="footer-container">
     &copy; 2024 SE204 Group 2, Inc
   </div>
+  <script>
+    // Get the search input element
+    var searchInput = document.getElementById('searchbar');
+
+    // Add event listener for focus event
+    searchInput.addEventListener('focus', function(event) {
+      // Check if the current value is "Search..."
+      if (event.target.value === 'Search...') {
+        // Clear the input value
+        event.target.value = '';
+      }
+    });
+    searchInput.addEventListener('blur', function(event) {
+      // Check if the current value is "Search..."
+      if (event.target.value === '') {
+        // Clear the input value
+        event.target.value = 'Search...';
+      }
+    });
+  </script>
 </body>
 
 </html>
