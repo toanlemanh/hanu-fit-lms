@@ -1,0 +1,2 @@
+package fit.se2.hanulms.model;public class Lecturer {
+}
