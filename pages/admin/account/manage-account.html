@@ -9,9 +9,10 @@
     <script src="/js/jquery-3.7.0.js"></script>
     <link rel="stylesheet" href="/css/bootstrap.min.css">
     <script src="/js/bootstrap.min.js"></script>
+    <script src="/js/jquery-3.7.0.js"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
-    <link rel="stylesheet" href="/assets/css/accountManagement.css">
-    <script src="assets/jsaccountManagement.js"></script>
+    <link rel="stylesheet" href="/assets/css/manage-account.css">
+    <script src="/assets/js/manage-account.js"></script>
 </head>
 
 <body>
@@ -37,7 +38,7 @@
                     </div>
                     <div
                         class="px-0 d-flex justify-content-center col-4 col-sm-4 col-md-4 col-lg-4 col-xl-4 col-xxl-4 ">
-                        <button class="btn btn-outline-secondary" type="button" id="createAcc-btn">Create new
+                        <button class="btn create-btn" type="button" id="createAcc-btn">Create new
                             Account</button>
                     </div>
                 </div>
@@ -76,7 +77,36 @@
                                 <p>Student</p>
                             </td>
                             <td><a th:href="'/account/update/' + ${account.id}">UPDATE</a></td>
-                            <td><a th:href="'/account/delete/' + ${account.id}">DELETE</a></td>
+
+                            <td>
+                                <a href="#" data-toggle="modal" data-target="#deleteConfirmModal"
+                                    data-account-id="${account.id}">DELETE</a>
+                            </td>
+
+
+                            <div class="modal fade" id="deleteConfirmModal" tabindex="-1" role="dialog"
+                                aria-labelledby="deleteConfirmModalLabel" aria-hidden="true">
+                                <div class="modal-dialog" role="document">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <h5 class="modal-title" id="deleteConfirmModalLabel">Confirm Account
+                                                Deletion</h5>
+                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                <span aria-hidden="true">&times;</span>
+                                            </button>
+                                        </div>
+                                        <div class="modal-body">
+                                            Are you sure you want to delete this account?
+                                        </div>
+                                        <div class="modal-footer">
+                                            <button type="button" class="btn btn-secondary"
+                                                data-dismiss="modal">Cancel</button>
+                                            <a href="#" class="btn delete-btn" id="deleteAccountBtn">Delete Account</a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
                         </tr>
                     </table>
                 </div>

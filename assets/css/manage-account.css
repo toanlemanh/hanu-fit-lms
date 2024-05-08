@@ -1,4 +1,9 @@
-.btn {
+.create-btn {
+    background-color: #700404;
+    color: white;
+}
+
+.delete-btn {
     background-color: #700404;
     color: white;
 }
