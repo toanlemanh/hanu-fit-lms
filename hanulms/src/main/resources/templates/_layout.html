@@ -32,6 +32,12 @@
         dropdownContent.style.display = "none";
       }
     });
+    function searchKeyPress(event) {
+      if (event.keyCode === 13) { // Check if Enter key is pressed
+        event.preventDefault(); // Prevent default form submission
+        window.location.href = "/searchResult"; // Redirect to '/searchResult'
+      }
+    }
   </script>
 </head>
 
@@ -52,7 +58,7 @@
                 <a href="" class="navbar-item mx-2 my-1">Home</a>
               </div>
               <div class="row">
-                <a href="" class="navbar-item mx-2 my-1">My Courses</a>
+                <a href="/myCourses" class="navbar-item mx-2 my-1">My Courses</a>
               </div>
               <div class="row">
                 <a href="" class="navbar-item mx-2 my-1">Faculty Announcements</a>
@@ -69,7 +75,7 @@
             <div class="row align-items-center justify-content-end">
               <div id="searchbar-container" class="d-none d-md-flex py-2">
                 <i class="bi bi-search" aria-hidden="true" id="search-icon"></i>
-                <input type="text" value="Search..." id="searchbar">
+                <input type="text" value="Search..." id="searchbar" onkeydown="searchKeyPress(event)">
               </div>
             </div>
           </div>

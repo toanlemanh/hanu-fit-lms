@@ -31,3 +31,20 @@
 	text-decoration: none;
 	color: var(--primary1000);
 }
+
+#path-container {
+	align-items: center;
+	padding-top: 5vh;
+}
+
+.path {
+	text-decoration: none;
+	color: black;
+}
+
+#title-container {
+	display: flex;
+	align-items: baseline;
+	justify-content: space-between;
+	font-family: Georgia, "Times New Roman", Times, serif;
+}
