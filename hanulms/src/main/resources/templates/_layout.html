@@ -1,6 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org"
-      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
 
 <head>
   <meta charset="UTF-8">
@@ -9,6 +8,7 @@
   <link rel="stylesheet" th:href="@{/css/bootstrap/bootstrap.css}">
   <link rel="stylesheet" th:href="@{/css/bootstrap/bootstrap.min.css}">
   <link rel="stylesheet" th:href="@{/css/_layout.css}">
+  <link rel="stylesheet" th:href="@{/css/shared.css}">
   <link rel="stylesheet" th:href="@{/svgs/bootstrap-icons-1.11.3/font/bootstrap-icons.css}">
   <script>
     // Function to toggle the dropdown menu
@@ -36,13 +36,12 @@
 </head>
 
 <body>
-<div class="container-fluid">
-  <div class="row align-items-center justify-content-between" id="body-container">
-
-      <div class="col-md-7">
+  <div class="container-fluid">
+    <div class="row align-items-center justify-content-between" id="body-container">
+      <div class="col-9 col-md-7">
         <div class="row align-items-center">
           <div class="col-3">
-            <div class="row align-items-center">
+            <div class="row align-items-center flex-nowrap">
               <img src="/images/HANU.png" id="logo">
               <span id="logo-title">HANU LMS</span>
             </div>
@@ -63,34 +62,42 @@
         </div>
       </div>
 
-      <div class="col-md-4">
+      <div class="col-3 col-md-4">
         <div class="row align-items-center justify-content-end flex-nowrap">
 
           <div class="col-sm-4 col-md-6">
-          <div class="row align-items-center justify-content-end">
-          <div id="searchbar-container" class="py-2">
-            <i class="bi bi-search" aria-hidden="true" id="search-icon"></i>
-            <input type="text" value="Search..." id="searchbar">
+            <div class="row align-items-center justify-content-end">
+              <div id="searchbar-container" class="d-none d-md-flex py-2">
+                <i class="bi bi-search" aria-hidden="true" id="search-icon"></i>
+                <input type="text" value="Search..." id="searchbar">
+              </div>
+            </div>
           </div>
-          </div>
-          </div>
+
+          <!-- <div class="col">
+            <div class="row align-items-center justify-content-end flex-nowrap">
+              <button class="button">
+                <i class="bi bi-bell-fill"></i>
+              </button>
+
+              <a id="username">Trần Trung Nghĩa</a>
+
+              <div id="avatar-container">
+                <img src="/images/HANU.png">
+              </div>
+
+              <button class="button" onclick="toggleDropdown(event)">
+                <i class="bi bi-chevron-down" id="chevron-icon"></i>
+              </button>
+            </div>
+          </div> -->
 
           <div class="col">
-          <div class="row align-items-center justify-content-end flex-nowrap">
-          <button class="button">
-            <i class="bi bi-bell-fill"></i>
-          </button>
-
-          <a id="username">Trần Trung Nghĩa</a>
-
-          <div id="avatar-container">
-            <img src="/images/HANU.png">
-          </div>
-
-          <button class="button" onclick="toggleDropdown(event)">
-            <i class="bi bi-chevron-down" id="chevron-icon"></i>
-          </button>
-          </div>
+            <div class="row align-items-center justify-content-start flex-nowrap mx-1">
+              <button class="base-button">
+                Login
+              </button>
+            </div>
           </div>
 
           <div class="dropdown-content" id="dropdownContent">
@@ -102,7 +109,7 @@
       </div>
 
     </div>
-</div>
+  </div>
 
   <div layout:fragment="content">
     <!-- content page will override this -->

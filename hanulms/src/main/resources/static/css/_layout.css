@@ -23,6 +23,7 @@ body {
 #logo {
 	width: clamp(30px, 2.5vw, 100%);
 	margin-inline: 0.5vw;
+	margin-block: 0.4rem;
 }
 
 #left-cluster {
@@ -79,7 +80,7 @@ body {
 	border: none;
 	outline: none;
 	color: var(--accent-yellow);
-	font-size: x-small;
+	font-size: small;
 	width: 100%;
 }
 
@@ -102,7 +103,7 @@ body {
 	padding-inline: 1vw;
 	border-radius: 5px;
 	transition: background-color 0.3s ease;
-	margin: 0.5vw;
+	margin: 0.2rem;
 	display: flex;
 	align-items: center;
 	width: 100%;
@@ -123,12 +124,13 @@ body {
 #avatar-container {
 	/* background-color: #000000; */
 	border-radius: 50%;
-	width: clamp(30px, 2.5vw, 40px);
+	width: clamp(20px, 1.5vw + 1px, 40px);
 	aspect-ratio: 1;
 	overflow: hidden;
 	display: flex;
 	justify-content: center;
 	margin-inline: 0.5vw;
+	min-width: 25px;
 }
 
 .button {

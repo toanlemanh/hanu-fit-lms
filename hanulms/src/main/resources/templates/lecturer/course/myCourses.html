@@ -1,62 +1,61 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org"
-      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-      layout:decorate="_layout">
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="_layout">
 
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>My Courses</title>
+  <link rel="stylesheet" th:href="@{/css/bootstrap.css}">
   <link rel="stylesheet" th:href="@{/css/myCourses.css}">
   <script th:src="@{/js/myCourses.js}"></script>
 </head>
 
 <body>
-<div layout:fragment="content">
-  <div id="path-container">
-    <a href="" class="path">Home</a> /
-    <a href="" class="path">My Courses</a>
-  </div>
-  <div id="title-container">
-    <h1 id="title">MY COURSES</h1>
-    <button class="button">Create</button>
-  </div>
-  <div class="course-item-container">
-    <div class="course-title-container">
-      <a class="course-title" href="">61FIT3SE2 - Software Engineering 2</a>
-      <div class="buttons-container">
-        <button class="button">Edit</button>
-        <button class="button">Delete</button>
-      </div>
+  <div layout:fragment="content" class="container-lg">
+    <div id="path-container">
+      <a href="" class="path">Home</a> /
+      <a href="" class="path">My Courses</a>
     </div>
-    <p class="course-description">Software Engineering 2 is a course that covers advanced topics in software development, including software architecture, design patterns, and software testing methodologies. Students will learn how to design and implement large-scale software systems using modern software engineering principles and tools. The course will also cover topics such as agile development methodologies, software project management, and software quality assurance.</p>
-    <div class="lecturers"></div>
-  </div>
+    <div id="title-container">
+      <h1 id="title">MY COURSES</h1>
+      <button class="base-button">Create</button>
+    </div>
+    <div class="course-item-container">
+      <div class="course-title-container">
+        <a class="course-title hyperlink" href="">61FIT3SE2 - Software Engineering 2</a>
+        <div class="buttons-container">
+          <button class="base-button">Edit</button>
+          <button class="base-button">Delete</button>
+        </div>
+      </div>
+      <p class="course-description">Software Engineering 2 is a course that covers advanced topics in software development, including software architecture, design patterns, and software testing methodologies. Students will learn how to design and implement large-scale software systems using modern software engineering principles and tools. The course will also cover topics such as agile development methodologies, software project management, and software quality assurance.</p>
+      <div class="lecturers"></div>
+    </div>
 
-  <div class="course-item-container">
-    <div class="course-title-container">
-      <a class="course-title" href="">61FIT3SE2 - Software Engineering 2</a>
-      <div class="buttons-container">
-        <button class="button">Edit</button>
-        <button class="button">Delete</button>
+    <div class="course-item-container">
+      <div class="course-title-container">
+        <a class="course-title" href="">61FIT3SE2 - Software Engineering 2</a>
+        <div class="buttons-container">
+          <button class="base-button">Edit</button>
+          <button class="base-button">Delete</button>
+        </div>
       </div>
+      <p class="course-description">Software Engineering 2 is a course that covers advanced topics in software development, including software architecture, design patterns, and software testing methodologies. Students will learn how to design and implement large-scale software systems using modern software engineering principles and tools. The course will also cover topics such as agile development methodologies, software project management, and software quality assurance.</p>
+      <div class="lecturers"></div>
     </div>
-    <p class="course-description">Software Engineering 2 is a course that covers advanced topics in software development, including software architecture, design patterns, and software testing methodologies. Students will learn how to design and implement large-scale software systems using modern software engineering principles and tools. The course will also cover topics such as agile development methodologies, software project management, and software quality assurance.</p>
-    <div class="lecturers"></div>
-  </div>
 
-  <div class="course-item-container">
-    <div class="course-title-container">
-      <a class="course-title" href="">61FIT3SE2 - Software Engineering 2</a>
-      <div class="buttons-container">
-        <button class="button">Edit</button>
-        <button class="button">Delete</button>
+    <div class="course-item-container">
+      <div class="course-title-container">
+        <a class="course-title" href="">61FIT3SE2 - Software Engineering 2</a>
+        <div class="buttons-container">
+          <button class="base-button">Edit</button>
+          <button class="base-button">Delete</button>
+        </div>
       </div>
+      <p class="course-description">Software Engineering 2 is a course that covers advanced topics in software development, including software architecture, design patterns, and software testing methodologies. Students will learn how to design and implement large-scale software systems using modern software engineering principles and tools. The course will also cover topics such as agile development methodologies, software project management, and software quality assurance.</p>
+      <div class="lecturers"></div>
     </div>
-    <p class="course-description">Software Engineering 2 is a course that covers advanced topics in software development, including software architecture, design patterns, and software testing methodologies. Students will learn how to design and implement large-scale software systems using modern software engineering principles and tools. The course will also cover topics such as agile development methodologies, software project management, and software quality assurance.</p>
-    <div class="lecturers"></div>
   </div>
-</div>
   <script>
     // Function to process lecturer names
     function processLecturers(lecturers) {
