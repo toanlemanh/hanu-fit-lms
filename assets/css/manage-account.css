@@ -1,3 +1,8 @@
+.btn {
+    background-color: #700404;
+    color: white;
+}
+
 .properties {
     background-color: #700404;
     color: white;
@@ -7,7 +12,6 @@
     color: black;
     text-decoration: none;
 }
-
 
 .path:hover {
     color: #700404;
