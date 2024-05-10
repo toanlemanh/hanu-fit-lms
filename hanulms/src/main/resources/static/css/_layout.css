@@ -64,6 +64,7 @@ body {
 	border-bottom: 0px solid transparent;
 	font-size: clamp(0.7rem, 1vw, 2rem);
 	font-family: Georgia, "Times New Roman", Times, serif;
+	white-space: nowrap;
 }
 
 .navbar-item:hover {
