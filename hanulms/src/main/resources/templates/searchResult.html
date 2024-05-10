@@ -8,12 +8,17 @@
   <link rel="stylesheet" th:href="@{/css/bootstrap.css}">
   <link rel="stylesheet" th:href="@{/css/myCourses.css}">
   <link rel="stylesheet" th:href="@{/css/shared.css}">
+  <link rel="stylesheet" th:href="@{/css/style.css}">
   <script th:src="@{/js/myCourses.js}"></script>
+  <script th:src="@{/js/jquery/jquery-3.7.0.js}"></script>
+  <script th:src="@{/js/script.js}"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+  <link href="https://fonts.googleapis.com/css2?family=REM&display=swap" rel="stylesheet">
 </head>
 
 <body>
   <div layout:fragment="content" class="container-lg">
-    <div id="path-container">
+    <!-- <div id="path-container">
       <a href="" class="path">Home</a> /
       <a href="" class="path">Search Result</a>
     </div>
@@ -27,41 +32,9 @@
       </div>
       <p class="course-description">Software Engineering 2 is a course that covers advanced topics in software development, including software architecture, design patterns, and software testing methodologies. Students will learn how to design and implement large-scale software systems using modern software engineering principles and tools. The course will also cover topics such as agile development methodologies, software project management, and software quality assurance.</p>
       <div class="lecturers"></div>
-    </div>
-
+    </div> -->
 
   </div>
-  <script>
-    // Function to process lecturer names
-    function processLecturers(lecturers) {
-      // Get all elements with the class "lecturers"
-      var containers = document.getElementsByClassName("lecturers");
-
-      // Iterate over each container
-      Array.from(containers).forEach(function(container) {
-        // Iterate over each lecturer name
-        lecturers.forEach(function(name, index) {
-          // Create a span element to hold the lecturer name
-          var span = document.createElement("span");
-          span.textContent = name;
-
-          // Add '|' character if it's not the last lecturer name
-          if (index < lecturers.length - 1) {
-            span.textContent += " | ";
-          }
-
-          // Append the span element to the container
-          container.appendChild(span);
-        });
-      });
-    }
-
-    // Dummy list of lecturer names
-    var lecturerNames = ["Đặng Đình Quân", "Nguyễn Tất Hà Sơn"];
-
-    // Call the function to process lecturer names
-    processLecturers(lecturerNames);
-  </script>
 </body>
 
 </html>
