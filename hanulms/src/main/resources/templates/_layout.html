@@ -32,13 +32,6 @@
         dropdownContent.style.display = "none";
       }
     });
-
-    function searchKeyPress(event) {
-      if (event.keyCode === 13) { // Check if Enter key is pressed
-        event.preventDefault(); // Prevent default form submission
-        window.location.href = "/searchResult"; // Redirect to '/searchResult'
-      }
-    }
   </script>
 </head>
 
@@ -146,6 +139,18 @@
         event.target.value = 'Search...';
       }
     });
+
+    function searchKeyPress(event) {
+      if (event.keyCode === 13) { // Check if Enter key is pressed
+        const searchPhrase = document.getElementById("searchbar").value;
+        if (searchPhrase.trim() === "") {
+          window.location.href = "/searchCourseEmpty";
+        } else {
+          window.location.href = "/searchCourse/" + searchPhrase;
+
+        }
+      }
+    }
   </script>
 </body>
 

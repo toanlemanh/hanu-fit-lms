@@ -256,4 +256,32 @@ public class LecturerController {
         return "redirect:/myCourses";
     }
 
+    @GetMapping(value = "/searchCourse/{phrase}")
+    public String searchCourse(@PathVariable(value = "phrase") String searchPhrase, Model model) {
+        List<Course> foundCourses = new ArrayList<>();
+        String lowerCaseSearchPhrase = searchPhrase.toLowerCase();
+        if (!searchPhrase.trim().equals("")) {
+            List<Course> allCourses = courseRepository.findAll();
+            for (Course course : allCourses) {
+                if (course.getCode().toLowerCase().contains(lowerCaseSearchPhrase) ||
+                        course.getName().toLowerCase().contains(lowerCaseSearchPhrase) ||
+                        course.getDescription().toLowerCase().contains(lowerCaseSearchPhrase)) {
+                    foundCourses.add(course);
+                }
+            }
+        }
+
+        model.addAttribute("foundCourses", foundCourses);
+        model.addAttribute("searchPhrase", searchPhrase);
+        model.addAttribute("numberOfFoundCourses", foundCourses.size());
+        return "searchResult";
+    }
+    @GetMapping(value = "/searchCourseEmpty")
+    public String searchCourseEmpty(Model model) {
+        List<Course> foundCourses = new ArrayList<>();
+        model.addAttribute("foundCourses", foundCourses);
+        model.addAttribute("searchPhrase", "");
+        model.addAttribute("numberOfFoundCourses", foundCourses.size());
+        return "searchResult";
+    }
 }
