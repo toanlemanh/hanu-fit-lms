@@ -12,7 +12,16 @@
     function onEditClick(courseCode) {
       window.location.href = "/editCourse/" + courseCode;
     }
+
+    function onCreateClick() {
+      window.location.href = "/createCourse";
+    }
+
+    function onDeleteClick(courseCode) {
+      window.location.href = "/deleteCourse/" + courseCode;
+    }
   </script>
+
 </head>
 
 <body>
@@ -21,20 +30,9 @@
       <a href="" class="path">Home</a> /
       <a href="" class="path">My Courses</a>
     </div>
-    <div id="title-container">
+    <div id="title-container" class="mb-3">
       <h1 id="title">MY COURSES</h1>
-      <button class="base-button">Create</button>
-    </div>
-    <div class="course-item-container">
-      <div class="course-title-container">
-        <a class="course-title hyperlink" href="">61FIT3SE2 - Software Engineering 2</a>
-        <div class="buttons-container">
-          <button class="base-button">Edit</button>
-          <button class="base-button">Delete</button>
-        </div>
-      </div>
-      <p class="course-description">ÂJiafiajfo</p>
-      <div class="lecturers"></div>
+      <button class="base-button" onclick="onCreateClick()">Create</button>
     </div>
 
     <div th:each="course : ${courses}" class="course-item-container">
@@ -42,45 +40,17 @@
         <a class="course-title hyperlink" href="/courseDetail" th:text="${course.name}"></a>
         <div class="buttons-container">
           <button class="base-button" id="edit-button" th:attr="onclick=|onEditClick('${course.code}')|">Edit</button>
-          <button class="base-button">Delete</button>
+          <button class="base-button" th:attr="onclick=|onDeleteClick('${course.code}')|">Delete</button>
         </div>
       </div>
       <p class="course-description" th:text="${course.description}"></p>
-      <div class="lecturers"></div>
+      <span class="lecturers" th:each="lecturer, iterStat : ${course.lecturers}">
+        <span th:text="${lecturer.name}"></span>
+        <span th:if="${!iterStat.last}" class="abc"> | </span>
+      </span>
     </div>
 
   </div>
-  <script>
-    // // Function to process lecturer names
-    // function processLecturers(lecturers) {
-    //   // Get all elements with the class "lecturers"
-    //   var containers = document.getElementsByClassName("lecturers");
-
-    //   // Iterate over each container
-    //   Array.from(containers).forEach(function(container) {
-    //     // Iterate over each lecturer name
-    //     lecturers.forEach(function(name, index) {
-    //       // Create a span element to hold the lecturer name
-    //       var span = document.createElement("span");
-    //       span.textContent = name;
-
-    //       // Add '|' character if it's not the last lecturer name
-    //       if (index < lecturers.length - 1) {
-    //         span.textContent += " | ";
-    //       }
-
-    //       // Append the span element to the container
-    //       container.appendChild(span);
-    //     });
-    //   });
-    // }
-
-    // // Dummy list of lecturer names
-    // var lecturerNames = ["Đặng Đình Quân", "Nguyễn Tất Hà Sơn"];
-
-    // // Call the function to process lecturer names
-    // processLecturers(lecturerNames);
-  </script>
 </body>
 
 </html>

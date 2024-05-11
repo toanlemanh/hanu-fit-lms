@@ -4,7 +4,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>My Courses</title>
+  <title>Create A New Course</title>
   <link rel="stylesheet" th:href="@{/css/bootstrap.css}">
   <link rel="stylesheet" th:href="@{/css/editCourse.css}">
   <link rel="stylesheet" th:href="@{/css/shared.css}">
@@ -130,13 +130,13 @@
       customSelects.forEach(function(customSelect) {
         const options = customSelect.querySelectorAll(".option");
         options.forEach(function(option) {
-          let lecturerIds = /*[[${lecturerIds}]]*/ "default";
-          let faculty = /*[[${lecturerIds}]]*/ "default";
+          //   let lecturerIds = /*[[${lecturerIds}]]*/ "default";
+          //   let faculty = /*[[${lecturerIds}]]*/ "default";
           const optionValue = parseInt(option.getAttribute("data-value"));
-          if (lecturerIds.includes(optionValue)) {
-            option.classList.add("active");
-            updateSelectedOptions(customSelect);
-          }
+          //   if (lecturerIds.includes(optionValue)) {
+          //     option.classList.add("active");
+          //     updateSelectedOptions(customSelect);
+          //   }
 
           option.addEventListener("click", function() {
             option.classList.toggle("active");
@@ -212,7 +212,7 @@
         const formData = new FormData(formEl);
         const data = new URLSearchParams(formData);
 
-        fetch('/confirmEditCourse', {
+        fetch('/createCourse', {
             method: 'POST',
             body: data,
           }).then(response => {
@@ -236,34 +236,34 @@
   <div layout:fragment="content" class="container-lg">
     <div id="path-container">
       <a href="" class="path">Home</a> /
-      <a href="" class="path">Edit Course</a>
+      <a href="" class="path">Create Course</a>
     </div>
     <div id="title-container">
-      <h1 id="title">Edit Course</h1>
+      <h1 id="title">Create Course</h1>
     </div>
     <section>
-      <form method="post" class="row my-4" id="edit-course-form" th:action="'/confirmEditCourse'">
+      <form method="post" class="row my-4" id="edit-course-form" th:object="${course}" th:action="'/createCourse'">
         <div class="col-7">
           <label for="course-code" class="form-label">Course Code</label>
           <div class="mb-3 input-group">
             <span class="input-group-text">
               <i class="bi bi-hash text-secondary"></i>
             </span>
-            <input required type="text" id="course-code" class="form-control" placeholder="e.g. 61FIT3SE2" th:field="${course.code}" />
+            <input required type="text" id="course-code" class="form-control" placeholder="e.g. 61FIT3SE2" th:field="*{code}" />
           </div>
           <label for="course-name" class="form-label">Course Name</label>
           <div class="mb-3 input-group">
             <span class="input-group-text">
               <i class="bi bi-book-half text-secondary"></i>
             </span>
-            <input required type="text" id="course-name" class="form-control" placeholder="e.g. Software Engineering 2" th:field="${course.name}" />
+            <input required type="text" id="course-name" class="form-control" placeholder="e.g. Software Engineering 2" th:field="*{name}" />
           </div>
           <label for="enrolment-key" class="form-label">Enrolment Key</label>
           <div class="mb-3 input-group">
             <span class="input-group-text">
               <i class="bi bi-key-fill text-secondary"></i>
             </span>
-            <input required type="text" id="enrolment-key" class="form-control" th:field="${course.enrolmentKey}" />
+            <input required type="text" id="enrolment-key" class="form-control" th:field="*{enrolmentKey}" />
           </div>
           <label for="lecturers" class="form-label">Lecturers</label>
 
@@ -273,7 +273,7 @@
             </span>
             <div class="custom-select open">
               <div class="select-box">
-                <input required type="text" class="tags_input" name="tags" th:field="${course.lecturers}" />
+                <input required type="text" class="tags_input" name="tags" th:field="*{lecturers}" />
                 <div class="selected-options">
                 </div>
                 <div class="arrow">
@@ -297,7 +297,7 @@
 
           <label for="description">Course Description</label>
           <div class="mb-3 form-floating">
-            <textarea required class="form-control" id="description" style="height: 140px" placeholder="e.g. Software Engineering 2 is..." th:field="${course.description}"></textarea>
+            <textarea required class="form-control" id="description" style="height: 140px" placeholder="e.g. Software Engineering 2 is..." th:field="*{description}"></textarea>
           </div>
           <label for="course-image-input" class="form-label">Course Image</label>
           <div class="mb-4 input-group">
@@ -308,7 +308,7 @@
           </div>
           <div class="mb-3">
             <button class="cancel-button">Cancel</button>
-            <button type="submit" class="base-button">Save</button>
+            <button type="submit" class="base-button">Create</button>
           </div>
         </div>
         <div class="col-3 mx-3">
@@ -317,9 +317,9 @@
             <span class="input-group-text">
               <i class="bi bi-alphabet-uppercase text-secondary"></i>
             </span>
-            <select required class="form-select col" id="faculty-code-input" th:field="${course.faculty}">
-              <option value="" selected disabled>Select Faculty Code</option>
-              <option th:each="faculty : ${faculties}" th:value="${faculty.code}" th:text="${faculty.code}" />
+            <select required class="form-select col" id="faculty-code-input" th:field="*{faculty}">
+              <option value="" selected>Select Faculty Code</option>
+              <option th:each="faculty : ${allFaculties}" th:value="${faculty.code}" th:text="${faculty.code}" />
             </select>
           </div>
         </div>

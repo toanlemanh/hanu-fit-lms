@@ -27,10 +27,9 @@
 	margin-block: 1rem;
 }
 
-/* .course-title:hover {
-	text-decoration: none;
-	color: var(--primary500);
-} */
+#title-container {
+	align-items: center;
+}
 
 .course-description {
 	display: -webkit-box;
@@ -44,4 +43,5 @@
 
 .lecturers {
 	color: var(--primary800);
+	width: fit-content;
 }
