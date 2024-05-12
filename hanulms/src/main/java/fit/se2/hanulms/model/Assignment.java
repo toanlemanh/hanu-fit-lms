@@ -1,9 +1,6 @@
 package fit.se2.hanulms.model;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 
 @Entity
 public class Assignment {
@@ -12,11 +9,14 @@ public class Assignment {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int assignmentId;
 
-    private String title;
+    private String assTitle;
 
-    private String description;
+    private String assDescription;
 
     private String attachment;
+
+    @ManyToOne
+    private Topic topic;
 
     public int getAssignmentId() {
         return assignmentId;
@@ -26,20 +26,20 @@ public class Assignment {
         this.assignmentId = assignmentId;
     }
 
-    public String getTitle() {
-        return title;
+    public String getAssTitle() {
+        return assTitle;
     }
 
-    public void setTitle(String title) {
-        this.title = title;
+    public void setAssTitle(String assTitle) {
+        this.assTitle = assTitle;
     }
 
-    public String getDescription() {
-        return description;
+    public String getAssDescription() {
+        return assDescription;
     }
 
-    public void setDescription(String description) {
-        this.description = description;
+    public void setAssDescription(String assDescription) {
+        this.assDescription = assDescription;
     }
 
     public String getAttachment() {
@@ -48,5 +48,13 @@ public class Assignment {
 
     public void setAttachment(String attachment) {
         this.attachment = attachment;
+    }
+
+    public Topic getTopic() {
+        return topic;
+    }
+
+    public void setTopic(Topic topic) {
+        this.topic = topic;
     }
 }
