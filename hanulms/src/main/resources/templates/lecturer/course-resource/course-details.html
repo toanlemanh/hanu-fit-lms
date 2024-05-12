@@ -138,7 +138,7 @@
             <div class="mb-3 fs-6 py-3">
 
               <ul  th:each="anAnnouncement : ${announcements}">
-                  <li class="fs-4 fw-semi-bold" th:text="${anAnnouncement.announcementTitle}"/>
+                  <li class="fs-3 fw-semi-bold" th:text="${anAnnouncement.announcementTitle}"/>
                   <p th:text="${anAnnouncement.announcementDescription}"/>
                 <a class="d-block" th:if="${anAnnouncement.attachment.length() != 0}" th:href="@{'/images/'+${anAnnouncement.attachment}}">More details</a>
               </ul>
@@ -147,8 +147,8 @@
         </div>
         <h3 class="col-6">Course Resources</h3>
 
-        <div class="col-6 d-flex justify-content-end">
-          <div class="btn-group mx-2">
+        <div class="col-6 d-flex justify-content-end ">
+          <div class="btn-group">
             <button
               class="btn border-1 border-danger dropdown-toggle px-4"
               type="button"
@@ -178,24 +178,34 @@
               </li>
             </ul>
           </div>
-          <!-- <div class="col"> -->
-          <!-- Example single danger button -->
-          <div class="btn-group">
+        </div>
+
+        <!-- <div class=""> -->
+        <div  th:each="aTopic : ${topics}">
+        <div class="row" style="padding-left: 11px;">
+          <div class="col-11 card-header mb-2 hanu-button rounded">
+            <strong class="text-white font-bold" th:text="${aTopic.topicName}"/>
+
+          </div>
+          <div class="col-1 mb-2 btn-group">
+
             <button
-              type="button"
-              class="hanu-button btn btn-danger text-white px-3 rounded"
-              data-bs-toggle="dropdown"
-              aria-expanded="false"
+                    type="button"
+                    class="hanu-button btn btn-danger text-white rounded"
+                    data-bs-toggle="dropdown"
+                    aria-expanded="false"
+                    th:data-name="${aTopic.topicId}"
+                    th:onclick="chooseTopicId(this.getAttribute('data-name'))"
             >
-              <i class="bi bi-plus"></i>
+              <i class="fs-4 fw-bold bi bi-plus"></i>
             </button>
             <ul class="dropdown-menu">
               <li>
                 <button
-                  class="dropdown-item"
-                  data-bs-toggle="modal"
-                  data-bs-target="#uploadModal"
-                  data-bs-whatever="@mdo"
+                        class="dropdown-item"
+                        data-bs-toggle="modal"
+                        data-bs-target="#uploadModal"
+                        data-bs-whatever="@mdo"
                 >
                   Upload file
                 </button>
@@ -205,35 +215,29 @@
               <li><a class="dropdown-item" href="#">Remove Topic</a></li>
             </ul>
           </div>
-          <!-- </div> -->
         </div>
-
-        <!-- <div class=""> -->
-        <div th:each="aTopic : ${topics}">
-        <div class="">
-          <div class="card-header mb-2 hanu-button rounded">
-            <strong class="text-white font-bold" th:text="${aTopic.topicName}"/>
-          </div>
-          <div class="card-body hanu-button rounded">
+          <div th:each="aFile : ${aTopic.file}" class=" card-body hanu-button rounded ">
+<!--           List of files -->
             <ul>
               <li
-                class="list-unstyled d-flex justify-content-between align-items-center"
+                      class="list-unstyled d-flex justify-content-between align-items-center"
               />
-                <div class="">
-                  <i class="bi bi-file-earmark-check-fill mx-3 fs-1 text-primary"></i>
-                  <div class="d-inline-block">
-                    <a href="#" class="fw-bold" th:text="File"/>
-                      <!-- title -->
-                    <span class="d-block fw-bold hanu-color">Lecture 5</span>
-                  </div>
+              <div class="">
+                <i class="bi bi-file-earmark-check-fill mx-3 fs-1 text-primary"></i>
+                <div class="d-inline-block">
+<!--      LINK            -->
+                  <a href="#" class="fw-bold" th:text="*{type}"/>
+                  <!-- title -->
+                  <span class="d-block fw-bold hanu-color" th:text="*{fileName}"/>
                 </div>
+              </div>
 
-                <!-- button -->
+              <!-- file functional button  -->
               <div class="">
                 <button
                         type="button"
                         onclick="editTopicItem(this)"
-                        class="hanu-button rounded p-1 hanu-mark-as-done"
+                        class="hanu-button rounded p-1 hanu-mark-as-done mx-2"
                         data-bs-toggle="modal"
                         data-bs-target="#topicModal"
                         data-bs-whatever="@mdo">
@@ -251,7 +255,6 @@
             </ul>
             <!-- Announcement details here -->
           </div>
-        </div>
       </div>
       <!-- </div> -->
       </div>
@@ -414,30 +417,50 @@
                   data-bs-target="#createUploadModal"
                   data-bs-whatever="@mdo"
               onclick="chooseUploadType('image')" class="btn btn-primary rounded-circle">
-                <i class="fa-solid fa-image"></i>
+                <i class="bi bi-image"></i>
               </button>
               <span class="d-block text-center">Image</span>
             </div>
             <div class="upload-file-container"> 
-              <button class="btn btn-danger rounded-circle">
-                <i class="bi bi-file-image"></i>
+              <button
+                      data-bs-toggle="modal"
+                      data-bs-target="#createUploadModal"
+                      data-bs-whatever="@mdo"
+                      onclick="chooseUploadType('earmark-check-fill')"
+                      class="btn btn-danger rounded-circle">
+                <i class="bi bi-file-earmark-check-fill"></i>
               </button>
               <span class="d-block text-center">doc</span>
             </div>
             <div class="upload-file-container"> 
-              <button class="btn btn-secondary rounded-circle">
-                <i class="bi bi-file-video"></i>
+              <button
+                      data-bs-toggle="modal"
+                      data-bs-target="#createUploadModal"
+                      data-bs-whatever="@mdo"
+                      onclick="chooseUploadType('play')"
+                      class="btn btn-secondary rounded-circle">
+                <i class="bi bi-file-play"></i>
               </button>
               <span class="d-block text-center">video</span>
             </div>
             <div class="upload-file-container"> 
-              <button class="btn btn-success rounded-circle">
+              <button
+                      data-bs-toggle="modal"
+                      data-bs-target="#createUploadModal"
+                      data-bs-whatever="@mdo"
+                      onclick="chooseUploadType('zip-fill')"
+                      class="btn btn-success rounded-circle">
                 <i class="bi bi-file-zip-fill"></i>
               </button>
               <span class="d-block text-center">zip</span>
             </div>
             <div class="upload-file-container"> 
-              <button class="btn btn-warning rounded-circle">
+              <button
+                      data-bs-toggle="modal"
+                      data-bs-target="#createUploadModal"
+                      data-bs-whatever="@mdo"
+                      onclick="chooseUploadType('earmark-ppt-fill')"
+                      class="btn btn-warning rounded-circle">
                 <i class="bi bi-file-earmark-ppt-fill"></i>
               </button>
               <span class="d-block text-center">slides</span>
@@ -471,34 +494,62 @@
             ></button>
           </div>
           <div class="modal-body ">
-            <form id="upload-file-form" class="row g-3" method="post" action="/upload-topic-item">
+            <form id="upload-file-form" enctype="multipart/form-data" class="row g-3" th:object="${fileDTO}" method="post" th:action="'/myCourses/course-details/'+${course.code}"  >
                <label class="form-label" for="title">Title</label>
-               <input class="form-control" type="text" id="title" placeholder="Topic item title" name="topic-item-title" />
+               <input class="form-control" type="text" id="title" placeholder="Topic item title" th:field="*{fileTitle}" required />
                <label class="form-label" for="file">Upload</label>
-               <input class="form-control" type="file" id="file" name="topic-item-upload"/>
+               <input class="form-control" type="file" id="file" th:field="*{fileData}" required/>
+              <div class="modal-footer">
+                <button
+                        type="button"
+                        class="btn btn-danger hanu-button"
+                        data-bs-dismiss="modal"
+                >
+                  Cancel
+                </button>
+                <button type="submit" onclick="uploadForm(event)" class="btn btn-danger hanu-button">Submit</button>
+              </div>
             </form>
           </div>
            
-          <div class="modal-footer">
-            <button
-              type="button"
-              class="btn btn-danger hanu-button"
-              data-bs-dismiss="modal"
-            >
-              Cancel
-            </button>
-            <button type="button" class="btn btn-danger hanu-button">Submit</button>
-          </div>
+
         </div>
       </div>
     </div>
     <script th:inline="javascript">
+    let uploadedType = "";
+    let topicId = "";
         document.addEventListener("DOMContentLoaded", (event) => {
             let error = /*[[${error}]]*/ "default";
             console.log(error);
             if (error !== "default" && error)
                window.alert(error);
         })
+
+        function uploadForm (event) {
+           event.preventDefault();
+            let uploadedForm = document.getElementById('upload-file-form');
+            let input = document.createElement("input");
+            input.setAttribute("type","text");
+            input.setAttribute("name","uploadedType");
+            input.value = uploadedType;
+<!--            uploadedForm.appendChild(input);-->
+<!--            uploadedForm.submit();-->
+            let current = window.location.href;
+            current = current + "/" + topicId + "/" + uploadedType;
+            alert(current);
+            alert("uploaded");
+        }
+
+        function chooseTopicId(id){
+          topicId = id;
+         }
+
+       function chooseUploadType (type) {
+            uploadedType = type;
+
+       }
+
   </script>
     <!-- Upload File Modal-->
     <!-- End Upload File modal -->
