@@ -13,6 +13,8 @@ public class Course {
     private String name;
     private String description;
     private String enrolmentKey;
+
+    private String courseImage;
     @ManyToOne
     private Faculty faculty;
     @ManyToMany(mappedBy = "courses")
