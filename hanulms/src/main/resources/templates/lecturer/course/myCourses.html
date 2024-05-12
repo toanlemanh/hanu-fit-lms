@@ -5,7 +5,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>My Courses</title>
-<!--  <link rel="stylesheet" th:href="@{/css/bootstrap.css}">-->
+  <!--  <link rel="stylesheet" th:href="@{/css/bootstrap.css}">-->
   <link rel="stylesheet" th:href="@{/css/myCourses.css}">
   <script th:src="@{/js/myCourses.js}"></script>
   <script>
@@ -37,7 +37,9 @@
 
     <div th:each="course : ${courses}" class="course-item-container">
       <div class="course-title-container">
+
         <a class="course-title hyperlink" th:href="'/myCourses/course-details/' + ${course.code}" th:text="${course.name}"></a>
+
         <div class="buttons-container">
           <button class="base-button" id="edit-button" th:attr="onclick=|onEditClick('${course.code}')|">Edit</button>
           <button class="base-button" th:attr="onclick=|onDeleteClick('${course.code}')|">Delete</button>
