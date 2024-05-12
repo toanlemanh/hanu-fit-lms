@@ -2,6 +2,7 @@ package fit.se2.hanulms.model;
 
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotEmpty;
 
 @Entity
 public class File {
@@ -9,6 +10,7 @@ public class File {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int fileId;
 
+    @NotEmpty(message = "You should type")
     private String fileName;
 
     @ManyToOne
