@@ -7,10 +7,9 @@ public class FileDTO {
 
     @NotEmpty(message = "You have to insert a title to this topic item")
     private String fileTitle;
-    @NotEmpty(message="You have to insert a link to this topic item")
+
     private MultipartFile fileData;
 
-    @NotEmpty(message="You have to choose a file type")
     private String type;
 
     public MultipartFile getFileData() {

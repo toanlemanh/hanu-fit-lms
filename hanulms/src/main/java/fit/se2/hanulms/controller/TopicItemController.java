@@ -23,7 +23,7 @@ import java.nio.file.StandardCopyOption;
 import java.util.Date;
 
 @Controller
-@RequestMapping(value="/myCourses/course-detail")
+@RequestMapping(value="/myCourses/course-details")
 public class TopicItemController {
     @Autowired
     CourseRepository courseRepository;
@@ -34,9 +34,9 @@ public class TopicItemController {
     @Autowired
     TopicRepository topicRepository;
 
-    @PostMapping(value="/{code}/{topicId}/upload-file")
+    @PostMapping (value="/{code}/{topicId}/upload-file")
     public String uploadFile (@PathVariable(value="code") String code, @PathVariable(value = "topicId") Long topicId, @Valid FileDTO fileDTO, BindingResult result) {
-        Course course = courseRepository.getReferenceById(code);
+//        Course course = courseRepository.getReferenceById(code);
         Topic topic = topicRepository.getReferenceById(topicId);
         if (result.hasErrors()){
             System.out.println(result.getAllErrors());
@@ -65,11 +65,11 @@ public class TopicItemController {
             catch (Exception e){
                 System.out.println("Exception: "+ e.getMessage());
             }
-
             File file = new File();
             file.setFileName(fileDTO.getFileTitle());
             file.setFileLink(storageFileName);
             file.setType(fileDTO.getType());
+            file.setTopic(topic);
             fileRepository.save(file);
             return "redirect:/myCourses/course-details/"+ code;
         }

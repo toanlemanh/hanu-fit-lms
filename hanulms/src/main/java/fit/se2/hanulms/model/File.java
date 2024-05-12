@@ -13,10 +13,9 @@ public class File {
     @NotEmpty(message = "You should type the file name")
     private String fileName;
 
-    @NotEmpty(message = "You should type the file link")
+
     private String fileLink;
 
-    @NotEmpty(message = "You should choose a type of file")
     private String type;
 
     public String getType() {
