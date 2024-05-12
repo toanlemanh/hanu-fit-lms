@@ -35,10 +35,12 @@
       <button class="base-button" onclick="onCreateClick()">Create</button>
     </div>
 
+    <div class="text-success" id="messages" th:text="${message}"></div>
+
     <div th:each="course : ${courses}" class="course-item-container">
       <div class="course-title-container">
 
-        <a class="course-title hyperlink" th:href="'/myCourses/course-details/' + ${course.code}" th:text="${course.name}"></a>
+        <a class="course-title hyperlink" th:href="'/myCourses/course-details/' + ${course.code}" th:text="${course.code} + ' - ' + ${course.name}"></a>
 
         <div class="buttons-container">
           <button class="base-button" id="edit-button" th:attr="onclick=|onEditClick('${course.code}')|">Edit</button>
