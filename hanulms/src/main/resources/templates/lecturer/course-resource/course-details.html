@@ -4,7 +4,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Software Engineering 2</title>
+    <title th:text="${course.name}"/>
 <!--    <link rel="stylesheet" th:href="@{/css/bootstrap.css}">-->
 
 
@@ -22,16 +22,16 @@
 
   </head>
   <body>
+
   <div layout:fragment="content" class="container mt-4">
 
-      <div class="row">
+      <div class="row" th:object="${course}">
         <!-- Main Content -->
         <div class="col-lg-10 col-md-10 col-sm-6">
-          <h2 class="mb-3 text-truncate text-wrap">
-            61FIT3SE2 - Software Engineering 2
-          </h2>
+          <h2 class="mb-3 text-truncate text-wrap" th:text="${course.name}"/>
+
           <p class="text-truncate fs-6">
-            <strong>Dang Dinh Quan | Dang Dinh Quan</strong>
+<!--            <strong th:text="${course.lecturers}"/>-->
           </p>
         </div>
         <!-- Setting button -->
@@ -141,7 +141,16 @@
         <div class="mb-3 fs-6 text-truncate">
           <!-- Announcements and course content goes here -->
           <h3>Course Announcements</h3>
-          <p>Lorem ipsum dolor sit amet...</p>
+<!--          <p th:text="${announcement.announcementTitle}"/>-->
+            <div class="mb-3 fs-6 py-3">
+
+              <ul  th:each="anAnnouncement : ${announcements}">
+                  <li class="fs-4 fw-semi-bold" th:text="${anAnnouncement.announcementTitle}"/>
+                  <p th:text="${anAnnouncement.announcementDescription}"/>
+                <a class="d-block" th:if="${anAnnouncement.attachment.length() != 0}" th:href="@{'/images/'+${anAnnouncement.attachment}}">More details</a>
+              </ul>
+                <p />
+            </div>
         </div>
         <h3 class="col-6">Course Resources</h3>
 
@@ -162,8 +171,7 @@
                   class="dropdown-item"
                   data-bs-toggle="modal"
                   data-bs-target="#topicModal"
-                  data-bs-whatever="@mdo"
-                >
+                  data-bs-whatever="@mdo">
                   Create new Topic
                 </button>
               </li>
@@ -171,8 +179,7 @@
                 <button
                   class="dropdown-item"
                   data-bs-toggle="modal"
-                  data-bs-target="#announcementModal"
-                >
+                  data-bs-target="#announcementModal">
                   Create new announcement
                 </button>
               </li>
@@ -209,22 +216,21 @@
         </div>
 
         <!-- <div class=""> -->
+        <div th:each="aTopic : ${topics}">
         <div class="">
           <div class="card-header mb-2 hanu-button rounded">
-            <strong class="text-white font-bold">Topic</strong>
+            <strong class="text-white font-bold" th:text="${aTopic.topicName}"/>
           </div>
           <div class="card-body hanu-button rounded">
             <ul>
               <li
                 class="list-unstyled d-flex justify-content-between align-items-center"
-              >
+              />
                 <div class="">
                   <i class="bi bi-file-earmark-check-fill mx-3 fs-1 text-primary"></i>
                   <div class="d-inline-block">
-                    <a href="#" class="fw-bold">
+                    <a href="#" class="fw-bold" th:text="File"/>
                       <!-- title -->
-                      File
-                    </a>
                     <span class="d-block fw-bold hanu-color">Lecture 5</span>
                   </div>
                 </div>
@@ -244,7 +250,7 @@
         </div>
       </div>
       <!-- </div> -->
-
+      </div>
 
     <!-- 
       Modal
@@ -269,16 +275,18 @@
             ></button>
           </div>
           <div class="modal-body">
-            <form id="create-topic-form" method="get" action="/create-topic">
+            <form id="create-topic-form" method="post" th:object="${topic}" th:action="'/myCourses/course-details/'+${course.code}+'/create-topic'">
               <div class="mb-3">
-                <label for="recipient-name" class="col-form-label"
+                <label for="topic-recipient-name" class="col-form-label"
                   >Title:</label
                 >
                 <input
                   type="text"
                   class="form-control"
                   id="topic-recipient-name"
-                  name="topic-title"
+                  th:field="*{topicName}"
+                  required
+
                 />
               </div>
               <div class="mb-3">
@@ -288,21 +296,25 @@
                 <textarea
                   class="form-control"
                   id="topic-message-text"
-                  name="topic-description"
+                  th:field="*{topicDescription}"
+                  required
                 ></textarea>
               </div>
+
+              <div class="modal-footer">
+                <button
+                        type="button"
+                        class="btn btn-secondary"
+                        data-bs-dismiss="modal"
+                >
+                  Close
+                </button>
+                <button type="submit" class="btn btn-danger">Submit</button>
+              </div>
             </form>
+
           </div>
-          <div class="modal-footer">
-            <button
-              type="button"
-              class="btn btn-secondary"
-              data-bs-dismiss="modal"
-            >
-              Close
-            </button>
-            <button type="button" class="btn btn-danger">Submit</button>
-          </div>
+
         </div>
       </div>
     </div>
@@ -327,7 +339,7 @@
             ></button>
           </div>
           <div class="modal-body">
-            <form id="create-announcement-form" method="post" action="/create-course-announcement">
+            <form enctype="multipart/form-data" id="create-announcement-form" th:method="post" th:object="${announcementDTO}" th:action="'/myCourses/course-details/'+${course.code}+'/create-announcement'">
               <div class="mb-3">
                 <label for="recipient-name" class="col-form-label"
                   >Title:</label
@@ -336,7 +348,7 @@
                   type="text"
                   class="form-control"
                   id="announcement-recipient-name"
-                  name="title"
+                  th:field="*{announcementTitle}"
                 />
               </div>
               <div class="mb-3">
@@ -346,32 +358,34 @@
                 <textarea
                   class="form-control"
                   id="announcement-message-text"
-                  name="description"
+                  th:field="*{announcementDescription}"
                 ></textarea>
               </div>
               <div class="mb-3">
                 <label for="recipient-name" class="col-form-label"
-                  >Attachment:</label
+                  >Image:</label
                 >
                 <input
-                  type="text"
+                  type="file"
                   class="form-control"
                   id="recipient-name"
-                  name="attachment"
+                 th:field="*{attachment}"
+                  accept="image/png, image/jpeg"
                 />
+              </div>
+              <div class="modal-footer">
+                <button
+                        type="button"
+                        class="btn btn-secondary"
+                        data-bs-dismiss="modal"
+                >
+                  Close
+                </button>
+                <button type="submit" class="btn btn-danger">Submit</button>
               </div>
             </form>
           </div>
-          <div class="modal-footer">
-            <button
-              type="button"
-              class="btn btn-secondary"
-              data-bs-dismiss="modal"
-            >
-              Close
-            </button>
-            <button type="button" class="btn btn-danger">Submit</button>
-          </div>
+
         </div>
       </div>
     </div>
@@ -474,9 +488,18 @@
         </div>
       </div>
     </div>
+    <script th:inline="javascript">
+        document.addEventListener("DOMContentLoaded", (event) => {
+            let error = /*[[${error}]]*/ "default";
+            console.log(error);
+            if (error !== "default" && error)
+               window.alert(error);
+        })
+  </script>
     <!-- Upload File Modal-->
     <!-- End Upload File modal -->
     <!-- End Modal -->
   </div>
+
   </body>
 </html>

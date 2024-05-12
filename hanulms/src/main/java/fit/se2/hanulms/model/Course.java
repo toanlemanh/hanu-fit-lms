@@ -1,12 +1,14 @@
 package fit.se2.hanulms.model;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotEmpty;
 
 import java.util.List;
 
 @Entity
 public class Course {
     @Id
+    @NotEmpty(message = "Please insert course code")
     private String code;
     private String name;
     private String description;
@@ -16,11 +18,19 @@ public class Course {
     @ManyToMany(mappedBy = "courses")
     private List<Lecturer> lecturers;
 
+    @OneToMany(mappedBy = "course")
+    private List<Topic> topics;
+
+    @OneToMany(mappedBy = "course")
+    List<Announcement> announcements;
+
  public String getCode() {
   return code;
  }
 
- public void setCode(String code) {
+
+
+    public void setCode(String code) {
   this.code = code;
  }
 
@@ -63,4 +73,20 @@ public class Course {
  public void setLecturers(List<Lecturer> lecturers) {
   this.lecturers = lecturers;
  }
+    public List<Topic> getTopics() {
+        return topics;
+    }
+
+    public void setTopics(List<Topic> topics) {
+        this.topics = topics;
+    }
+
+    public List<Announcement> getAnnouncements() {
+        return announcements;
+    }
+
+    public void setAnnouncements(List<Announcement> announcements) {
+        this.announcements = announcements;
+    }
 }
+

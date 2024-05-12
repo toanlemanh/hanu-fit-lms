@@ -1,6 +1,11 @@
 package fit.se2.hanulms.model;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.Max;
+import jakarta.validation.constraints.NotEmpty;
+import org.hibernate.validator.constraints.Length;
+
+import java.util.List;
 
 @Entity
 public class Topic {
@@ -8,13 +13,24 @@ public class Topic {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int topicId;
 
+    @NotEmpty(message = "Please enter the title of topic")
+    @Length(max = 20, message = "The title should be less than 20")
     private String topicName;
-    private String topicDescription;
 
+    @NotEmpty(message = "Please enter the description of topic")
+    @Length(max = 40, message = "The description should be less than 40")
+    private String topicDescription;
 
 
     @ManyToOne
     private Course course;
+
+    @OneToMany(mappedBy = "topic")
+    private List<File> file;
+
+    @OneToMany(mappedBy = "topic")
+    private List<Assignment> assignments;
+
 
     public int getTopicId() {
         return topicId;
@@ -46,4 +62,14 @@ public class Topic {
     public void setTopicDescription(String topicDescription) {
         this.topicDescription = topicDescription;
     }
+
+    public List<File> getFile() {
+        return file;
+    }
+
+    public List<Assignment> getAssignments() {
+        return assignments;
+    }
+
+
 }
