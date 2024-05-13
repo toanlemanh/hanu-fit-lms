@@ -25,7 +25,7 @@
     <div th:text="${numberOfFoundCourses} + ' courses found for &quot;' + ${searchPhrase} + '&quot;'"></div>
     <div th:each="course : ${foundCourses}" class="course-item-container">
       <div class="course-title-container">
-        <a class="course-title hyperlink" href="/courseDetail" th:text="${course.code} + ' - ' + ${course.name}"></a>
+        <a class="course-title hyperlink" th:href="'/myCourses/course-details/' + ${course.code}" th:text="${course.code} + ' - ' + ${course.name}"></a>
       </div>
       <p class="course-description" th:text="${course.description}"></p>
       <span class="lecturers" th:each="lecturer, iterStat : ${course.lecturers}">

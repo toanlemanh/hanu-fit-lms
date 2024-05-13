@@ -20,6 +20,14 @@ public class Course {
     @ManyToMany(mappedBy = "courses")
     private List<Lecturer> lecturers;
 
+    public String getCourseImage() {
+        return courseImage;
+    }
+
+    public void setCourseImage(String courseImage) {
+        this.courseImage = courseImage;
+    }
+
     @OneToMany(mappedBy = "course")
     private List<Topic> topics;
 
