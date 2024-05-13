@@ -1,11 +1,7 @@
 package fit.se2.hanulms.controller;
 
-import fit.se2.hanulms.Repository.CourseRepository;
-import fit.se2.hanulms.Repository.FacultyRepository;
-import fit.se2.hanulms.Repository.LecturerRepository;
-import fit.se2.hanulms.model.Course;
-import fit.se2.hanulms.model.Faculty;
-import fit.se2.hanulms.model.Lecturer;
+import fit.se2.hanulms.Repository.*;
+import fit.se2.hanulms.model.*;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -31,6 +27,12 @@ public class LecturerController {
     FacultyRepository facultyRepository;
     @Autowired
     LecturerRepository lecturerRepository;
+
+    @Autowired
+    TopicRepository topicRepository;
+
+    @Autowired
+    AnnouncementRepository announcementRepository;
 
     @GetMapping(value = "/myCourses")
     public String myCourses(Model model) {
@@ -337,8 +339,22 @@ public class LecturerController {
             System.out.println("Courses: " + lecturer.getCourses());
             lecturerRepository.save(lecturer); // Save to ensure changes are persisted
         }
+        List<Topic> allTopics = topicRepository.findAll();
+        for (Topic topic : allTopics) {
+            if (topic.getCourse().equals(course)) {
+                topicRepository.delete(topic);
+            }
+        }
+        List<Announcement> allAnnouncements = announcementRepository.findAll();
+        for (Announcement announcement : allAnnouncements) {
+            if (announcement.getCourse().equals(course)) {
+                announcementRepository.delete(announcement);
+            }
+        }
         // Clear existing associations for current course
         course.getLecturers().clear();
+        course.getTopics().clear();
+        course.getAnnouncements().clear();
         System.out.println("Lecturers: " + course.getLecturers());
         courseRepository.save(course);
 
