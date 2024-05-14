@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 
 import java.util.List;
 
+<<<<<<< HEAD
 //@Controller
 //public class HomeController {
 //    @GetMapping("/")
@@ -16,3 +17,12 @@ import java.util.List;
 //        return "/homepage";
 //    }
 //}
+=======
+@Controller
+public class HomeController {
+    @GetMapping("/")
+    public String home() {
+        return "/admin/create-account";
+    }
+}
+>>>>>>> 35abeb925879a926c3a96a5bb4335fbbcaec2bbf

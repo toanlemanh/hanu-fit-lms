@@ -14,7 +14,20 @@ public class Faculty {
     @OneToMany(mappedBy = "faculty")
     private List<Lecturer> lecturers;
     @OneToMany(mappedBy = "faculty")
+<<<<<<< HEAD
     private List<Course> courses;
+=======
+    private List<Student> students;
+    @OneToMany(mappedBy = "faculty")
+    private List<Course> courses;
+    public List<Student> getStudents() {
+        return students;
+    }
+
+    public void setStudents(List<Student> students) {
+        this.students = students;
+    }
+>>>>>>> 35abeb925879a926c3a96a5bb4335fbbcaec2bbf
 
     public String getCode() {
         return code;

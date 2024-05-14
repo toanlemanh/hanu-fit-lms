@@ -5,7 +5,11 @@ import jakarta.persistence.*;
 import java.util.List;
 
 @Entity
+<<<<<<<< HEAD:hanulms/src/main/java/fit/se2/hanulms/model/Lecturer.java
 public class Lecturer {
+========
+public class Student {
+>>>>>>>> 35abeb925879a926c3a96a5bb4335fbbcaec2bbf:hanulms/src/main/java/fit/se2/hanulms/model/Student.java
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -18,6 +22,7 @@ public class Lecturer {
     private String username;
 
     private String password;
+<<<<<<<< HEAD:hanulms/src/main/java/fit/se2/hanulms/model/Lecturer.java
 
     public String getUsername() {
         return username;
@@ -74,4 +79,6 @@ public class Lecturer {
     public void setCourses(List<Course> courses) {
         this.courses = courses;
     }
+========
+>>>>>>>> 35abeb925879a926c3a96a5bb4335fbbcaec2bbf:hanulms/src/main/java/fit/se2/hanulms/model/Student.java
 }

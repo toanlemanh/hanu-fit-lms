@@ -9,6 +9,17 @@
         <module name="hanulms" />
       </profile>
     </annotationProcessing>
+<<<<<<< HEAD
+  </component>
+  <component name="JavacSettings">
+    <option name="ADDITIONAL_OPTIONS_OVERRIDE">
+      <module name="hanulms" options="-parameters" />
+    </option>
+=======
+    <bytecodeTargetLevel>
+      <module name="hanulms" target="17" />
+    </bytecodeTargetLevel>
+>>>>>>> 35abeb925879a926c3a96a5bb4335fbbcaec2bbf
   </component>
   <component name="JavacSettings">
     <option name="ADDITIONAL_OPTIONS_OVERRIDE">

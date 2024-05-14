@@ -5,7 +5,11 @@
 	<parent>
 		<groupId>org.springframework.boot</groupId>
 		<artifactId>spring-boot-starter-parent</artifactId>
+<<<<<<< HEAD
 		<version>3.1.4</version>
+=======
+		<version>3.2.5</version>
+>>>>>>> 35abeb925879a926c3a96a5bb4335fbbcaec2bbf
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
 	<groupId>fit.se2</groupId>
@@ -22,18 +26,24 @@
 			<artifactId>spring-boot-starter-data-jpa</artifactId>
 		</dependency>
 		<dependency>
+<<<<<<< HEAD
 			<groupId>com.microsoft.sqlserver</groupId>
 			<artifactId>mssql-jdbc</artifactId>
 			<version>12.6.1.jre11</version>
 		</dependency>
 		<dependency>
+=======
+>>>>>>> 35abeb925879a926c3a96a5bb4335fbbcaec2bbf
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-security</artifactId>
 		</dependency>
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-thymeleaf</artifactId>
+<<<<<<< HEAD
 			<version>3.1.4</version>
+=======
+>>>>>>> 35abeb925879a926c3a96a5bb4335fbbcaec2bbf
 		</dependency>
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
@@ -54,6 +64,7 @@
 			<scope>runtime</scope>
 		</dependency>
 		<dependency>
+<<<<<<< HEAD
 			<groupId>javax.servlet</groupId>
 			<artifactId>jstl</artifactId>
 			<version>1.2</version>
@@ -63,6 +74,8 @@
 			<artifactId>tomcat-embed-jasper</artifactId>
 		</dependency>
 		<dependency>
+=======
+>>>>>>> 35abeb925879a926c3a96a5bb4335fbbcaec2bbf
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-test</artifactId>
 			<scope>test</scope>
@@ -90,7 +103,10 @@
 			<scope>runtime</scope>
 			<optional>true</optional>
 		</dependency>
+<<<<<<< HEAD
 
+=======
+>>>>>>> 35abeb925879a926c3a96a5bb4335fbbcaec2bbf
 	</dependencies>
 
 	<build>

@@ -113,6 +113,7 @@ public class LecturerController {
                 }
             }
         }
+<<<<<<< HEAD
         if (mode.equals("edit")) {
             for (Course course : allCourses) {
                 if (courseRepository.getReferenceById(courseCode).equals(course)) {
@@ -123,6 +124,18 @@ public class LecturerController {
                 }
             }
         }
+=======
+//        if (mode.equals("edit")) {
+//            for (Course course : allCourses) {
+//                if (courseRepository.getReferenceById(courseCode).equals(course)) {
+//                    continue;
+//                }
+//                if (courseCode.equals(course.getCode())) {
+//                    errorMessages.add("The entered course code already exists!");
+//                }
+//            }
+//        }
+>>>>>>> 35abeb925879a926c3a96a5bb4335fbbcaec2bbf
         if (courseCode != null && courseCode.length() > 10) {
             errorMessages.add("The maximum length for course code is 10 characters!");
         }

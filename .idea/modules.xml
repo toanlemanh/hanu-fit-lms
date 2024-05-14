@@ -3,6 +3,10 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/.idea/hanu-fit-lms.iml" filepath="$PROJECT_DIR$/.idea/hanu-fit-lms.iml" />
+<<<<<<< HEAD
+=======
+      <module fileurl="file://$PROJECT_DIR$/hanulms/hanulms.iml" filepath="$PROJECT_DIR$/hanulms/hanulms.iml" />
+>>>>>>> 35abeb925879a926c3a96a5bb4335fbbcaec2bbf
     </modules>
   </component>
 </project>
