@@ -227,9 +227,9 @@
             </ul>
           </div>
         </div>
-          <div th:each="aFile : ${aTopic.file}" class="card-body hanu-button rounded ">
+          <div th:each="aFile : ${aTopic.file}" class="card-body hanu-button ">
 <!--           List of files -->
-            <ul>
+            <ul class="rounded">
               <li
                       class="list-unstyled d-flex justify-content-between align-items-center"
               />
@@ -239,12 +239,7 @@
                 <i th:if="${aFile.type == 'Document'}" class="mx-3 fs-1 text-primary bi bi-file-earmark-check-fill" ></i>
                 <i th:if="${aFile.type == 'File'}" class="mx-3 fs-1 text-primary bi bi-file-zip-fill" ></i>
                 <i th:if="${aFile.type == 'Slides'}" class="mx-3 fs-1 text-primary bi bi-file-earmark-ppt-fill" ></i>
-
-
                 <div class="d-inline-block">
-<!--      LINK            -->
-<!--                  <a href="#" class="fw-bold"  />-->
-                  <!-- title -->
                   <p class="d-block fw-bold hanu-color mb-0" th:text="${aFile.type}" />
                   <a class="d-block fw-bold hanu-color" th:text="${aFile.fileName}" th:href="@{'/images/' + ${aFile.fileLink}}"/>
                 </div>
@@ -254,10 +249,9 @@
               <div class="">
                 <button
                         type="button"
-                        onclick="editTopicItem(this)"
                         class="hanu-button rounded p-1 hanu-mark-as-done mx-2"
                         data-bs-toggle="modal"
-                        data-bs-target="#topicModal"
+                        data-bs-target="#editUploadModal"
                         data-bs-whatever="@mdo">
                   Edit
                 </button>
@@ -270,21 +264,68 @@
                 >
                   Delete
                 </button>
+
               </div>
               </li>
             </ul>
+  <!-- Edit Upload File Modal-->
+            <div id="editUploadModal" class="modal" tabindex="-1">
+              <div class="modal-dialog">
+                <div class="modal-content">
+                  <div class="modal-header">
+                    <h5 class="modal-title">Edit file</h5>
+                    <button
+                            type="button"
+                            class="btn-close"
+                            data-bs-dismiss="modal"
+                            aria-label="Close"
+                    ></button>
+                  </div>
+                  <div class="modal-body ">
+                    <form id="edit-upload-file-form" enctype="multipart/form-data" class="row g-3" th:object="${fileDTO}" method="post" th:action="'/myCourses/course-details/'+${course.code}"  >
+                      <label class="form-label" for="title">Title</label>
+                      <input class="form-control" type="text" th:value="${aFile.fileName}" th:placeholder="${aFile.fileName}" th:field="*{fileTitle}" required/>
+                      <label class="form-label" for="file">Change file</label>
+                      <input class="form-control" type="file" th:field="*{fileData}" required/>
+                      <select required class="form-select col" id="file-type-input" th:field="*{type}" >
+                        <option th:value="${aFile.type}" selected >Select file type</option>
+                        <option value="Image" >Image</option>
+                        <option value="Video" >Video</option>
+                        <option value="File" >Zip</option>
+                        <option value="Document" >Doc</option>
+                        <option value="Slides" >Slides</option>
+                      </select>
+                      <div class="modal-footer">
+                        <button
+                                type="button"
+                                class="btn btn-danger hanu-button"
+                                data-bs-dismiss="modal"
+                        >
+                          Cancel
+                        </button>
+                        <button type="submit"
+                                th:data-name="${aFile.fileId}"
+                                th:onclick="editFileForm(event, this.getAttribute('data-name'))"
+                                class="btn btn-danger hanu-button">Edit</button>
+                      </div>
+                    </form>
+                  </div>
+                </div>
+              </div>
+            </div>
+  <!--    Edit file modal-->
+
           </div>
 <!--          Assignment File -->
-          <div th:each="anAssignment : ${aTopic.assignments}" class=" card-body hanu-button rounded ">
-            <ul>
-              <li
-                      class="list-unstyled d-flex justify-content-between align-items-center"
-              />
-              <div class="">
+          <div th:each="anAssignment : ${aTopic.assignments}" class=" card-body hanu-button ">
+            <ul class="rounded">
+              <li class="list-unstyled d-flex justify-content-between align-items-center">
+              <div class="d-flex flex-row">
                 <i class="mx-3 fs-1 text-primary bi bi-file-play" ></i>
                 <div class="d-inline-block">
-                  <p class="d-block fw-bold hanu-color mb-0" th:text="Assignment" />
-                  <a class="d-block fw-bold hanu-color" th:text="${anAssignment.assTitle}" th:href="@{'/images/' + ${anAssignment.attachment}}"/>
+                  <p class="d-block fw-bold hanu-color mb-0" th:text="${anAssignment.assTitle}" />
+                  <a class="d-block fw-bold hanu-color" th:text="${anAssignment.assDescription}" th:href="@{'/images/' + ${anAssignment.attachment}}"/>
+                  <p class="d-block fw-bold hanu-color " th:text="${anAssignment.deadline}"/>
                 </div>
               </div>
 
@@ -303,7 +344,6 @@
                 <button
                         type="button"
                         th:if="${anAssignment != null || aFile != null}"
-
                         th:data-name="${anAssignment.assignmentId}"
                         th:onclick="deleteTopicItem('assignment',this.getAttribute('data-name'))"
                         class="hanu-button rounded p-1 hanu-mark-as-done"
@@ -579,6 +619,7 @@
     </div>
 
     <!-- End Type Upload Modal -->
+<!--    Upload modal-->
     <div id="createUploadModal" class="modal" tabindex="-1">
       <div class="modal-dialog">
         <div class="modal-content">
@@ -609,15 +650,21 @@
               </div>
             </form>
           </div>
-           
-
         </div>
       </div>
     </div>
+<!--    End Upload Modal-->
+
+    <!-- End Upload File modal -->
+
+
+
+<!--    End edit file modal -->
+    <!-- End Modal -->
     <script th:inline="javascript">
-    let uploadedType = "";
+     let uploadedType = "";
     let topicId = "";
-        document.addEventListener("DOMContentLoaded", (event) => {
+      document.addEventListener("DOMContentLoaded", (event) => {
             let error = /*[[${error}]]*/ "default";
             console.log(error);
             if (error !== "default" && error){
@@ -636,13 +683,10 @@
             input.setAttribute("type","text");
             input.setAttribute("name","uploadedType");
             input.value = uploadedType;
-<!--            uploadedForm.appendChild(input);-->
-<!--            uploadedForm.submit();-->
             let current = window.location.href;
             current = current + "/" + topicId + "/upload-file/"+uploadedType;
             uploadedForm.action = current;
             alert(current);
-<!--            window.location.href = current;-->
             uploadedForm.submit();
             alert("uploaded");
         }
@@ -686,12 +730,21 @@
               alert(current);
                window.location.href = current;
        }
-
-
-  </script>
-    <!-- Upload File Modal-->
-    <!-- End Upload File modal -->
-    <!-- End Modal -->
+       function editFileForm(event, id){
+            event.preventDefault();
+          let editForm = document.getElementById('edit-upload-file-form');
+          let current = window.location.href;
+           current = current + "/edit-file/"+ id;
+           editForm.action = current;
+           alert(current);
+            editForm.submit();
+            alert("uploaded");
+       }
+       function selectType() {
+          let selectType = document.getElementById("file-type-input");
+          chooseUploadType(selectType.value);
+       }
+    </script>
   </div>
 
   </body>

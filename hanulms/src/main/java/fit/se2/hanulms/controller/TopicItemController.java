@@ -69,7 +69,9 @@ public class TopicItemController {
                                 StandardCopyOption.REPLACE_EXISTING);
                     }
                 } catch (Exception e) {
-                    System.out.println("Exception: " + e.getMessage());
+                    String errors = e.getMessage();
+                    System.out.println("Errors :"+ errors);
+                    return "redirect:/myCourses/course-details/"+ code+"?error="+ errors;
                 }
                 file.setFileLink(storageFileName);
             }
@@ -112,7 +114,9 @@ public class TopicItemController {
                                 StandardCopyOption.REPLACE_EXISTING);
                     }
                 } catch (Exception e) {
-                    System.out.println("Exception: " + e.getMessage());
+                    String errors = e.getMessage();
+                    System.out.println("Errors :"+ errors);
+                    return "redirect:/myCourses/course-details/"+ code+"?error="+ errors;
                 }
                assignment.setAttachment(storageFileName);
             }
@@ -131,13 +135,84 @@ public class TopicItemController {
     @GetMapping(value="/{code}/delete-assignment/{id}")
     public String deleteAssignment (@PathVariable(value="code") String code,  @PathVariable(value = "id") Long assId) {
         System.out.println("Delete");
+        Assignment assignment = assignmentRepository.getReferenceById(assId);
+        String attachment = assignment.getAttachment();
+        try {
+            String uploadDir = "src/main/resources/static/images/"+attachment;
+            Path uploadPath = Paths.get(uploadDir);
+
+            if (Files.exists(uploadPath)) {
+                Files.delete(uploadPath);
+            }
+        } catch (Exception e) {
+            String errors = e.getMessage();
+            System.out.println("Errors :"+ errors);
+            return "redirect:/myCourses/course-details/"+ code+"?error="+ errors;
+        }
         assignmentRepository.deleteById(assId);
         return "redirect:/myCourses/course-details/"+ code;
     }
     @GetMapping(value="/{code}/delete-file/{id}")
     public String deleteFile (@PathVariable(value="code") String code,  @PathVariable(value = "id") Long fileId) {
         System.out.println("Delete");
+        File file = fileRepository.getReferenceById(fileId);
+        String attachment = file.getFileLink();
+        try {
+            String uploadDir = "src/main/resources/static/images/"+attachment;
+            Path uploadPath = Paths.get(uploadDir);
+
+            if (Files.exists(uploadPath)) {
+                Files.delete(uploadPath);
+            }
+        } catch (Exception e) {
+            String errors = e.getMessage();
+            System.out.println("Errors :"+ errors);
+            return "redirect:/myCourses/course-details/"+ code+"?error="+ errors;
+        }
         fileRepository.deleteById(fileId);
         return "redirect:/myCourses/course-details/"+ code;
+    }
+
+    @PostMapping(value="/{code}/edit-file/{id}")
+    public String editFile (@PathVariable(value="code") String code,@PathVariable(value = "id") Long fileId,@Valid FileDTO fileDTO, BindingResult result) {
+
+        if (result.hasErrors()) {
+            System.out.println(result.getAllErrors());
+            String errors = "Bad editing a file";
+            System.out.println("Errors :" + errors);
+            return "redirect:/myCourses/course-details/" + code + "?error=" + errors;
+        } else {
+            File file = fileRepository.getReferenceById(fileId);
+            MultipartFile attachment = fileDTO.getFileData();
+            if (!attachment.isEmpty()) {
+                System.out.println("Not null");
+                Date createdAt = new Date();
+                String storageFileName = createdAt.getTime() + "_" + attachment.getOriginalFilename();
+
+                try {
+                    String uploadDir = "src/main/resources/static/images/";
+                    Path uploadPath = Paths.get(uploadDir);
+
+                    if (!Files.exists(uploadPath)) {
+                        Files.createDirectories(uploadPath);
+                    }
+                    try (InputStream inputStream = attachment.getInputStream()) {
+                        Files.copy(inputStream, Paths.get(uploadDir + storageFileName),
+                                StandardCopyOption.REPLACE_EXISTING);
+                    }
+                } catch (Exception e) {
+                    String errors = e.getMessage();
+                    System.out.println("Errors :"+ errors);
+                    return "redirect:/myCourses/course-details/"+ code+"?error="+ errors;
+                }
+                file.setFileLink(storageFileName);
+            }
+
+            file.setType(fileDTO.getType());
+
+            file.setFileName(fileDTO.getFileTitle());
+            fileRepository.save(file);
+            return "redirect:/myCourses/course-details/" + code;
+        }
     }
 }
