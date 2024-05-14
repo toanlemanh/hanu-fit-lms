@@ -1,0 +1,175 @@
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="_layout">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Submit Assignment</title>
+    <link rel="stylesheet" th:href="@{/css/bootstrap/bootstrap.min.css}">
+    <link rel="stylesheet" th:href="@{/css/shared.css}">
+    <link rel="stylesheet" th:href="@{/css/submit-assignment.css}">
+    <script th:src="@{/js/jquery/jquery-3.7.0.js}"></script>
+    <script th:src="@{/js/bootstrap/bootstrap.js}"></script>
+
+</head>
+<body>
+<div id="body-container" layout:fragment="content" style="background-color: white;">
+    <!-- Main -->
+    <main id="main" class="container p-5 my-5 border">
+        <div id="assignment-overview">
+            <!-- breadcrumb -->
+            <nav aria-label="Breadcrumb">
+                <ol class="breadcrumb ml-n2 transparent-breadcrumb">
+                    <li class="breadcrumb-item">
+                        <a class="text-dark" href="/">Home</a>
+                    </li>
+                    <li class="breadcrumb-item">
+                        <a class="text-dark" href="/myCourses">My Courses</a>
+                    </li>
+                    <li class="breadcrumb-item">
+                        <a class="text-dark" href="#">61FIT3SE2</a>
+                    </li>
+                    <li class="breadcrumb-item active">
+                        <a class="text-dark" href="/submit-assignment" aria-current="page">Assignment</a>
+                    </li>
+                </ol>
+            </nav>
+
+            <h1 id="course-title">61FIT3SE2 - Software Engineering 2 <span id="assignment-title" class="ml-5">Tutorial Hello World</span></h1>
+            <p id="lecturer-name" style="color: var(--primary800); margin-bottom: 32px;"><span>Đặng Đình Quân</span></p>
+
+            <div id="deadline-detail" class="breadcrumb">
+                <p>Opened: Wednesday, 27 March 2024, 12:00 AM <br>Due: Friday, 5 April 2024, 12:00 AM</p>
+            </div>
+        </div>
+
+        <div id="main-content">
+            <div id="description">
+                <h3>Description</h3>
+                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Lorem lorem aliquam sed lacinia quis. Nibh dictumst vulputate odio
+                    pellentesque sit quis ac, sit ipsum. Sit rhoncus velit in sed massa arcu sit eu. Vitae et vitae eget lorem non dui. Sollicitudin ut
+                    mi adipiscing duis.
+                    Convallis in semper laoreet nibh leo. Vivamus malesuada ipsum pulvinar non rutrum risus dui, risus. Purus massa velit iaculis tincidunt
+                    tortor, risus, scelerisque risus. In at lorem pellentesque orci aenean dictum dignissim in. Aenean pulvinar diam interdum ullamcorper.
+                    Vel urna, tortor, massa metus purus metus. Maecenas mollis in velit auctor cursus scelerisque eget. Nibh faucibus purus elementum ultrices
+                    elementum, urna.</p>
+                <div class="ml-5">
+                    <div id="instruction-file"><a class="font-weight-bold" href="">SE2 - Random Forest.docx</a></div>
+                    <!-- Button trigger modal -->
+                    <button class="button mt-2 font-weight-bold"
+                            id="add-submission-btn"
+                            style="
+                                       font-family: 'Times New Roman', Times, serif;"
+                            data-toggle="modal"
+                            data-target="#upload-file-modal">Add Subsmission
+                    </button>
+
+                    <!-- Modal -->
+                    <div class="modal fade" id="upload-file-modal" tabindex="-1" role="dialog" aria-labelledby="upload-file-title" aria-hidden="true">
+                        <div class="modal-dialog modal-dialog-centered" role="document">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title" id="upload-file-title">Upload File</h5>
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
+                                    </button>
+                                </div>
+                                <div class="modal-body">
+                                    <form action="">
+                                        <label for="title" class="font-weight-bold text-secondary">Title:</label><br>
+                                        <input class="form-control" type="text" id="title" name="title" placeholder="Enter your file title here...">
+                                        <div class="container mt-3 py-5" id="drop-area">
+                                            <input type="file" id="fileElem" onchange="handleFiles(this.files)">
+                                        </div>
+                                    </form>
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-light font-weight-bold text-secondary" data-dismiss="modal">Cancel</button>
+                                    <button type="button"
+                                            class="button font-weight-bold"
+                                            style="color: white;
+                                                    font-family: 'Times New Roman', Times, serif;">Submit
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div id="report">
+                <h3>Submission Report</h3>
+                <table class="table table-striped">
+                    <thead>
+                    </thead>
+                    <tbody>
+                    <tr>
+                        <th scope="row">Submission Status</th>
+                        <td>Not been submitted yet</td>
+                    </tr>
+                    <tr>
+                        <th scope="row">Dealine Status</th>
+                        <td>6 days left</td>
+                    </tr>
+                    <tr>
+                        <th scope="row">Last Modified</th>
+                        <td>None</td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+    </main>
+    
+    <script th:inline="javascript">
+        //
+        let dropArea = document.getElementById('drop-area');
+
+        ['dragenter', 'dragover'].forEach(eventName => {
+        dropArea.addEventListener(eventName, highlight, false)
+        })
+
+        ;['dragleave', 'drop'].forEach(eventName => {
+        dropArea.addEventListener(eventName, unhighlight, false)
+        })
+
+        function highlight(e) {
+        dropArea.classList.add('highlight')
+        }
+
+        function unhighlight(e) {
+        dropArea.classList.remove('highlight')
+        }
+
+        //
+        dropArea.addEventListener('drop', handleDrop, false)
+
+        function handleDrop(e) {
+        let dt = e.dataTransfer
+        let files = dt.files
+
+        handleFiles(files)
+        }
+
+        //
+        function handleFiles(files) {
+            ([...files]).forEach(uploadFile)
+        }
+
+        //
+        function uploadFile(file) {
+            let url = 'YOUR URL HERE'
+            let formData = new FormData()
+
+            formData.append('file', file)
+
+            fetch(url, {
+                method: 'POST',
+                body: formData
+            })
+            .then(() => { /* Done. Inform the user */ })
+            .catch(() => { /* Error. Inform the user */ })
+        }
+    </script>
+    </div>
+</body>
+</html>
