@@ -3,6 +3,7 @@ package fit.se2.hanulms.model;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToOne;
 
 import java.util.Date;
 
@@ -13,8 +14,11 @@ public class Submission {
     private boolean submissionStatus;
     private boolean deadlineStatus;
     private Date lastModifiedDate;
-    @ManyToOne
+    private String attachment;
+    @OneToOne
     private Assignment assignment;
+    @ManyToOne
+    private Student student;
 
     public Long getId() {
         return id;
@@ -54,5 +58,21 @@ public class Submission {
 
     public void setAssignment(Assignment assignment) {
         this.assignment = assignment;
+    }
+
+    public String getAttachment() {
+        return attachment;
+    }
+
+    public void setAttachment(String attachment) {
+        this.attachment = attachment;
+    }
+
+    public Student getStudent() {
+        return student;
+    }
+
+    public void setStudent(Student student) {
+        this.student = student;
     }
 }
