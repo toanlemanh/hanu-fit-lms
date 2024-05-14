@@ -15,7 +15,7 @@ Checkpoint 2:
 EDIT COURSE (chuyên để edit 1 course đã có trong hệ thống), COURSE DETAIL (đã enrol), NAVBAR cho tất cả page, SEARCH RESULT
 - Toản: COURSE DETAILS
 - Ly: ASSIGNMENT SUBMISSION
-- Hiền: LOG IN, MY COURSES (for student), COURSE OVERVIEW (chưa enrol)
+- Hiền: LOG IN, COURSE OVERVIEW (chưa enrol)
 - Phương: PROFILE (for S and L), HOME PAGE
 - Sỹ: ACCOUNT MANAGEMENT (dùng để create edit delete các account), FACULTY ANNOUNCEMENTS (k phải HOME PAGE)
 
