@@ -19,9 +19,7 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
   </head>
   <script>
-        let current = window.location.href;
-        let errorPathIndex = current.indexOf("?error");
-        current = current.substring(0, errorPathIndex);
+
   </script>
   <body>
 
@@ -537,8 +535,13 @@
         document.addEventListener("DOMContentLoaded", (event) => {
             let error = /*[[${error}]]*/ "default";
             console.log(error);
-            if (error !== "default" && error)
+            if (error !== "default" && error){
                window.alert(error);
+                  let current = window.location.href;
+                  let errorPathIndex = current.indexOf("?error");
+                  current = current.substring(0, errorPathIndex);
+                  window.location.href = current;
+               }
         })
 
         function uploadForm (event) {
