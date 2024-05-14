@@ -9,9 +9,4 @@ function toggleItems () {
   //  ul.classList.toggle("hidden");
 }
 
-function chooseUploadType(type){
-      //alert(type);
-      // create a icon element and appendChild in the placeholder
-
-}
  
