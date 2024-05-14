@@ -2,6 +2,8 @@ package fit.se2.hanulms.model;
 
 import jakarta.persistence.*;
 
+import java.sql.Date;
+
 @Entity
 public class Assignment {
 
@@ -14,6 +16,16 @@ public class Assignment {
     private String assDescription;
 
     private String attachment;
+
+    private Date deadline;
+
+    public Date getDeadline() {
+        return deadline;
+    }
+
+    public void setDeadline(Date deadline) {
+        this.deadline = deadline;
+    }
 
     @ManyToOne
     private Topic topic;

@@ -1,9 +1,6 @@
 package fit.se2.hanulms.controller;
 
-import fit.se2.hanulms.Repository.AnnouncementRepository;
-import fit.se2.hanulms.Repository.CourseRepository;
-import fit.se2.hanulms.Repository.FileRepository;
-import fit.se2.hanulms.Repository.TopicRepository;
+import fit.se2.hanulms.Repository.*;
 import fit.se2.hanulms.model.*;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -33,19 +30,26 @@ public class TopicController {
    @Autowired
     AnnouncementRepository announcementRepository;
 
+    @Autowired
+    AssignmentRepository assignmentRepository;
+
    @Autowired
     FileRepository fileRepository;
 
     @RequestMapping(value = "/myCourses/course-details/{code}")
     public String getCourseDetailById (@PathVariable (value="code") String code, @RequestParam(value="error", required = false, defaultValue = "default") String error, Model model){
         Course course = courseRepository.findById(code).get();
+        List<File> files = fileRepository.findAll();
+        List<Assignment> assignments = assignmentRepository.findAll();
         List<Announcement> announcements = course.getAnnouncements();
         List<Topic> topics = course.getTopics();
         Topic topic = new Topic();
         FileDTO fileDTO = new FileDTO();
-        List<File> files = fileRepository.findAll();
+        AssignmentDTO assignmentDTO = new AssignmentDTO();
         AnnouncementDTO announcementDTO = new AnnouncementDTO();
-        model.addAttribute("files", files);
+        model.addAttribute("assignmentDTO", assignmentDTO);
+//        model.addAttribute("assignments", assignments);
+//        model.addAttribute("files", files);
         model.addAttribute("fileDTO", fileDTO);
         model.addAttribute("announcements", announcements);
         model.addAttribute("announcementDTO", announcementDTO);
@@ -70,6 +74,7 @@ public class TopicController {
            return "redirect:/myCourses/course-details/"+ code;
        }
    }
+
 
     @PostMapping(value="/myCourses/course-details/{code}/create-announcement")
     public String insertAnnouncement(@PathVariable(value="code") String code, @Valid AnnouncementDTO announcementDTO, BindingResult result  , Model model){
