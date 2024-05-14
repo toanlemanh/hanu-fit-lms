@@ -1,11 +1,7 @@
 package fit.se2.hanulms.controller;
 
-import fit.se2.hanulms.Repository.CourseRepository;
-import fit.se2.hanulms.Repository.FacultyRepository;
-import fit.se2.hanulms.Repository.LecturerRepository;
-import fit.se2.hanulms.model.Course;
-import fit.se2.hanulms.model.Faculty;
-import fit.se2.hanulms.model.Lecturer;
+import fit.se2.hanulms.Repository.*;
+import fit.se2.hanulms.model.*;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -20,6 +16,7 @@ import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Controller
@@ -31,10 +28,30 @@ public class LecturerController {
     @Autowired
     LecturerRepository lecturerRepository;
 
+    @Autowired
+    TopicRepository topicRepository;
+
+    @Autowired
+    AnnouncementRepository announcementRepository;
+
     @GetMapping(value = "/myCourses")
     public String myCourses(Model model) {
         List<Course> courses = courseRepository.findAll();
         model.addAttribute("courses", courses);
+        model.addAttribute("message", "");
+        return "/lecturer/course/myCourses";
+    }
+    @GetMapping(value = "/myCourses/{messageType}/{courseCode}")
+    public String myCoursesSuccess(@PathVariable(value = "messageType") String messageType,
+                                   @PathVariable(value = "courseCode") String courseCode,
+                                   Model model) {
+        List<Course> courses = courseRepository.findAll();
+        model.addAttribute("courses", courses);
+        if (messageType.equals("success")) {
+            model.addAttribute("message", "The course \"" + courseCode + "\" has been created successfully!");
+        } else {
+            model.addAttribute("message", "");
+        }
         return "/lecturer/course/myCourses";
     }
     @GetMapping(value = "/searchResult")
@@ -57,10 +74,72 @@ public class LecturerController {
         model.addAttribute("lecturerIds", lecturerIds);
         List<Lecturer> allLecturers = lecturerRepository.findAll();
         model.addAttribute("allLecturers", allLecturers);
+        model.addAttribute("message", "");
         return "/lecturer/course/editCourse";
     }
+    @GetMapping(value = "/editCourse/{messageType}/{courseCode}")
+    public String editCourseSuccess(@PathVariable(value = "courseCode") String courseCode,
+                                    @PathVariable(value = "messageType") String messageType,
+                                    Model model) {
+        Course currentCourse = courseRepository.getReferenceById(courseCode);
+        model.addAttribute("course", currentCourse);
+        List<Faculty> faculties = facultyRepository.findAll();
+        model.addAttribute("faculties", faculties);
+        List<Lecturer> lecturers = currentCourse.getLecturers();
+        model.addAttribute("lecturers", lecturers);
+        List<Long> lecturerIds = lecturers.stream().map(Lecturer::getId).collect(Collectors.toList());
+        model.addAttribute("lecturerIds", lecturerIds);
+        List<Lecturer> allLecturers = lecturerRepository.findAll();
+        model.addAttribute("allLecturers", allLecturers);
+        if (messageType.equals("success")) {
+            model.addAttribute("message", "The course \"" + courseCode + "\" has been updated successfully!");
+        } else {
+            model.addAttribute("message", "");
+        }
+        return "/lecturer/course/editCourse";
+    }
+
+    /**
+     *  HELPER FUNCTION <p>
+     *  Check the existence of the entered courseCode in the database. Validate the length of the attributes.
+     */
+    private List<String> validateCourse(String courseCode, String courseName, String description, String enrolmentKey, String mode) {
+        List<Course> allCourses = courseRepository.findAll();
+        List<String> errorMessages = new ArrayList<>();
+        if (mode.equals("create")) {
+            for (Course course : allCourses) {
+                if (courseCode != null && courseCode.equals(course.getCode())) {
+                    errorMessages.add("The entered course code already exists!");
+                }
+            }
+        }
+//        if (mode.equals("edit")) {
+//            for (Course course : allCourses) {
+//                if (courseRepository.getReferenceById(courseCode).equals(course)) {
+//                    continue;
+//                }
+//                if (courseCode.equals(course.getCode())) {
+//                    errorMessages.add("The entered course code already exists!");
+//                }
+//            }
+//        }
+        if (courseCode != null && courseCode.length() > 10) {
+            errorMessages.add("The maximum length for course code is 10 characters!");
+        }
+        if (courseName != null && courseName.length() > 40) {
+            errorMessages.add("The maximum length for course name is 40 characters!");
+        }
+        if (description != null && description.length() > 254) {
+            errorMessages.add("The maximum length for course description is 254 characters!");
+        }
+        if (enrolmentKey != null && enrolmentKey.length() > 10) {
+            errorMessages.add("The maximum length for enrolment key is 10 characters!");
+        }
+
+        return errorMessages;
+    }
     @PostMapping(value = "/confirmEditCourse")
-    public ResponseEntity<String> confirmEditCourse(@RequestBody String requestBody) {
+    public ResponseEntity<List<String>> confirmEditCourse(@RequestBody String requestBody) {
         String[] keyValuePairs = requestBody.split("&");
         String courseCode = null;
         String courseName = null;
@@ -111,6 +190,12 @@ public class LecturerController {
         System.out.println("description: "+description);
         System.out.println("facultyCode: "+facultyCode);
         System.out.println("lecturerIds: "+Arrays.toString(lecturerIds));
+
+        List<String> errorMessages = validateCourse(courseCode, courseName, description, enrolmentKey, "edit");
+        if (errorMessages.size() > 0) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(errorMessages);
+        }
+
         if (lecturerIds != null && facultyCode != null && courseCode != null && lecturerIds.length > 0) {
             // Retrieve existing course entity or create a new one
             Course course = courseRepository.findById(courseCode).orElse(new Course());
@@ -135,7 +220,6 @@ public class LecturerController {
             // Retrieve lecturer entities by their IDs and update the course's lecturers
             List<Lecturer> selectedLecturers = lecturerRepository.findAllById(Arrays.asList(lecturerIds));
 
-
             // ADD A NEW COURSE WITH ATTRIBUTES FROM POST REQUEST
             // Set the course to each lecturer's list of associated courses
             for (Lecturer lecturer : selectedLecturers) {
@@ -144,8 +228,10 @@ public class LecturerController {
             course.setLecturers(selectedLecturers);
             courseRepository.save(course);
         }
-//        return "redirect:/searchResult";
-        return ResponseEntity.ok("Course information updated successfully.");
+        List<String> successMessage = new ArrayList<>();
+        successMessage.add("success");
+        successMessage.add(courseCode);
+        return ResponseEntity.ok(successMessage);
     }
 
     @GetMapping(value = "/createCourse")
@@ -160,7 +246,7 @@ public class LecturerController {
     }
 
     @PostMapping(value = "/createCourse")
-    public ResponseEntity<String> createCourse(@RequestBody String requestBody) {
+    public ResponseEntity<List<String>> createCourse(@RequestBody String requestBody) {
         System.out.println(requestBody);
         String[] keyValuePairs = requestBody.split("&");
         String courseCode = null;
@@ -180,7 +266,6 @@ public class LecturerController {
                 // Decode URL-encoded value
                 value = URLDecoder.decode(keyValue[1], StandardCharsets.UTF_8);
                 if (!key.equals("_csrf") && !key.equals("lecturers")) {
-                    System.out.println(key);
                     switch (key) {
                         case "code":
                             courseCode = value;
@@ -212,6 +297,12 @@ public class LecturerController {
         System.out.println("description: "+description);
         System.out.println("facultyCode: "+facultyCode);
         System.out.println("lecturerIds: "+Arrays.toString(lecturerIds));
+
+        List<String> errorMessages = validateCourse(courseCode, courseName, description, enrolmentKey, "create");
+        if (errorMessages.size() > 0) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(errorMessages);
+        }
+
         if (lecturerIds != null && facultyCode != null && courseCode != null && lecturerIds.length > 0) {
             // Retrieve existing course entity or create a new one
             Course course = courseRepository.findById(courseCode).orElse(new Course());
@@ -224,7 +315,6 @@ public class LecturerController {
             // Retrieve lecturer entities by their IDs
             List<Lecturer> selectedLecturers = lecturerRepository.findAllById(Arrays.asList(lecturerIds));
 
-
             // ADD A NEW COURSE WITH ATTRIBUTES FROM POST REQUEST
             // Set the course to each lecturer's list of associated courses
             for (Lecturer lecturer : selectedLecturers) {
@@ -233,8 +323,10 @@ public class LecturerController {
             course.setLecturers(selectedLecturers);
             courseRepository.save(course);
         }
-//        return "redirect:/searchResult";
-        return ResponseEntity.ok("Course information updated successfully.");
+        List<String> successMessage = new ArrayList<>();
+        successMessage.add("success");
+        successMessage.add(courseCode);
+        return ResponseEntity.ok(successMessage);
     }
 
     @GetMapping(value = "/deleteCourse/{code}")
@@ -247,8 +339,22 @@ public class LecturerController {
             System.out.println("Courses: " + lecturer.getCourses());
             lecturerRepository.save(lecturer); // Save to ensure changes are persisted
         }
+        List<Topic> allTopics = topicRepository.findAll();
+        for (Topic topic : allTopics) {
+            if (topic.getCourse().equals(course)) {
+                topicRepository.delete(topic);
+            }
+        }
+        List<Announcement> allAnnouncements = announcementRepository.findAll();
+        for (Announcement announcement : allAnnouncements) {
+            if (announcement.getCourse().equals(course)) {
+                announcementRepository.delete(announcement);
+            }
+        }
         // Clear existing associations for current course
         course.getLecturers().clear();
+        course.getTopics().clear();
+        course.getAnnouncements().clear();
         System.out.println("Lecturers: " + course.getLecturers());
         courseRepository.save(course);
 

@@ -49,7 +49,6 @@
         });
 
         customSelect.querySelector(".tags_input").value = selectedValues.join(", ");
-        console.log("Selected Values:", selectedValues);
 
         let tagsHTML = "";
 
@@ -206,6 +205,7 @@
       });
 
       const formEl = document.querySelector('#edit-course-form')
+      const errorMessages = document.getElementById('error-messages');
       formEl.addEventListener('submit', event => {
         event.preventDefault()
 
@@ -216,12 +216,19 @@
             method: 'POST',
             body: data,
           }).then(response => {
-            if (response.ok) {
-              // If the response is successful, redirect to '/myCourses'
-              window.location.href = '/myCourses';
+            return response.json();
+          }).then(data => {
+            if (data[0] === "success") {
+              window.location.href = '/editCourse/' + data[0] + '/' + data[1];
             } else {
-              // If there are errors, refresh the page
-              location.reload();
+              // Clear existing error messages
+              errorMessages.innerHTML = '';
+
+              data.forEach(errorMessage => {
+                const div = document.createElement('div');
+                div.textContent = errorMessage.trim();
+                errorMessages.appendChild(div);
+              });
             }
           })
           .catch(error => {
@@ -241,6 +248,9 @@
     <div id="title-container">
       <h1 id="title">Edit Course</h1>
     </div>
+
+    <div class="text-success" id="messages" th:text="${message}"></div>
+
     <section>
       <form method="post" class="row my-4" id="edit-course-form" th:action="'/confirmEditCourse'">
         <div class="col-7">
@@ -249,7 +259,7 @@
             <span class="input-group-text">
               <i class="bi bi-hash text-secondary"></i>
             </span>
-            <input required type="text" id="course-code" class="form-control" placeholder="e.g. 61FIT3SE2" th:field="${course.code}" />
+            <input readonly required type="text" id="course-code" class="form-control" placeholder="e.g. 61FIT3SE2" th:field="${course.code}" />
           </div>
           <label for="course-name" class="form-label">Course Name</label>
           <div class="mb-3 input-group">
@@ -306,8 +316,9 @@
             </span>
             <input type="file" class="form-control" id="course-image-input" accept="image/*">
           </div>
+          <div class="mb-4 text-danger" id="error-messages"></div>
           <div class="mb-3">
-            <button class="cancel-button">Cancel</button>
+            <button class="cancel-button" th:attr="onclick=|window.location.href = '/myCourses'|">Cancel</button>
             <button type="submit" class="base-button">Save</button>
           </div>
         </div>
