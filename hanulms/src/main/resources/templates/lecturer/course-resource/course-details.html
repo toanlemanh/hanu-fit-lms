@@ -10,16 +10,21 @@
             rel="stylesheet"
     />
 <!--    <link rel="stylesheet" th:href="@{/css/bootstrap/bootstrap.min.css}" />-->
-    <link rel="stylesheet" th:href="@{/svgs/bootstrap-icons-1.11.3/font/bootstrap-icons.css}" />
 <!--    <link th:ref="@{/css/bootstrap/bootstrap.css}" />-->
     <link rel="stylesheet" th:href="@{/css/course-detail.css}">
     <script th:src="@{/js/course-detail.js}"></script>
-    <script th:src="@{/js/jquery/jquery-3-7.0.js}"></script>
-    <script th:src="@{/js/bootstrap/bootstrap.min.js}"></script>
-<!--    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/js/bootstrap.bundle.min.js"></script>-->
-
+<!--    <script th:src="@{/js/jquery/jquery-3-7.0.js}"></script>-->
+<!--    <script th:src="@{/js/bootstrap/bootstrap.min.js}"></script>-->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/js/bootstrap.bundle.min.js"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
   </head>
+  <script>
+        let current = window.location.href;
+        let errorPathIndex = current.indexOf("?error");
+        current = current.substring(0, errorPathIndex);
+  </script>
   <body>
+
 
   <div layout:fragment="content" class="container mt-4">
 
@@ -72,22 +77,20 @@
           <div class="carousel-inner">
             <div class="carousel-item active">
               <img
-                src="../../static/images/download.jpg"
-                class="d-block w-100"
+                th:src="@{/images/slider-1.jpg}"
+                class="d-block w-100 rounded object-fit-cover"
                 alt="..."
               />
             </div>
             <div class="carousel-item">
-              <img
-                src="../../static/images/HANU.png"
-                class="d-block w-100"
+              <img th:src="@{/images/slider-2.jpg}"
+                class="d-block w-100 rounded object-fit-cover"
                 alt="..."
               />
             </div>
             <div class="carousel-item">
-              <img
-                src="../../static/images/HANU.png"
-                class="d-block w-100"
+              <img th:src="@{/images/slider-3.jpg}"
+                class="d-block w-100 rounded object-fit-cover"
                 alt="..."
               />
             </div>
@@ -139,13 +142,13 @@
         <div class="mb-3 fs-6 text-truncate">
           <!-- Announcements and course content goes here -->
           <h3>Course Announcements</h3>
-<!--          <p th:text="${announcement.announcementTitle}"/>-->
+
             <div class="mb-3 fs-6 py-3">
 
               <ul  th:each="anAnnouncement : ${announcements}">
                   <li class="fs-3 fw-semi-bold" th:text="${anAnnouncement.announcementTitle}"/>
                   <p th:text="${anAnnouncement.announcementDescription}"/>
-                <a class="d-block" th:if="${anAnnouncement.attachment.length() != 0}" th:href="@{'/images/'+${anAnnouncement.attachment}}">More details</a>
+                <a class="d-block" th:if="${anAnnouncement.attachment != null }" th:href="@{'/images/'+${anAnnouncement.attachment}}">More details</a>
               </ul>
                 <p />
             </div>
@@ -228,12 +231,19 @@
                       class="list-unstyled d-flex justify-content-between align-items-center"
               />
               <div class="">
-                <i class="bi bi-file-earmark-check-fill mx-3 fs-1 text-primary"></i>
+                <i th:if="${aFile.type == 'Video'}" class="mx-3 fs-1 text-primary bi bi-file-play" ></i>
+                <i th:if="${aFile.type == 'Image'}" class="mx-3 fs-1 text-primary bi bi-image" ></i>
+                <i th:if="${aFile.type == 'Document'}" class="mx-3 fs-1 text-primary bi bi-file-earmark-check-fill" ></i>
+                <i th:if="${aFile.type == 'File'}" class="mx-3 fs-1 text-primary bi bi-file-zip-fill" ></i>
+                <i th:if="${aFile.type == 'Slides'}" class="mx-3 fs-1 text-primary bi bi-file-earmark-ppt-fill" ></i>
+
+
                 <div class="d-inline-block">
 <!--      LINK            -->
 <!--                  <a href="#" class="fw-bold"  />-->
                   <!-- title -->
-                  <p class="d-block fw-bold hanu-color" th:text="${aFile.fileName}"/>
+                  <p class="d-block fw-bold hanu-color mb-0" th:text="${aFile.type}" />
+                  <a class="d-block fw-bold hanu-color" th:text="${aFile.fileName}" th:href="@{'/images/' + ${aFile.fileLink}}"/>
                 </div>
               </div>
 
@@ -421,7 +431,7 @@
                   data-bs-toggle="modal"
                   data-bs-target="#createUploadModal"
                   data-bs-whatever="@mdo"
-              onclick="chooseUploadType('image')" class="btn btn-primary rounded-circle">
+              onclick="chooseUploadType('Image')" class="btn btn-primary rounded-circle">
                 <i class="bi bi-image"></i>
               </button>
               <span class="d-block text-center">Image</span>
@@ -431,7 +441,7 @@
                       data-bs-toggle="modal"
                       data-bs-target="#createUploadModal"
                       data-bs-whatever="@mdo"
-                      onclick="chooseUploadType('earmark-check-fill')"
+                      onclick="chooseUploadType('Document')"
                       class="btn btn-danger rounded-circle">
                 <i class="bi bi-file-earmark-check-fill"></i>
               </button>
@@ -442,7 +452,7 @@
                       data-bs-toggle="modal"
                       data-bs-target="#createUploadModal"
                       data-bs-whatever="@mdo"
-                      onclick="chooseUploadType('play')"
+                      onclick="chooseUploadType('Video')"
                       class="btn btn-secondary rounded-circle">
                 <i class="bi bi-file-play"></i>
               </button>
@@ -453,7 +463,7 @@
                       data-bs-toggle="modal"
                       data-bs-target="#createUploadModal"
                       data-bs-whatever="@mdo"
-                      onclick="chooseUploadType('zip-fill')"
+                      onclick="chooseUploadType('File')"
                       class="btn btn-success rounded-circle">
                 <i class="bi bi-file-zip-fill"></i>
               </button>
@@ -464,7 +474,7 @@
                       data-bs-toggle="modal"
                       data-bs-target="#createUploadModal"
                       data-bs-whatever="@mdo"
-                      onclick="chooseUploadType('earmark-ppt-fill')"
+                      onclick="chooseUploadType('Slides')"
                       class="btn btn-warning rounded-circle">
                 <i class="bi bi-file-earmark-ppt-fill"></i>
               </button>
@@ -541,7 +551,7 @@
 <!--            uploadedForm.appendChild(input);-->
 <!--            uploadedForm.submit();-->
             let current = window.location.href;
-            current = current + "/" + topicId + "/upload-file";
+            current = current + "/" + topicId + "/upload-file/"+uploadedType;
             uploadedForm.action = current;
             alert(current);
 <!--            window.location.href = current;-->

@@ -34,10 +34,12 @@ public class TopicItemController {
     @Autowired
     TopicRepository topicRepository;
 
-    @PostMapping (value="/{code}/{topicId}/upload-file")
-    public String uploadFile (@PathVariable(value="code") String code, @PathVariable(value = "topicId") Long topicId, @Valid FileDTO fileDTO, BindingResult result) {
+    @PostMapping (value="/{code}/{topicId}/upload-file/{type}")
+    public String uploadFile (@PathVariable(value="code") String code, @PathVariable(value="type") String type, @PathVariable(value = "topicId") Long topicId, @Valid FileDTO fileDTO, BindingResult result) {
 //        Course course = courseRepository.getReferenceById(code);
         Topic topic = topicRepository.getReferenceById(topicId);
+        System.out.println(fileDTO.getFileTitle());
+        File file = new File();
         if (result.hasErrors()){
             System.out.println(result.getAllErrors());
             String errors = "Bad uploading a file";
@@ -47,27 +49,29 @@ public class TopicItemController {
         else {
             // save image file
             MultipartFile attachment = fileDTO.getFileData();
-            Date createdAt = new Date();
-            String storageFileName = createdAt.getTime()+"_"+ attachment.getOriginalFilename();
+            if (!attachment.isEmpty()) {
+                System.out.println("Not null");
+                Date createdAt = new Date();
+                String storageFileName = createdAt.getTime() + "_" + attachment.getOriginalFilename();
 
-            try {
-                String uploadDir = "src/main/resources/static/images/";
-                Path uploadPath = Paths.get(uploadDir);
+                try {
+                    String uploadDir = "src/main/resources/static/images/";
+                    Path uploadPath = Paths.get(uploadDir);
 
-                if (!Files.exists(uploadPath)){
-                    Files.createDirectories(uploadPath);
+                    if (!Files.exists(uploadPath)) {
+                        Files.createDirectories(uploadPath);
+                    }
+                    try (InputStream inputStream = attachment.getInputStream()) {
+                        Files.copy(inputStream, Paths.get(uploadDir + storageFileName),
+                                StandardCopyOption.REPLACE_EXISTING);
+                    }
+                } catch (Exception e) {
+                    System.out.println("Exception: " + e.getMessage());
                 }
-                try (InputStream inputStream = attachment.getInputStream()){
-                    Files.copy(inputStream, Paths.get(uploadDir+storageFileName),
-                            StandardCopyOption.REPLACE_EXISTING);
-                }
+                file.setFileLink(storageFileName);
             }
-            catch (Exception e){
-                System.out.println("Exception: "+ e.getMessage());
-            }
-            File file = new File();
+            file.setType(type);
             file.setFileName(fileDTO.getFileTitle());
-            file.setFileLink(storageFileName);
             file.setType(fileDTO.getType());
             file.setTopic(topic);
             fileRepository.save(file);

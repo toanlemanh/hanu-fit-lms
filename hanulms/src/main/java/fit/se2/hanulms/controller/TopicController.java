@@ -74,6 +74,7 @@ public class TopicController {
     @PostMapping(value="/myCourses/course-details/{code}/create-announcement")
     public String insertAnnouncement(@PathVariable(value="code") String code, @Valid AnnouncementDTO announcementDTO, BindingResult result  , Model model){
         Course course = courseRepository.getReferenceById(code);
+        Announcement announcement = new Announcement();
         if (result.hasErrors()){
             System.out.println(result.getAllErrors());
             String errors = "Bad creating an announcement";
@@ -83,29 +84,29 @@ public class TopicController {
         else {
             // save image file
             MultipartFile attachment = announcementDTO.getAttachment();
-            Date createdAt = new Date();
-            String storageFileName = createdAt.getTime()+"_"+ attachment.getOriginalFilename();
+            if (!attachment.isEmpty()) {
+                System.out.println("Not null");
+                Date createdAt = new Date();
+                String storageFileName = createdAt.getTime() + "_" + attachment.getOriginalFilename();
 
-            try {
-                String uploadDir = "src/main/resources/static/images/";
-                Path uploadPath = Paths.get(uploadDir);
+                try {
+                    String uploadDir = "src/main/resources/static/images/";
+                    Path uploadPath = Paths.get(uploadDir);
 
-                if (!Files.exists(uploadPath)){
-                    Files.createDirectories(uploadPath);
+                    if (!Files.exists(uploadPath)) {
+                        Files.createDirectories(uploadPath);
+                    }
+                    try (InputStream inputStream = attachment.getInputStream()) {
+                        Files.copy(inputStream, Paths.get(uploadDir + storageFileName),
+                                StandardCopyOption.REPLACE_EXISTING);
+                    }
+                } catch (Exception e) {
+                    System.out.println("Exception: " + e.getMessage());
                 }
-                try (InputStream inputStream = attachment.getInputStream()){
-                    Files.copy(inputStream, Paths.get(uploadDir+storageFileName),
-                            StandardCopyOption.REPLACE_EXISTING);
-                }
+                announcement.setAttachment(storageFileName);
             }
-            catch (Exception e){
-                System.out.println("Exception: "+ e.getMessage());
-            }
-
-            Announcement announcement = new Announcement();
             announcement.setAnnouncementTitle(announcementDTO.getAnnouncementTitle());
             announcement.setAnnouncementDescription(announcementDTO.getAnnouncementDescription());
-            announcement.setAttachment(storageFileName);
             announcement.setCourse(course);
             announcementRepository.save(announcement);
             return "redirect:/myCourses/course-details/"+ code;

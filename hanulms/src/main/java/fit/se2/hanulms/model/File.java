@@ -2,6 +2,7 @@ package fit.se2.hanulms.model;
 
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotEmpty;
 
 @Entity
@@ -12,7 +13,6 @@ public class File {
 
     @NotEmpty(message = "You should type the file name")
     private String fileName;
-
 
     private String fileLink;
 
