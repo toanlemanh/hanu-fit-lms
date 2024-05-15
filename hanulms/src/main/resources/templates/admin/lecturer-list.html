@@ -76,11 +76,11 @@
               <td><a th:href="'/admin/editLecturer/' + ${lecturer.id}">UPDATE</a></td>
 
               <td>
-                <a href="#" data-toggle="modal" data-target="#deleteConfirmModal">DELETE</a>
+                <a href="#" data-toggle="modal" th:data-target="'#deleteConfirmModal-' + ${lecturer.id}">DELETE</a>
               </td>
 
 
-              <div class="modal fade" id="deleteConfirmModal" tabindex="-1" role="dialog" aria-labelledby="deleteConfirmModalLabel" aria-hidden="true">
+              <div class="modal fade" th:id="'deleteConfirmModal-' + ${lecturer.id}" tabindex="-1" role="dialog" aria-labelledby="deleteConfirmModalLabel" aria-hidden="true">
                 <div class="modal-dialog" role="document">
                   <div class="modal-content">
                     <div class="modal-header">

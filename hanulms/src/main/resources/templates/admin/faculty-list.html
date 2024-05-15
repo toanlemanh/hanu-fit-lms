@@ -36,7 +36,7 @@
             <input type="text" class="form-control" placeholder="Search...">
           </div>
           <div class="px-0 d-flex justify-content-center col-4 col-sm-4 col-md-4 col-lg-4 col-xl-4 col-xxl-4 ">
-            <button th:attr="onclick=|window.location.href = '/admin/createLecturer'|" class="btn create-btn" type="button" id="createAcc-btn">Create New Lecturer</button>
+            <button th:attr="onclick=|window.location.href = '/admin/createFaculty'|" class="btn create-btn" type="button" id="createAcc-btn">Create New Faculty</button>
           </div>
         </div>
         <div class="row">
@@ -69,11 +69,11 @@
               <td><a th:href="'/admin/editFaculty/' + ${faculty.code}">UPDATE</a></td>
 
               <td>
-                <a href="#" data-toggle="modal" data-target="#deleteConfirmModal">DELETE</a>
+                <a href="#" data-toggle="modal" th:data-target="'#deleteConfirmModal-' + ${faculty.code}">DELETE</a>
               </td>
 
 
-              <div class="modal fade" id="deleteConfirmModal" tabindex="-1" role="dialog" aria-labelledby="deleteConfirmModalLabel" aria-hidden="true">
+              <div class="modal fade" th:id="'deleteConfirmModal-' + ${faculty.code}" tabindex="-1" role="dialog" aria-labelledby="deleteConfirmModalLabel" aria-hidden="true">
                 <div class="modal-dialog" role="document">
                   <div class="modal-content">
                     <div class="modal-header">

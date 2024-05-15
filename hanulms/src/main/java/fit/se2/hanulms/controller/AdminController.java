@@ -33,6 +33,10 @@ public class AdminController {
     @Autowired
     AnnouncementRepository announcementRepository;
     @Autowired
+    FileRepository fileRepository;
+    @Autowired
+    AssignmentRepository assignmentRepository;
+    @Autowired
     PasswordEncoder p;
 
     @GetMapping("/listLecturer")
@@ -263,7 +267,22 @@ public class AdminController {
             }
             List<Topic> allTopics = topicRepository.findAll();
             for (Topic topic : allTopics) {
+                List<File> allFiles = fileRepository.findAll();
+                for (File f : allFiles) {
+                    if (f.getTopic().equals(topic)) {
+                        fileRepository.delete(f);
+                    }
+                }
+                List<Assignment> allAssignments = assignmentRepository.findAll();
+                for (Assignment a : allAssignments) {
+                    if (a.getTopic().equals(topic)) {
+                        assignmentRepository.delete(a);
+                    }
+                }
                 if (topic.getCourse().equals(course)) {
+                    topic.getFile().clear();
+                    topic.getAssignments().clear();
+                    topicRepository.save(topic);
                     topicRepository.delete(topic);
                 }
             }

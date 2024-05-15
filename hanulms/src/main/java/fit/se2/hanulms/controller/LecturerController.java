@@ -30,14 +30,16 @@ public class LecturerController {
     FacultyRepository facultyRepository;
     @Autowired
     LecturerRepository lecturerRepository;
-
     @Autowired
     TopicRepository topicRepository;
-
     @Autowired
     StudentRepository studentRepository;
     @Autowired
     AnnouncementRepository announcementRepository;
+    @Autowired
+    FileRepository fileRepository;
+    @Autowired
+    AssignmentRepository assignmentRepository;
 
     @GetMapping(value = "/myCourses")
     public String myCourses(Model model, @AuthenticationPrincipal UserDetails userDetails) {
@@ -349,12 +351,34 @@ public class LecturerController {
             System.out.println("Courses: " + lecturer.getCourses());
             lecturerRepository.save(lecturer); // Save to ensure changes are persisted
         }
+//        List<Topic> allTopics = topicRepository.findAll();
+//        for (Topic topic : allTopics) {
+//            if (topic.getCourse().equals(course)) {
+//                topicRepository.delete(topic);
+//            }
+//        }
         List<Topic> allTopics = topicRepository.findAll();
         for (Topic topic : allTopics) {
+            List<File> allFiles = fileRepository.findAll();
+            for (File f : allFiles) {
+                if (f.getTopic().equals(topic)) {
+                    fileRepository.delete(f);
+                }
+            }
+            List<Assignment> allAssignments = assignmentRepository.findAll();
+            for (Assignment a : allAssignments) {
+                if (a.getTopic().equals(topic)) {
+                    assignmentRepository.delete(a);
+                }
+            }
             if (topic.getCourse().equals(course)) {
+                topic.getFile().clear();
+                topic.getAssignments().clear();
+                topicRepository.save(topic);
                 topicRepository.delete(topic);
             }
         }
+
         List<Announcement> allAnnouncements = announcementRepository.findAll();
         for (Announcement announcement : allAnnouncements) {
             if (announcement.getCourse().equals(course)) {
