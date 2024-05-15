@@ -4,24 +4,8 @@
 	--primary500: #823838;
 }
 
-body {
-	margin: 0;
-}
-
-#body-container {
-	background-color: var(--primary500);
-	height: fit-content;
-	align-items: center;
-	justify-content: space-between;
-	display: flex;
-	padding-inline: 0.5vw;
-	padding-block: 0.5vw;
-	flex: 1;
-	flex-direction: row;
-}
-
 #logo {
-	width: clamp(30px, 2.5vw, 100%);
+	width: 50px;
 	margin-inline: 0.5vw;
 	margin-block: 0.4rem;
 }
@@ -53,7 +37,7 @@ body {
 	font-family: Georgia, "Times New Roman", Times, serif;
 	color: var(--accent-yellow);
 	margin-left: 0.5vw;
-	/* margin-right: 4vw; */
+	margin-right: 2vw;
 }
 
 .navbar-item {
@@ -125,7 +109,7 @@ body {
 #avatar-container {
 	/* background-color: #000000; */
 	border-radius: 50%;
-	width: clamp(20px, 1.5vw + 1px, 40px);
+	width: clamp(35px, 1.5vw + 1px, 40px);
 	aspect-ratio: 1;
 	overflow: hidden;
 	display: flex;
@@ -149,7 +133,7 @@ body {
 	min-width: 100px;
 	box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.2);
 	z-index: 1;
-	top: 9vh;
+	top: 13vh;
 	border-radius: 3px;
 	overflow: hidden;
 }
@@ -176,4 +160,31 @@ body {
 a {
 	font-family: "Times New Roman", Times, serif;
 	font-size: clamp(0.8rem, 1vw, 2rem);
+}
+
+body {
+	margin: 0;
+}
+
+#body-container {
+	background-color: var(--primary500);
+	height: fit-content;
+	align-items: center;
+	justify-content: space-between;
+	display: flex;
+	padding-inline: 0.5vw;
+	padding-block: 0.5vw;
+	flex: 1;
+	flex-direction: row;
+}
+
+#avatar {
+	width: 40px;
+	aspect-ratio: 1;
+}
+
+.lecturer-item {
+	display: flex;
+	flex-direction: row;
+	align-items: first baseline;
 }

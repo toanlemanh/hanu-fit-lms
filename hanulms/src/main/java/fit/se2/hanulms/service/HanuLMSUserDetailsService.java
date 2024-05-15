@@ -4,7 +4,6 @@ import fit.se2.hanulms.Repository.LecturerRepository;
 import fit.se2.hanulms.Repository.StudentRepository;
 import fit.se2.hanulms.model.*;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -23,13 +22,6 @@ public class HanuLMSUserDetailsService implements UserDetailsService {
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        // Hard-coded admin username and password
-//        if (username.equals("admin")) {
-//            return User.withUsername("admin")
-//                    .password("{noop}1") // Use "{noop}" to indicate plain text password
-//                    .roles("ADMIN")
-//                    .build();
-//        } else {
             Optional<Admin> adminOptional = adminRepository.findByUsername(username);
             if (adminOptional.isPresent()) {
                 return new AdminDetails(adminOptional.get());
@@ -45,10 +37,6 @@ public class HanuLMSUserDetailsService implements UserDetailsService {
                 return new StudentDetails(studentOptional.get());
             }
 
-            // Handle other user types (lecturer, student) similarly
-            // Here, you might retrieve user details from a database or another source
-            // For simplicity, let's assume no other users exist initially
             throw new UsernameNotFoundException("User not found with username: " + username);
-//        }
     }
 }

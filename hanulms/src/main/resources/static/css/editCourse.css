@@ -51,7 +51,7 @@
 
 .selected-options {
 	display: flex;
-	flex-wrap: wrap;
+	/* flex-wrap: wrap; */
 	margin-top: 0;
 }
 
@@ -63,6 +63,7 @@
 	padding: 2px 7px;
 	display: flex;
 	align-items: center;
+	text-wrap: nowrap;
 }
 
 .remove-tag {

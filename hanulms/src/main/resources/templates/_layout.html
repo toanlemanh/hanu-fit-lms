@@ -82,7 +82,7 @@
                 <i class="bi bi-bell-fill"></i>
               </button>
 
-              <a th:text="${#authentication.principal.name}" id="username"></a>
+              <a th:text="${#authentication.principal.name}" id="userfullname"></a>
               <div id="avatar-container">
                 <img src="/images/HANU.png">
               </div>
@@ -92,15 +92,6 @@
               </button>
             </div>
           </div>
-
-          <!-- <div th:if="${#authentication != null}" class="col">
-            <div class="row align-items-center justify-content-center flex-nowrap">
-              <button class="base-button px-5" th:attr="onclick=|window.location.href = '/logout'|">
-                Logout
-              </button>
-            </div>
-          </div> -->
-
           <div class="dropdown-content justify-content-center" id="dropdownContent">
             <a class="hyperlink" href="/logout"><i class="bi bi-box-arrow-right"></i>  Logout</a>
           </div>

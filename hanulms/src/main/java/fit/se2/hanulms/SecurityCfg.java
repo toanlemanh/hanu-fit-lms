@@ -25,6 +25,7 @@ public class SecurityCfg {
                 .authorizeHttpRequests(req -> req
                         .requestMatchers("/myCourses").hasAnyAuthority("LECTURER", "STUDENT")
                         .requestMatchers("/admin/**").hasAuthority("ADMIN")
+                        .requestMatchers("/signup").permitAll()
                         .anyRequest().authenticated()
                 )
                 .userDetailsService(myUserDetailsService)

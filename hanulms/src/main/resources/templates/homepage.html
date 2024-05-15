@@ -72,51 +72,28 @@
     </div>
 
     <div id="title-container" class="container">
-      <h1>Lastest Announcement</h1>
+      <h1>Lastest Announcements</h1>
     </div>
 
     <div id="block" class="container"></div>
 
     <div id="homepage-announcement" class="container">
-      <div class="row align-items-center">
-        <div class="timestamp">
-          <box-icon name='user-circle' size="md"></box-icon>
-          <div class="timestamp-text">
-            <span id="admin-name">Admin 1- </span>
-            <span>Monday, 1 April 2024, 10:30 AM</span>
+      <div th:each="announcement : ${announcements}">
+        <div class="row timestamp align-items-center justify-content-start">
+          <box-icon class="col-1" name='user-circle' size="md"></box-icon>
+          <div class="timestamp-text pr-3 py-2">
+            <div id="admin-name" th:text="${announcement.faculty.name}"></div>
+            <div>Monday, 1 April 2024, 10:30 AM</div>
           </div>
         </div>
-        <div class="announcement-content">
-          <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Lorem lorem aliquam sed lacinia quis. Nibh dictumst vulputate odio pellentesque sit quis ac, sit ipsum. Sit rhoncus velit in sed massa arcu sit eu. Vitae et vitae eget lorem non dui. Sollicitudin ut mi adipiscing duis. Convallis in semper laoreet nibh leo. Vivamus malesuada ipsum pulvinar non rutrum risus dui, risus. Purus massa velit iaculis tincidunt tortor, risus, scelerisque risus. In at lorem pellentesque orci aenean dictum dignissim in. Aenean pulvinar diam interdum ullamcorper. Vel urna, tortor, massa metus purus metus. Maecenas mollis in velit auctor cursus scelerisque eget. Nibh faucibus purus elementum ultrices elementum, urna.</p>
+        <div class="announcement-content justify-content-start mt-3 py-2">
+          <h6 th:text="${announcement.facultyAnnouncementTitle}"></h6>
         </div>
-      </div>
-      <div class="row align-items-center">
-        <div class="timestamp">
-          <box-icon name='user-circle' size="md"></box-icon>
-          <div class="timestamp-text">
-            <span id="admin-name">Admin 2- </span>
-            <span>Monday, 1 April 2024, 10:30 AM</span>
-          </div>
-        </div>
-        <div class="announcement-content">
-          <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Lorem lorem aliquam sed lacinia quis. Nibh dictumst vulputate odio pellentesque sit quis ac, sit ipsum. Sit rhoncus velit in sed massa arcu sit eu. Vitae et vitae eget lorem non dui. Sollicitudin ut mi adipiscing duis. Convallis in semper laoreet nibh leo. Vivamus malesuada ipsum pulvinar non rutrum risus dui, risus. Purus massa velit iaculis tincidunt tortor, risus, scelerisque risus. In at lorem pellentesque orci aenean dictum dignissim in. Aenean pulvinar diam interdum ullamcorper. Vel urna, tortor, massa metus purus metus. Maecenas mollis in velit auctor cursus scelerisque eget. Nibh faucibus purus elementum ultrices elementum, urna.</p>
-        </div>
-      </div>
-      <div class="row align-items-center">
-        <div class="timestamp">
-          <box-icon name='user-circle' size="md"></box-icon>
-          <div class="timestamp-text">
-            <span id="admin-name">Admin 3- </span>
-            <span>Monday, 1 April 2024, 10:30 AM</span>
-          </div>
-        </div>
-        <div class="announcement-content">
-          <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Lorem lorem aliquam sed lacinia quis. Nibh dictumst vulputate odio pellentesque sit quis ac, sit ipsum. Sit rhoncus velit in sed massa arcu sit eu. Vitae et vitae eget lorem non dui. Sollicitudin ut mi adipiscing duis. Convallis in semper laoreet nibh leo. Vivamus malesuada ipsum pulvinar non rutrum risus dui, risus. Purus massa velit iaculis tincidunt tortor, risus, scelerisque risus. In at lorem pellentesque orci aenean dictum dignissim in. Aenean pulvinar diam interdum ullamcorper. Vel urna, tortor, massa metus purus metus. Maecenas mollis in velit auctor cursus scelerisque eget. Nibh faucibus purus elementum ultrices elementum, urna.</p>
+        <div class="announcement-content justify-content-start">
+          <p th:text="${announcement.facultyAnnouncementDescription}"></p>
         </div>
       </div>
     </div>
-
-
   </div>
   </div>
 </body>

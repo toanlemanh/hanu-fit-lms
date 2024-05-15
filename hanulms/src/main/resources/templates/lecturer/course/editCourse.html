@@ -283,7 +283,7 @@
             </span>
             <div class="custom-select open">
               <div class="select-box">
-                <input required type="text" class="tags_input" name="tags" th:field="${course.lecturers}" />
+                <input required type="text" class="tags_input row" name="tags" th:field="${course.lecturers}" />
                 <div class="selected-options">
                 </div>
                 <div class="arrow">
@@ -308,13 +308,6 @@
           <label for="description">Course Description</label>
           <div class="mb-3 form-floating">
             <textarea required class="form-control" id="description" style="height: 140px" placeholder="e.g. Software Engineering 2 is..." th:field="${course.description}"></textarea>
-          </div>
-          <label for="course-image-input" class="form-label">Course Image</label>
-          <div class="mb-4 input-group">
-            <span class="input-group-text">
-              <i class="bi bi-card-image text-secondary"></i>
-            </span>
-            <input type="file" class="form-control" id="course-image-input" accept="image/*">
           </div>
           <div class="mb-4 text-danger" id="error-messages"></div>
           <div class="mb-3">

@@ -73,3 +73,7 @@
 	color: var(--primary800);
 	transition: border color 0.05s ease;
 }
+
+.dull-link:hover {
+	text-decoration: none;
+}

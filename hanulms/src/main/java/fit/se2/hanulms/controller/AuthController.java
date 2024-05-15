@@ -1,9 +1,12 @@
 package fit.se2.hanulms.controller;
 
+import fit.se2.hanulms.Repository.AdminRepository;
+import fit.se2.hanulms.model.Admin;
 import fit.se2.hanulms.model.UserTemplate;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.validation.Valid;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -13,28 +16,19 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 
 @Controller
 public class AuthController {
-//    private UserRepository userRepository;
+    @Autowired
+    private AdminRepository adminRepository;
 
-//    public AuthController(UserRepository userRepository) {
-//        this.userRepository = userRepository;
-//    }
+    @Autowired
+    PasswordEncoder pEncoder;
 
     @GetMapping("/login")
     public String login() {
         return "/auth/login";
     }
-//    @PostMapping("/loginPerform")
-//    public String loginPerform(@Valid UserTemplate ut, BindingResult result) {
-//        System.out.println("What I POSTed with the login form: " + ut.toString());
-//        if (result.hasErrors()) {
-//            return "/auth/login";
-//        }
-//        return "/myCourses";
-//    }
     @GetMapping(value="/logout")
     public String logoutPage (HttpServletRequest request, HttpServletResponse response) {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
@@ -44,16 +38,26 @@ public class AuthController {
         return "redirect:/login?logout";
     }
 
-    @GetMapping("/register")
-    public String register() {
-        return "register";
+    @GetMapping("/signup")
+    public String signup(Model model) {
+        model.addAttribute("admin", new Admin());
+        return "/auth/signup";
     }
-    @PostMapping("/register")
-    public String registerHandle(PasswordEncoder pEncoder, Model model, @Valid UserTemplate ut, BindingResult result) {
-        if (!result.hasErrors()) {
-//            User u = new User(ut, pEncoder);
-//            userRepository.save(u);
+    @PostMapping("/signup")
+    public String signup(Model model,
+                         @Valid UserTemplate ut,
+                         BindingResult result,
+                         HttpServletRequest request) {
+        String reEnteredPassword = request.getParameter("reEnteredPassword");
+        if (result.hasErrors() ||
+            adminRepository.findByUsername(ut.getUsername()).isPresent() ||
+            !reEnteredPassword.equals(ut.getPassword())
+        ) {
+            model.addAttribute("admin", ut);
+            return "/auth/signup";
         }
-        return "register";
+        Admin admin = new Admin(ut, pEncoder);
+        adminRepository.save(admin);
+        return "redirect:/login";
     }
 }

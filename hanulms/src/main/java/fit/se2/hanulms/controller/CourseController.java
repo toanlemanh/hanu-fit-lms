@@ -3,7 +3,6 @@ package fit.se2.hanulms.controller;
 import fit.se2.hanulms.Repository.*;
 import fit.se2.hanulms.model.*;
 import jakarta.servlet.http.HttpServletRequest;
-import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -11,7 +10,6 @@ import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 import java.net.URLDecoder;
@@ -19,11 +17,10 @@ import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Controller
-public class LecturerController {
+public class CourseController {
     @Autowired
     CourseRepository courseRepository;
     @Autowired
@@ -40,6 +37,8 @@ public class LecturerController {
     FileRepository fileRepository;
     @Autowired
     AssignmentRepository assignmentRepository;
+    @Autowired
+    SubmissionRepository submissionRepository;
 
     @GetMapping(value = "/myCourses")
     public String myCourses(Model model, @AuthenticationPrincipal UserDetails userDetails) {
@@ -192,7 +191,6 @@ public class LecturerController {
                 // Decode URL-encoded value
                 value = URLDecoder.decode(keyValue[1], StandardCharsets.UTF_8);
                 if (!key.equals("_csrf") && !key.equals("lecturers")) {
-                    System.out.println(key);
                     switch (key) {
                         case "code":
                             courseCode = value;
@@ -231,12 +229,10 @@ public class LecturerController {
             // Clear existing associations for each lecturer
             for (Lecturer lecturer : allLecturers) {
                 lecturer.getCourses().remove(course);
-                System.out.println("Courses: " + lecturer.getCourses());
                 lecturerRepository.save(lecturer); // Save to ensure changes are persisted
             }
             // Clear existing associations for current course
             course.getLecturers().clear();
-            System.out.println("Lecturers: " + course.getLecturers());
             courseRepository.save(course);
 
             course.setCode(courseCode);
@@ -274,7 +270,6 @@ public class LecturerController {
 
     @PostMapping(value = "/createCourse")
     public ResponseEntity<List<String>> createCourse(@RequestBody String requestBody) {
-        System.out.println(requestBody);
         String[] keyValuePairs = requestBody.split("&");
         String courseCode = null;
         String courseName = null;
@@ -352,34 +347,38 @@ public class LecturerController {
     @GetMapping(value = "/deleteCourse/{code}")
     public String deleteCourse(@PathVariable(value = "code") String courseCode) {
         Course course = courseRepository.findById(courseCode).orElse(new Course());
-        List<Lecturer> allLecturers = lecturerRepository.findAll();
         // Clear existing associations for each lecturer
+        List<Lecturer> allLecturers = lecturerRepository.findAll();
         for (Lecturer lecturer : allLecturers) {
             lecturer.getCourses().remove(course);
-            System.out.println("Courses: " + lecturer.getCourses());
             lecturerRepository.save(lecturer); // Save to ensure changes are persisted
         }
-//        List<Topic> allTopics = topicRepository.findAll();
-//        for (Topic topic : allTopics) {
-//            if (topic.getCourse().equals(course)) {
-//                topicRepository.delete(topic);
-//            }
-//        }
+        List<Student> allStudents = studentRepository.findAll();
+        for (Student student : allStudents) {
+            student.getCourses().remove(course);
+            studentRepository.save(student); // Save to ensure changes are persisted
+        }
         List<Topic> allTopics = topicRepository.findAll();
         for (Topic topic : allTopics) {
-            List<File> allFiles = fileRepository.findAll();
-            for (File f : allFiles) {
-                if (f.getTopic().equals(topic)) {
-                    fileRepository.delete(f);
-                }
-            }
-            List<Assignment> allAssignments = assignmentRepository.findAll();
-            for (Assignment a : allAssignments) {
-                if (a.getTopic().equals(topic)) {
-                    assignmentRepository.delete(a);
-                }
-            }
             if (topic.getCourse().equals(course)) {
+                List<File> allFiles = topic.getFile();
+                for (File f : allFiles) {
+                    if (f.getTopic().equals(topic)) {
+                        fileRepository.delete(f);
+                    }
+                }
+                List<Assignment> allAssignments = topic.getAssignments();
+                List<Submission> allSubmissions = submissionRepository.findAll();
+                for (Assignment a : allAssignments) {
+                    if (a.getTopic().equals(topic)) {
+                        for (Submission s : allSubmissions) {
+                            if (s.getAssignment().equals(a)) {
+                                submissionRepository.delete(s);
+                            }
+                        }
+                        assignmentRepository.delete(a);
+                    }
+                }
                 topic.getFile().clear();
                 topic.getAssignments().clear();
                 topicRepository.save(topic);
@@ -397,7 +396,7 @@ public class LecturerController {
         course.getLecturers().clear();
         course.getTopics().clear();
         course.getAnnouncements().clear();
-        System.out.println("Lecturers: " + course.getLecturers());
+        course.getStudents().clear();
         courseRepository.save(course);
 
         courseRepository.delete(course);
@@ -437,9 +436,6 @@ public class LecturerController {
         String enrolmentKey = request.getParameter("enrolmentKey");
         String courseCode = request.getParameter("courseCode");
         Long studentId = Long.valueOf(request.getParameter("studentId"));
-        System.out.println("EnrolKey: " + enrolmentKey);
-        System.out.println("CourseCode: " + courseCode);
-        System.out.println("StudentID: " + studentId);
         Course thisCourse = courseRepository.getReferenceById(courseCode);
         Student thisStudent = studentRepository.getReferenceById(studentId);
         if (thisCourse.getEnrolmentKey().equals(enrolmentKey)) {

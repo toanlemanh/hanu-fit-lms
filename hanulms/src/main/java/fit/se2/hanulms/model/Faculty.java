@@ -17,8 +17,18 @@ public class Faculty {
     private List<Student> students;
     @OneToMany(mappedBy = "faculty")
     private List<Course> courses;
+    @OneToMany(mappedBy = "faculty")
+    private List<FacultyAnnouncement> facultyAnnouncements;
     public List<Student> getStudents() {
         return students;
+    }
+
+    public List<FacultyAnnouncement> getFacultyAnnouncements() {
+        return facultyAnnouncements;
+    }
+
+    public void setFacultyAnnouncements(List<FacultyAnnouncement> facultyAnnouncements) {
+        this.facultyAnnouncements = facultyAnnouncements;
     }
 
     public void setStudents(List<Student> students) {

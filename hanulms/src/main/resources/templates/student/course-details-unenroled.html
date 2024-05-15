@@ -72,9 +72,13 @@
       <!-- Right-top-teacher -->
       <div class="col-lg-4 col-md-3 col-sm-12">
         <div class="d-flex flex-column">
-          <div th:each="lecturer : ${course.lecturers}" class="d-flex flex-row flex-nowrap align-items-center px-4">
-            <img id="avatar" class="img-fluid d-flex rounded-circle mx-3" src="../../static/images/HANU.png" alt="avatar" />
-            <p th:text="${lecturer.name}"></p>
+          <div th:each="lecturer : ${course.lecturers}" class="d-flex flex-row flex-nowrap align-items-center px-4 my-1">
+            <div class="col-3">
+              <img id="avatar" class="img-fluid d-flex rounded-circle mx-3" th:src="@{/images/HANU.png}" alt="avatar" />
+            </div>
+            <div class="col-9">
+              <p th:text="${lecturer.name}"></p>
+            </div>
           </div>
         </div>
       </div>

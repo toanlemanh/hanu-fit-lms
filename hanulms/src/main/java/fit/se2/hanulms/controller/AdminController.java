@@ -36,6 +36,10 @@ public class AdminController {
     @Autowired
     AssignmentRepository assignmentRepository;
     @Autowired
+    SubmissionRepository submissionRepository;
+    @Autowired
+    FacultyAnnouncementRepository facultyAnnouncementRepository;
+    @Autowired
     PasswordEncoder p;
 
     @GetMapping("/listLecturer")
@@ -275,23 +279,8 @@ public class AdminController {
             model.addAttribute("faculty", faculty);
             return "/admin/edit-faculty";
         } else {
-            // Check for duplicate code before saving
-            List<Faculty> allFaculties = facultyRepository.findAll();
-            boolean isFacultyCodeDuplicate = false;
-            for (Faculty f : allFaculties) {
-                if (f.getCode().equals(faculty.getCode())) {
-                    isFacultyCodeDuplicate = true;
-                    break;
-                }
-            }
-            if (isFacultyCodeDuplicate) {
-                result.addError(new FieldError("faculty", "code", "Faculty code already exists"));
-                model.addAttribute("faculty", faculty);
-                return "/admin/edit-faculty";
-            } else {
-                facultyRepository.save(faculty);
-                return "redirect:/admin/listFaculty";
-            }
+            facultyRepository.save(faculty);
+            return "redirect:/admin/listFaculty";
         }
     }
     @GetMapping(value = "/deleteFaculty/{code}")
@@ -299,33 +288,45 @@ public class AdminController {
         Faculty thisFaculty = facultyRepository.getReferenceById(code);
         List<Course> associatedCourses = thisFaculty.getCourses();
         for (Course course : associatedCourses) {
-            List<Lecturer> allLecturers = lecturerRepository.findAll();
             // Clear existing associations for each lecturer
+            List<Lecturer> allLecturers = lecturerRepository.findAll();
             for (Lecturer lecturer : allLecturers) {
                 lecturer.getCourses().remove(course);
                 lecturerRepository.save(lecturer); // Save to ensure changes are persisted
             }
             List<Topic> allTopics = topicRepository.findAll();
             for (Topic topic : allTopics) {
-                List<File> allFiles = fileRepository.findAll();
-                for (File f : allFiles) {
-                    if (f.getTopic().equals(topic)) {
-                        fileRepository.delete(f);
-                    }
-                }
-                List<Assignment> allAssignments = assignmentRepository.findAll();
-                for (Assignment a : allAssignments) {
-                    if (a.getTopic().equals(topic)) {
-                        assignmentRepository.delete(a);
-                    }
-                }
                 if (topic.getCourse().equals(course)) {
+                    List<File> allFiles = topic.getFile();
+                    for (File f : allFiles) {
+                        if (f.getTopic().equals(topic)) {
+                            fileRepository.delete(f);
+                        }
+                    }
+                    List<Assignment> allAssignments = topic.getAssignments();
+                    List<Submission> allSubmissions = submissionRepository.findAll();
+                    for (Assignment a : allAssignments) {
+                        if (a.getTopic().equals(topic)) {
+                            for (Submission s : allSubmissions) {
+                                if (s.getAssignment().equals(a)) {
+                                    submissionRepository.delete(s);
+                                }
+                            }
+                            assignmentRepository.delete(a);
+                        }
+                    }
                     topic.getFile().clear();
                     topic.getAssignments().clear();
                     topicRepository.save(topic);
                     topicRepository.delete(topic);
                 }
             }
+            List<Student> allStudents = studentRepository.findAll();
+            for (Student student : allStudents) {
+                student.getCourses().remove(course);
+                studentRepository.save(student); // Save to ensure changes are persisted
+            }
+
             List<Announcement> allAnnouncements = announcementRepository.findAll();
             for (Announcement announcement : allAnnouncements) {
                 if (announcement.getCourse().equals(course)) {
@@ -336,6 +337,7 @@ public class AdminController {
             course.getLecturers().clear();
             course.getTopics().clear();
             course.getAnnouncements().clear();
+            course.getStudents().clear();
             courseRepository.save(course);
 
             courseRepository.delete(course);
@@ -351,10 +353,23 @@ public class AdminController {
         facultyRepository.save(thisFaculty);
 
         List<Student> associatedStudent = thisFaculty.getStudents();
+        List<Submission> allSubmissions = submissionRepository.findAll();
         for (Student s : associatedStudent) {
+            for (Submission submission : allSubmissions) {
+                if (submission.getStudent().equals(s)) {
+                    submissionRepository.delete(submission);
+                }
+            }
             studentRepository.delete(s);
         }
         thisFaculty.getStudents().clear();
+        facultyRepository.save(thisFaculty);
+
+        List<FacultyAnnouncement> associatedFAs = thisFaculty.getFacultyAnnouncements();
+        for (FacultyAnnouncement fa : associatedFAs) {
+            facultyAnnouncementRepository.delete(fa);
+        }
+        thisFaculty.getFacultyAnnouncements().clear();
         facultyRepository.save(thisFaculty);
 
         facultyRepository.delete(thisFaculty);

@@ -7,9 +7,9 @@
   <title>HANU LMS Layout</title>
   <!-- <link rel="stylesheet" th:href="@{/css/bootstrap/bootstrap.css}"> -->
   <!-- <link rel="stylesheet" th:href="@{/css/bootstrap/bootstrap.min.css}"> -->
-  <link rel="stylesheet" th:href="@{/css/_layout.css}">
-  <link rel="stylesheet" th:href="@{/css/shared.css}">
+  <link rel="stylesheet" th:href="@{/css/_layout-customized.css}">
   <link rel="stylesheet" th:href="@{/svgs/bootstrap-icons-1.11.3/font/bootstrap-icons.css}">
+  <!-- <link rel="stylesheet" th:href="@{/css/shared.css}"> -->
   <script>
     // Function to toggle the dropdown menu
     function toggleDropdown(event) {
@@ -37,38 +37,68 @@
 
 <body>
   <div class="container-fluid">
-    <div class="row align-items-center justify-content-between" id="body-container">
-      <div class="col">
-        <div class="row align-items-center">
-          <div class="col-3">
-            <div class="row align-items-center flex-nowrap">
+    <div class="align-items-center justify-content-between" id="body-container">
+      <div class="d-flex flex-row">
+        <div class="d-flex flex-row align-items-center">
+          <div class="d-flex flex-row">
+            <div class="d-flex flex-row align-items-center flex-nowrap">
               <img src="/images/HANU.png" id="logo">
               <span id="logo-title">HANU LMS</span>
             </div>
           </div>
-          <div class="col-7">
+          <div class="d-flex flex-row">
             <div class="row align-items-center justify-content-around flex-nowrap">
+
               <div class="col align-items-center text-center">
-                <a href="/admin/listLecturer" class="navbar-item mx-2 my-1">Lecturer</a>
+                <a href="/" class="navbar-item mx-2 my-1">Home</a>
               </div>
               <div class="col align-items-center text-center">
-                <a href="/admin/listStudent" class="navbar-item mx-2 my-1">Student</a>
+                <a href="/myCourses" class="navbar-item mx-2 my-1">My Courses</a>
               </div>
               <div class="col align-items-center text-center">
-                <a href="/admin/listFaculty" class="navbar-item mx-2 my-1">Faculty</a>
+
+                <a href="/facultyAnnouncement" class="navbar-item mx-2 my-1">Faculty Announcements</a>
               </div>
             </div>
           </div>
         </div>
       </div>
 
-      <div class="col-2">
-        <div class="row align-items-center justify-content-center flex-nowrap">
-          <button class="base-button px-5" th:attr="onclick=|window.location.href = '/logout'|">
-            Logout
-          </button>
+      <div class="d-flex flex-row">
+        <div class="d-flex flex-row align-items-center justify-content-end flex-nowrap">
+
+          <div class="d-flex flex-row">
+            <div class="d-flex flex-row align-items-center justify-content-end">
+              <div id="searchbar-container" class="d-none d-md-flex py-2">
+                <i class="bi bi-search" aria-hidden="true" id="search-icon"></i>
+                <input type="text" value="Search..." id="searchbar" onkeydown="searchKeyPress(event)">
+              </div>
+            </div>
+          </div>
+
+          <div th:if="${#authentication != null}">
+            <div class="d-flex flex-row align-items-center justify-content-end">
+              <button class="col button">
+                <i class="bi bi-bell-fill"></i>
+              </button>
+              <div class="d-flex flex-row align-items-center">
+              <a th:text="${#authentication.principal.name}" id="userfullname"></a>
+              <div id="avatar-container">
+                <img src="/images/HANU.png">
+              </div>
+              </div>
+
+              <button class="button col" onclick="toggleDropdown(event)">
+                <i class="bi bi-chevron-down" id="chevron-icon"></i>
+              </button>
+            </div>
+          </div>
+          <div class="dropdown-content justify-content-center p" id="dropdownContent">
+            <a class="hyperlink" href="/logout"><i class="bi bi-box-arrow-right"></i>  Logout</a>
+          </div>
         </div>
       </div>
+
     </div>
   </div>
 
