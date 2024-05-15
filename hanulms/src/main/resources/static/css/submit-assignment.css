@@ -1,0 +1,43 @@
+@import "./shared.css";
+#main {
+    font-family: "Times New Roman", Times, serif;
+}
+.transparent-breadcrumb {
+    background: transparent;
+}
+
+.ml-n2 {
+    margin-left: -0.8rem !important;
+}
+#course-title {
+    font-weight:bold;
+
+}
+#assignment-title {
+    color: gray;
+    font-size: 32px;
+}
+
+h3 {
+    margin-top: 32px;
+    font-weight: bold;
+}
+h5 {
+    font-weight: bold;
+}
+
+#add-subbmision-btn {
+    color: white; 
+    font-family: 'Times New Roman', Times, serif;
+    font-weight: bold;
+}
+
+#drop-area {
+    border: 2px dashed #ccc;
+    border-radius: 4px;
+    font-family: sans-serif;
+}
+
+#drop-area.highlight {
+    border-color: var(--primary800);
+  }
