@@ -14,7 +14,6 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
-
 import java.io.InputStream;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -25,30 +24,37 @@ import java.util.List;
 
 @Controller
 public class TopicController {
-   @Autowired
+    @Autowired
     TopicRepository topicRepository;
-   @Autowired
+    @Autowired
     CourseRepository courseRepository;
-   @Autowired
+    @Autowired
     AnnouncementRepository announcementRepository;
-   @Autowired
+
+    @Autowired
+    AssignmentRepository assignmentRepository;
+
+    @Autowired
     FileRepository fileRepository;
-   @Autowired
-   StudentRepository studentRepository;
+    @Autowired
+    StudentRepository studentRepository;
 
     @RequestMapping(value = "/myCourses/course-details/{code}")
-    public String getCourseDetailById (@PathVariable (value="code") String code,
-                                       @RequestParam(value="error", required = false, defaultValue = "default")
-                                       String error, Model model,
-                                       @AuthenticationPrincipal UserDetails userDetails){
+    public String getCourseDetailById(@PathVariable(value = "code") String code,
+            @RequestParam(value = "error", required = false, defaultValue = "default") String error, Model model,
+            @AuthenticationPrincipal UserDetails userDetails) {
         Course course = courseRepository.findById(code).get();
+        List<File> files = fileRepository.findAll();
+        List<Assignment> assignments = assignmentRepository.findAll();
         List<Announcement> announcements = course.getAnnouncements();
         List<Topic> topics = course.getTopics();
         Topic topic = new Topic();
         FileDTO fileDTO = new FileDTO();
-        List<File> files = fileRepository.findAll();
+        AssignmentDTO assignmentDTO = new AssignmentDTO();
         AnnouncementDTO announcementDTO = new AnnouncementDTO();
-        model.addAttribute("files", files);
+        model.addAttribute("assignmentDTO", assignmentDTO);
+        // model.addAttribute("assignments", assignments);
+        // model.addAttribute("files", files);
         model.addAttribute("fileDTO", fileDTO);
         model.addAttribute("announcements", announcements);
         model.addAttribute("announcementDTO", announcementDTO);
@@ -58,7 +64,8 @@ public class TopicController {
         model.addAttribute("error", error);
         if (userDetails.getAuthorities().stream().anyMatch(authority -> authority.getAuthority().equals("LECTURER"))) {
             return "/lecturer/course-resource/course-details";
-        } else if (userDetails.getAuthorities().stream().anyMatch(authority -> authority.getAuthority().equals("STUDENT"))) {
+        } else if (userDetails.getAuthorities().stream()
+                .anyMatch(authority -> authority.getAuthority().equals("STUDENT"))) {
             List<Student> allStudents = studentRepository.findAll();
             Student thisStudent = new Student();
             for (Student student : allStudents) {
@@ -75,32 +82,32 @@ public class TopicController {
         return "redirect:/";
     }
 
-   @PostMapping(value="/myCourses/course-details/{code}/create-topic")
-    public String insertTopic(@PathVariable(value="code") String code,@Valid Topic topic, BindingResult result  ,Model model, @RequestBody String topicDescription){
-       Course course = courseRepository.getReferenceById(code);
-       if (result.hasErrors()){
-           String errors = "Bad creating a topic";
-           System.out.println("Errors :"+ errors);
-          return "redirect:/myCourses/course-details/"+ code+"?error="+ errors;
-       }
-       else {
-           topic.setCourse(course);
-           topicRepository.save(topic);
-           return "redirect:/myCourses/course-details/"+ code;
-       }
-   }
+    @PostMapping(value = "/myCourses/course-details/{code}/create-topic")
+    public String insertTopic(@PathVariable(value = "code") String code, @Valid Topic topic, BindingResult result,
+            Model model, @RequestBody String topicDescription) {
+        Course course = courseRepository.getReferenceById(code);
+        if (result.hasErrors()) {
+            String errors = "Bad creating a topic";
+            System.out.println("Errors :" + errors);
+            return "redirect:/myCourses/course-details/" + code + "?error=" + errors;
+        } else {
+            topic.setCourse(course);
+            topicRepository.save(topic);
+            return "redirect:/myCourses/course-details/" + code;
+        }
+    }
 
-    @PostMapping(value="/myCourses/course-details/{code}/create-announcement")
-    public String insertAnnouncement(@PathVariable(value="code") String code, @Valid AnnouncementDTO announcementDTO, BindingResult result  , Model model){
+    @PostMapping(value = "/myCourses/course-details/{code}/create-announcement")
+    public String insertAnnouncement(@PathVariable(value = "code") String code, @Valid AnnouncementDTO announcementDTO,
+            BindingResult result, Model model) {
         Course course = courseRepository.getReferenceById(code);
         Announcement announcement = new Announcement();
-        if (result.hasErrors()){
+        if (result.hasErrors()) {
             System.out.println(result.getAllErrors());
             String errors = "Bad creating an announcement";
-            System.out.println("Errors :"+ errors);
-            return "redirect:/myCourses/course-details/"+ code+"?error="+ errors;
-        }
-        else {
+            System.out.println("Errors :" + errors);
+            return "redirect:/myCourses/course-details/" + code + "?error=" + errors;
+        } else {
             // save image file
             MultipartFile attachment = announcementDTO.getAttachment();
             if (!attachment.isEmpty()) {
@@ -128,15 +135,8 @@ public class TopicController {
             announcement.setAnnouncementDescription(announcementDTO.getAnnouncementDescription());
             announcement.setCourse(course);
             announcementRepository.save(announcement);
-            return "redirect:/myCourses/course-details/"+ code;
+            return "redirect:/myCourses/course-details/" + code;
         }
     }
-
-
-
-
-
-
-
 
 }

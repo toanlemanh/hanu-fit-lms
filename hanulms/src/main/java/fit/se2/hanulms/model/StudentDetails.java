@@ -18,6 +18,9 @@ public class StudentDetails implements UserDetails {
     public List<Course> getCourses() {
         return student.getCourses();
     }
+    public String getName() {
+        return student.getName();
+    }
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {

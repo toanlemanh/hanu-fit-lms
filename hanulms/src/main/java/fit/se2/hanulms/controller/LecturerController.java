@@ -43,12 +43,27 @@ public class LecturerController {
 
     @GetMapping(value = "/myCourses")
     public String myCourses(Model model, @AuthenticationPrincipal UserDetails userDetails) {
-        List<Course> courses = courseRepository.findAll();
-        model.addAttribute("courses", courses);
+        List<Course> allCourses = courseRepository.findAll();
         model.addAttribute("message", "");
         if (userDetails.getAuthorities().stream().anyMatch(authority -> authority.getAuthority().equals("LECTURER"))) {
+            Lecturer thisLecturer = lecturerRepository.findByUsername(userDetails.getUsername()).get();
+            List<Course> courses = new ArrayList<>();
+            for (Course c : allCourses) {
+                if (c.getLecturers().contains(thisLecturer)) {
+                    courses.add(c);
+                }
+            }
+            model.addAttribute("courses", courses);
             return "/lecturer/course/myCourses";
         } else if (userDetails.getAuthorities().stream().anyMatch(authority -> authority.getAuthority().equals("STUDENT"))) {
+            Student thisStudent = studentRepository.findByUsername(userDetails.getUsername()).get();
+            List<Course> courses = new ArrayList<>();
+            for (Course c : allCourses) {
+                if (c.getStudents().contains(thisStudent)) {
+                    courses.add(c);
+                }
+            }
+            model.addAttribute("courses", courses);
             return "/student/myCourses";
         }
         return "redirect:/";
@@ -56,8 +71,15 @@ public class LecturerController {
     @GetMapping(value = "/myCourses/{messageType}/{courseCode}")
     public String myCoursesSuccess(@PathVariable(value = "messageType") String messageType,
                                    @PathVariable(value = "courseCode") String courseCode,
-                                   Model model) {
-        List<Course> courses = courseRepository.findAll();
+                                   Model model, @AuthenticationPrincipal UserDetails userDetails) {
+        List<Course> allCourses = courseRepository.findAll();
+        Lecturer thisLecturer = lecturerRepository.findByUsername(userDetails.getUsername()).get();
+        List<Course> courses = new ArrayList<>();
+        for (Course c : allCourses) {
+            if (c.getLecturers().contains(thisLecturer)) {
+                courses.add(c);
+            }
+        }
         model.addAttribute("courses", courses);
         if (messageType.equals("success")) {
             model.addAttribute("message", "The course \"" + courseCode + "\" has been created successfully!");
@@ -196,13 +218,6 @@ public class LecturerController {
                 }
             }
         }
-        System.out.println("courseCode: "+courseCode);
-        System.out.println("courseName: "+courseName);
-        System.out.println("enrolmentKey: "+enrolmentKey);
-        System.out.println("description: "+description);
-        System.out.println("facultyCode: "+facultyCode);
-        System.out.println("lecturerIds: "+Arrays.toString(lecturerIds));
-
         List<String> errorMessages = validateCourse(courseCode, courseName, description, enrolmentKey, "edit");
         if (errorMessages.size() > 0) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(errorMessages);
@@ -303,13 +318,6 @@ public class LecturerController {
                 }
             }
         }
-        System.out.println("courseCode: "+courseCode);
-        System.out.println("courseName: "+courseName);
-        System.out.println("enrolmentKey: "+enrolmentKey);
-        System.out.println("description: "+description);
-        System.out.println("facultyCode: "+facultyCode);
-        System.out.println("lecturerIds: "+Arrays.toString(lecturerIds));
-
         List<String> errorMessages = validateCourse(courseCode, courseName, description, enrolmentKey, "create");
         if (errorMessages.size() > 0) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(errorMessages);
