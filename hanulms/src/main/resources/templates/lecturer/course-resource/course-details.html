@@ -81,21 +81,6 @@
     </div>
   </div>
 
-  <div class="row gy-3">
-    <div class="mb-3 fs-6 text-truncate">
-      <!-- Announcements and course content goes here -->
-      <h3 class="mt-3">Course Announcements</h3>
-
-      <div class="mb-3 fs-6 py-3">
-        <ul th:each="anAnnouncement : ${announcements}">
-          <li class="fs-3 fw-semi-bold" th:text="${anAnnouncement.announcementTitle}" />
-          <p th:text="${anAnnouncement.announcementDescription}" />
-          <a class="d-block" th:if="${anAnnouncement.attachment != null }" th:href="@{'/images/'+${anAnnouncement.attachment}}">More details</a>
-        </ul>
-      </div>
-    </div>
-  </div>
-
   <!-- Emd Slider -->
 
   <div class="row gy-3">
@@ -182,8 +167,7 @@
                         data-bs-target="#assignmentModal"
                         data-bs-whatever="@mdo"
             >Create assignment</button></li>
-            <li><a class="dropdown-item" href="#">Edit Topic</a></li>
-            <li><a class="dropdown-item" href="#">Remove Topic</a></li>
+
           </ul>
         </div>
       </div>
@@ -660,17 +644,7 @@
     </div>
   </div>
 
-
-</div>
-<!--    End Upload Modal-->
-
-<!-- End Upload File modal -->
-
-
-
-<!--    End edit file modal -->
-<!-- End Modal -->
-<script th:inline="javascript">
+  <script th:inline="javascript">
     let uploadedType = "";
     let itemId = "";
     let topicId = "";
@@ -685,6 +659,10 @@
         window.location.href = current;
       }
     })
+
+    function chooseTopicId(id) {
+        topicId = id;
+    }
 
     function uploadForm(event) {
       event.preventDefault();
@@ -708,24 +686,6 @@
       uploadedForm.action = current;
       alert(current);
       uploadedForm.submit();
-    }
-
-    function uploadForm(event) {
-      event.preventDefault();
-      let uploadedForm = document.getElementById('upload-file-form');
-      let input = document.createElement("input");
-      input.setAttribute("type", "text");
-      input.setAttribute("name", "uploadedType");
-      input.value = uploadedType;
-      // <!--            uploadedForm.appendChild(input);-->
-      // <!--            uploadedForm.submit();-->
-      let current = window.location.href;
-      current = current + "/" + topicId + "/upload-file/" + uploadedType;
-      uploadedForm.action = current;
-      alert(current);
-      // <!--            window.location.href = current;-->
-      uploadedForm.submit();
-      alert("uploaded");
     }
 
     function chooseItemId(id) {
@@ -828,6 +788,8 @@
       editForm.submit();
     }
   </script>
+</div>
+
 
 </body>
 
