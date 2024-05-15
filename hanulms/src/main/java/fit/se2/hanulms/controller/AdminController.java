@@ -2,6 +2,7 @@ package fit.se2.hanulms.controller;
 
 import fit.se2.hanulms.Repository.*;
 import fit.se2.hanulms.model.*;
+import jakarta.servlet.http.HttpServletRequest;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -15,6 +16,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Controller
@@ -56,6 +58,29 @@ public class AdminController {
         List<Faculty> allFaculties = facultyRepository.findAll();
         model.addAttribute("allFaculties", allFaculties);
         return "/admin/faculty-list";
+    }
+    @GetMapping("/searchLecturer")
+    public String searchLecturer(HttpServletRequest request, Model model) {
+        String searchPhrase = request.getParameter("searchPhrase");
+        List<Lecturer> allLecturers = lecturerRepository.findAll();
+        List<Lecturer> lecturersToShow = new ArrayList<>();
+
+        model.addAttribute("allLecturers", allLecturers);
+        return "/admin/lecturer-list";
+    }
+    @GetMapping("/searchStudent")
+    public String searchStudent(HttpServletRequest request, Model model) {
+        model.addAttribute("lecturer", new UserTemplate());
+        List<Faculty> allFaculties = facultyRepository.findAll();
+        model.addAttribute("allFaculties", allFaculties);
+        return "/admin/create-lecturer";
+    }
+    @GetMapping("/searchFaculty")
+    public String searchFaculty(HttpServletRequest request, Model model) {
+        model.addAttribute("lecturer", new UserTemplate());
+        List<Faculty> allFaculties = facultyRepository.findAll();
+        model.addAttribute("allFaculties", allFaculties);
+        return "/admin/create-lecturer";
     }
     @GetMapping("/createLecturer")
     public String createLecturer(Model model) {

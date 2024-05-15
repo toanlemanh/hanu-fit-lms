@@ -14,6 +14,9 @@ public class LecturerDetails implements UserDetails {
     public LecturerDetails(Lecturer lecturer) {
         this.lecturer = lecturer;
     }
+    public String getName() {
+        return lecturer.getName();
+    }
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {

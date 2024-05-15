@@ -23,7 +23,6 @@ public class SecurityCfg {
     SecurityFilterChain filterChain(HttpSecurity http, UserDetailsService myUserDetailsService) throws Exception {
         return http
                 .authorizeHttpRequests(req -> req
-//                        .requestMatchers("/").permitAll()
                         .requestMatchers("/myCourses").hasAnyAuthority("LECTURER", "STUDENT")
                         .requestMatchers("/admin/**").hasAuthority("ADMIN")
                         .anyRequest().authenticated()
