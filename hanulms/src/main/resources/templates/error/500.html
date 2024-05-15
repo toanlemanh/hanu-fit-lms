@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="_layout">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Courses</title>
+    <link rel="stylesheet" th:href="@{/css/bootstrap.css}">
+    <link rel="stylesheet" th:href="@{/css/myCourses.css}">
+    <link rel="stylesheet" th:href="@{/css/shared.css}">
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+    <script th:src="@{/js/myCourses.js}"></script>
+    <script th:src="@{/js/script.js}"></script>
+</head>
+
+<body>
+<div layout:fragment="content" class="container-lg">
+    <div id="path-container">
+        <a href="" class="path">Home</a> /
+    </div>
+    <div id="title-container">
+        <h1>Something went wrong 500! </h1>
+        <h2>Our Engineers are on it</h2>
+        <image src="" />
+        <a th:href="@{/lecturer/course/myCourses.html}">Go Home</a>
+    </div>
+</div>
+</body>
+
+</html>
