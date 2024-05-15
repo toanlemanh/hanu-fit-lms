@@ -28,15 +28,13 @@
 
       <div class="">
         <div class="row my-3">
-          <div class="input-group px-0 d-flex justify-content-center col-8 col-sm-8 col-md-8 col-lg-8 col-xl-8 col-xxl-8">
-            <form action="/searchLecturer" method="get">
-              <button class="btn btn-outline-secondary" type="submit" id="search-btn">
-                <!-- <i class="fa-solid fa-magnifying-glass"></i> -->
-                <i class="bi bi-search h6"></i>
-              </button>
-              <input type="text" class="form-control" placeholder="Search..." name="searchPhrase">
-            </form>
-          </div>
+          <form class="input-group px-0 d-flex justify-content-center col-8 col-sm-8 col-md-8 col-lg-8 col-xl-8 col-xxl-8" th:action="'/admin/searchLecturer'" method="get">
+            <button class="btn btn-outline-secondary" type="submit" id="search-btn">
+              <!-- <i class="fa-solid fa-magnifying-glass"></i> -->
+              <i class="bi bi-search h6"></i>
+            </button>
+            <input type="text" class="form-control" placeholder="Search..." name="searchPhrase">
+          </form>
           <div class="px-0 d-flex justify-content-center col-4 col-sm-4 col-md-4 col-lg-4 col-xl-4 col-xxl-4 ">
             <button th:attr="onclick=|window.location.href = '/admin/createLecturer'|" class="btn create-btn" type="button" id="createAcc-btn">Create New Lecturer</button>
           </div>

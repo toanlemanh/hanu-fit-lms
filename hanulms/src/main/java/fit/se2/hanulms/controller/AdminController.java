@@ -11,10 +11,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -64,23 +61,41 @@ public class AdminController {
         String searchPhrase = request.getParameter("searchPhrase");
         List<Lecturer> allLecturers = lecturerRepository.findAll();
         List<Lecturer> lecturersToShow = new ArrayList<>();
-
-        model.addAttribute("allLecturers", allLecturers);
+        for (Lecturer l : allLecturers) {
+            if (l.getName().toLowerCase().contains(searchPhrase.toLowerCase())) {
+                lecturersToShow.add(l);
+            }
+        }
+        model.addAttribute("allLecturers", lecturersToShow);
         return "/admin/lecturer-list";
     }
     @GetMapping("/searchStudent")
     public String searchStudent(HttpServletRequest request, Model model) {
-        model.addAttribute("lecturer", new UserTemplate());
-        List<Faculty> allFaculties = facultyRepository.findAll();
-        model.addAttribute("allFaculties", allFaculties);
-        return "/admin/create-lecturer";
+        String searchPhrase = request.getParameter("searchPhrase");
+        List<Student> allStudents = studentRepository.findAll();
+        List<Student> studentsToShow = new ArrayList<>();
+        for (Student s : allStudents) {
+            if (s.getName().toLowerCase().contains(searchPhrase.toLowerCase())) {
+                studentsToShow.add(s);
+            }
+        }
+        model.addAttribute("allStudents", studentsToShow);
+        return "/admin/student-list";
     }
     @GetMapping("/searchFaculty")
     public String searchFaculty(HttpServletRequest request, Model model) {
-        model.addAttribute("lecturer", new UserTemplate());
+        String searchPhrase = request.getParameter("searchPhrase");
         List<Faculty> allFaculties = facultyRepository.findAll();
-        model.addAttribute("allFaculties", allFaculties);
-        return "/admin/create-lecturer";
+        List<Faculty> facultiesToShow = new ArrayList<>();
+        for (Faculty f : allFaculties) {
+            if (f.getName().toLowerCase().contains(searchPhrase.toLowerCase()) ||
+                f.getCode().toLowerCase().contains(searchPhrase.toLowerCase())) {
+                facultiesToShow.add(f);
+            }
+        }
+        model.addAttribute("allFaculties", facultiesToShow);
+        return "/admin/faculty-list";
+
     }
     @GetMapping("/createLecturer")
     public String createLecturer(Model model) {
