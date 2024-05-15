@@ -13,6 +13,6 @@ import java.util.List;
 public class HomeController {
     @GetMapping("/")
     public String home() {
-        return "/admin/create-account";
+        return "/homepage";
     }
 }

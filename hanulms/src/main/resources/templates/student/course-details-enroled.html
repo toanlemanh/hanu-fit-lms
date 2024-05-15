@@ -35,9 +35,9 @@
       </div>
       <!-- Setting button -->
       <div class="col-lg-2 col-md-2 col-sm-6 px-5">
-        <button type="button" class="hanu-button border-0 btn btn-danger">
+        <!-- <button type="button" class="hanu-button border-0 btn btn-danger">
           <i class="bi bi-gear-fill"></i>
-        </button>
+        </button> -->
       </div>
     </div>
 
@@ -105,7 +105,7 @@
       </div>
       <h3 class="col-6">Course Resources</h3>
 
-      <div class="col-6 d-flex justify-content-end ">
+      <!-- <div class="col-6 d-flex justify-content-end ">
         <div class="btn-group">
           <button class="btn border-1 border-danger dropdown-toggle px-4" type="button" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-expanded="false">
             Options
@@ -123,7 +123,7 @@
             </li>
           </ul>
         </div>
-      </div>
+      </div> -->
 
       <!-- <div class=""> -->
       <div th:each="aTopic : ${topics}">
@@ -134,7 +134,7 @@
           </div>
           <div class="col-1 mb-2 btn-group">
 
-            <button type="button" class="hanu-button btn btn-danger text-white rounded" data-bs-toggle="dropdown" aria-expanded="false" th:data-name="${aTopic.topicId}" th:onclick="chooseTopicId(this.getAttribute('data-name'))">
+            <!-- <button type="button" class="hanu-button btn btn-danger text-white rounded" data-bs-toggle="dropdown" aria-expanded="false" th:data-name="${aTopic.topicId}" th:onclick="chooseTopicId(this.getAttribute('data-name'))">
               <i class="fs-3 fw-bold bi bi-plus"></i>
             </button>
             <ul class="dropdown-menu">
@@ -146,7 +146,7 @@
               <li><a class="dropdown-item" href="#">Assignment</a></li>
               <li><a class="dropdown-item" href="#">Edit Topic</a></li>
               <li><a class="dropdown-item" href="#">Remove Topic</a></li>
-            </ul>
+            </ul> -->
           </div>
         </div>
         <div th:each="aFile : ${aTopic.file}" class=" card-body hanu-button rounded ">
@@ -172,12 +172,12 @@
 
             <!-- file functional button  -->
             <div class="">
-              <button type="button" onclick="editTopicItem(this)" class="hanu-button rounded p-1 hanu-mark-as-done mx-2" data-bs-toggle="modal" data-bs-target="#topicModal" data-bs-whatever="@mdo">
+              <!-- <button type="button" onclick="editTopicItem(this)" class="hanu-button rounded p-1 hanu-mark-as-done mx-2" data-bs-toggle="modal" data-bs-target="#topicModal" data-bs-whatever="@mdo">
                 Edit
               </button>
               <button type="button" onclick="deleteTopicItem(this)" class="hanu-button rounded p-1 hanu-mark-as-done">
                 Delete
-              </button>
+              </button> -->
             </div>
             </li>
           </ul>

@@ -19,10 +19,10 @@
     <div class="list-accounts container">
       <div class="row path-container mt-3">
         <a href="" class="path">Home</a> /
-        <a href="" class="path">Faculty List</a>
+        <a href="" class="path">Lecturer List</a>
       </div>
       <div class="row title-container my-2">
-        <h3 class="title">FACULTY LIST</h3>
+        <h3 class="title">LECTURER LIST</h3>
       </div>
 
 
@@ -42,31 +42,38 @@
         <div class="row">
           <table class="table table-hover" border="1">
             <tr class="properties">
-              <th>Code</th>
+              <th>ID</th>
               <th>Name</th>
-              <th>Lecturers</th>
-              <th>Students</th>
-              <th>Courses</th>
+              <th>Faculty</th>
+              <th>Email</th>
+              <th>Role</th>
               <th>Update</th>
               <th>Delete</th>
             </tr>
-            <tr th:each="faculty : ${allFaculties}">
+            <tr th:each="lecturer : ${allLecturers}">
+              <!-- <td th:text="${account.id}" />
+                        <td>
+                            <a th:href="'/account/' + ${account.id}" th:text="${account.name}" />
+                        </td>
+                        <td th:text="${account.faculty}" />
+                        <td th:text="${account.email}" />
+                        <td th:text="${account.role}" /> -->
               <td>
-                <p th:text="${faculty.code}"></p>
+                <p th:text="${lecturer.id}"></p>
               </td>
               <td>
-                <p th:text="${faculty.name}"></p>
+                <p th:text="${lecturer.name}"></p>
               </td>
               <td>
-                <p th:text="${#lists.size(faculty.lecturers)}"></p>
+                <p th:text="${lecturer.faculty.name}"></p>
               </td>
               <td>
-                <p th:text="${#lists.size(faculty.students)}"></p>
+                <p th:text="${lecturer.email}"></p>
               </td>
               <td>
-                <p th:text="${#lists.size(faculty.courses)}"></p>
+                <p th:text="${lecturer.role}"></p>
               </td>
-              <td><a th:href="'/admin/editFaculty/' + ${faculty.code}">UPDATE</a></td>
+              <td><a th:href="'/admin/editLecturer/' + ${lecturer.id}">UPDATE</a></td>
 
               <td>
                 <a href="#" data-toggle="modal" data-target="#deleteConfirmModal">DELETE</a>
@@ -77,17 +84,18 @@
                 <div class="modal-dialog" role="document">
                   <div class="modal-content">
                     <div class="modal-header">
-                      <h5 class="modal-title" id="deleteConfirmModalLabel">Confirm Faculty Deletion</h5>
+                      <h5 class="modal-title" id="deleteConfirmModalLabel">Confirm Lecturer
+                        Deletion</h5>
                       <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                       </button>
                     </div>
                     <div class="modal-body">
-                      Are you sure you want to delete this faculty along with all associated lecturers, students, and courses?
+                      Are you sure you want to delete this lecturer?
                     </div>
                     <div class="modal-footer">
                       <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
-                      <a th:href="'/admin/deleteFaculty/' + ${faculty.code}" class="btn delete-btn" id="deleteAccountBtn">Delete Faculty</a>
+                      <a th:href="'/admin/deleteLecturer/' + ${lecturer.id}" class="btn delete-btn" id="deleteAccountBtn">Delete Lecturer</a>
                     </div>
                   </div>
                 </div>

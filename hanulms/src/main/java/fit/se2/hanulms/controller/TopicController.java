@@ -1,13 +1,12 @@
 package fit.se2.hanulms.controller;
 
-import fit.se2.hanulms.Repository.AnnouncementRepository;
-import fit.se2.hanulms.Repository.CourseRepository;
-import fit.se2.hanulms.Repository.FileRepository;
-import fit.se2.hanulms.Repository.TopicRepository;
+import fit.se2.hanulms.Repository.*;
 import fit.se2.hanulms.model.*;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.util.StringUtils;
@@ -32,12 +31,16 @@ public class TopicController {
     CourseRepository courseRepository;
    @Autowired
     AnnouncementRepository announcementRepository;
-
    @Autowired
     FileRepository fileRepository;
+   @Autowired
+   StudentRepository studentRepository;
 
     @RequestMapping(value = "/myCourses/course-details/{code}")
-    public String getCourseDetailById (@PathVariable (value="code") String code, @RequestParam(value="error", required = false, defaultValue = "default") String error, Model model){
+    public String getCourseDetailById (@PathVariable (value="code") String code,
+                                       @RequestParam(value="error", required = false, defaultValue = "default")
+                                       String error, Model model,
+                                       @AuthenticationPrincipal UserDetails userDetails){
         Course course = courseRepository.findById(code).get();
         List<Announcement> announcements = course.getAnnouncements();
         List<Topic> topics = course.getTopics();
@@ -53,7 +56,23 @@ public class TopicController {
         model.addAttribute("topics", topics);
         model.addAttribute("topic", topic);
         model.addAttribute("error", error);
-        return "/lecturer/course-resource/course-details";
+        if (userDetails.getAuthorities().stream().anyMatch(authority -> authority.getAuthority().equals("LECTURER"))) {
+            return "/lecturer/course-resource/course-details";
+        } else if (userDetails.getAuthorities().stream().anyMatch(authority -> authority.getAuthority().equals("STUDENT"))) {
+            List<Student> allStudents = studentRepository.findAll();
+            Student thisStudent = new Student();
+            for (Student student : allStudents) {
+                if (student.getUsername().equals(userDetails.getUsername())) {
+                    thisStudent = student;
+                }
+            }
+            model.addAttribute("thisStudent", thisStudent);
+            if (thisStudent.getCourses().contains(course)) {
+                return "/student/course-details-enroled";
+            }
+            return "/student/course-details-unenroled";
+        }
+        return "redirect:/";
     }
 
    @PostMapping(value="/myCourses/course-details/{code}/create-topic")

@@ -19,13 +19,13 @@
       <div class="row path-container mt-3">
         <a href="" class="path">Home</a> /
         <a href="" class="path">Accounts Management</a> /
-        <a href="" class="path">Edit Student</a>
+        <a href="" class="path">Edit Lecturer</a>
       </div>
       <div class="row title-container my-2">
-        <h3 class="title">EDIT STUDENT</h3>
+        <h3 class="title">EDIT LECTURER</h3>
       </div>
 
-      <form th:action="'/admin/editStudent'" th:object="${student}" method="post">
+      <form th:action="'/admin/editLecturer'" th:object="${lecturer}" method="post">
         <div class="row mb-3">
           <label for="fullName" class="form-label">Full Name</label>
           <input th:field="*{name}" type="text" class="form-control" id="fullName" placeholder="Enter Full Name" required>

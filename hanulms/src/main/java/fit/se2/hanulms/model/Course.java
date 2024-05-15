@@ -19,6 +19,16 @@ public class Course {
     private Faculty faculty;
     @ManyToMany(mappedBy = "courses")
     private List<Lecturer> lecturers;
+    @ManyToMany
+    private List<Student> students;
+
+    public List<Student> getStudents() {
+        return students;
+    }
+
+    public void setStudents(List<Student> students) {
+        this.students = students;
+    }
 
     public String getCourseImage() {
         return courseImage;

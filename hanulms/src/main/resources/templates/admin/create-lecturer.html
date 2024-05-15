@@ -19,13 +19,13 @@
       <div class="row path-container mt-3">
         <a href="" class="path">Home</a> /
         <a href="" class="path">Accounts Management</a> /
-        <a href="" class="path">Edit Student</a>
+        <a href="" class="path">Create new Account</a>
       </div>
       <div class="row title-container my-2">
-        <h3 class="title">EDIT STUDENT</h3>
+        <h3 class="title">CREATE NEW LECTURER</h3>
       </div>
 
-      <form th:action="'/admin/editStudent'" th:object="${student}" method="post">
+      <form th:action="'/admin/createLecturer'" th:object="${lecturer}" method="post">
         <div class="row mb-3">
           <label for="fullName" class="form-label">Full Name</label>
           <input th:field="*{name}" type="text" class="form-control" id="fullName" placeholder="Enter Full Name" required>
@@ -40,7 +40,7 @@
         </div>
         <div class="row mb-3">
           <label for="username" class="form-label">Username</label>
-          <input th:field="*{username}" type="text" class="form-control" id="username" placeholder="Enter Username" required readonly>
+          <input th:field="*{username}" type="text" class="form-control" id="username" placeholder="Enter Username" required>
           <div th:if="${#fields.hasErrors('username')}"
                  th:errorclass="error" th:errors="*{username}"/>
         </div>
@@ -62,8 +62,16 @@
             </select>
           </div>
         </div>
+        <!-- <div class="row mb-3">
+          <label for="role" class="form-label">Role</label>
+          <select class="form-control" id="role">
+            <option selected>Choose...</option>
+            <option value="">Lecturer</option>
+            <option value="">Student</option>
+          </select>
+        </div> -->
         <div class="row mb-3">
-          <button type="submit" class="btn btn-outline-secondary mb-3 px-5 py-2">Save</button>
+          <button type="submit" class="btn btn-outline-secondary mb-3 px-5 py-2">Create</button>
         </div>
 
       </form>

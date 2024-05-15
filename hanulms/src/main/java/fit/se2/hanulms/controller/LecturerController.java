@@ -2,10 +2,13 @@ package fit.se2.hanulms.controller;
 
 import fit.se2.hanulms.Repository.*;
 import fit.se2.hanulms.model.*;
+import jakarta.servlet.http.HttpServletRequest;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -32,14 +35,21 @@ public class LecturerController {
     TopicRepository topicRepository;
 
     @Autowired
+    StudentRepository studentRepository;
+    @Autowired
     AnnouncementRepository announcementRepository;
 
     @GetMapping(value = "/myCourses")
-    public String myCourses(Model model) {
+    public String myCourses(Model model, @AuthenticationPrincipal UserDetails userDetails) {
         List<Course> courses = courseRepository.findAll();
         model.addAttribute("courses", courses);
         model.addAttribute("message", "");
-        return "/lecturer/course/myCourses";
+        if (userDetails.getAuthorities().stream().anyMatch(authority -> authority.getAuthority().equals("LECTURER"))) {
+            return "/lecturer/course/myCourses";
+        } else if (userDetails.getAuthorities().stream().anyMatch(authority -> authority.getAuthority().equals("STUDENT"))) {
+            return "/student/myCourses";
+        }
+        return "redirect:/";
     }
     @GetMapping(value = "/myCourses/{messageType}/{courseCode}")
     public String myCoursesSuccess(@PathVariable(value = "messageType") String messageType,
@@ -389,5 +399,23 @@ public class LecturerController {
         model.addAttribute("searchPhrase", "");
         model.addAttribute("numberOfFoundCourses", foundCourses.size());
         return "searchResult";
+    }
+    @PostMapping(value = "/enrol")
+    public String enrol(HttpServletRequest request, Model model) {
+        String enrolmentKey = request.getParameter("enrolmentKey");
+        String courseCode = request.getParameter("courseCode");
+        Long studentId = Long.valueOf(request.getParameter("studentId"));
+        System.out.println("EnrolKey: " + enrolmentKey);
+        System.out.println("CourseCode: " + courseCode);
+        System.out.println("StudentID: " + studentId);
+        Course thisCourse = courseRepository.getReferenceById(courseCode);
+        Student thisStudent = studentRepository.getReferenceById(studentId);
+        if (thisCourse.getEnrolmentKey().equals(enrolmentKey)) {
+            thisStudent.getCourses().add(thisCourse);
+            studentRepository.save(thisStudent);
+            thisCourse.getStudents().add(thisStudent);
+            courseRepository.save(thisCourse);
+        }
+        return "redirect:/myCourses/course-details/" + courseCode;
     }
 }
