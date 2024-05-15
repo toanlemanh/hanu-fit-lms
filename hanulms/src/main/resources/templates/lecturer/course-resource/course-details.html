@@ -118,408 +118,397 @@
       </button>
     </div>
     <!-- Right-top-teacher -->
-    <div class="col-lg-4 col-md-3 col-sm-12">
-      <div class="d-flex flex-column">
-        <div class="d-flex flex-row flex-nowrap align-items-center px-4">
-          <img id="avatar" class="img-fluid d-flex rounded-circle mx-3" src="../../static/images/HANU.png" alt="avatar" />
-          <p class="">Le Manh Toan</p>
-        </div>
-
-        <div id="top-teacher" class="mt-3 text-wrap px-4">
-          <button type="button" class="top-teacher-button rounded-pill p-1">
-            Top teacher
-          </button>
-        </div>
-      </div>
-    </div>
     <!-- End Right-top-teacher -->
-  </div>
-  <!-- Emd Slider -->
+    <!-- Emd Slider -->
 
-  <div class="row gy-3">
-    <div class="mb-3 fs-6 text-truncate">
-      <!-- Announcements and course content goes here -->
-      <h3>Course Announcements</h3>
+    <div class="row gy-3">
+      <div class="mb-3 fs-6 text-truncate">
+        <!-- Announcements and course content goes here -->
+        <h3>Course Announcements</h3>
 
-      <div class="mb-3 fs-6 py-3">
+        <div class="mb-3 fs-6 py-3">
 
-        <ul th:each="anAnnouncement : ${announcements}">
-          <li class="fs-3 fw-semi-bold" th:text="${anAnnouncement.announcementTitle}" />
-          <p th:text="${anAnnouncement.announcementDescription}" />
-          <a class="d-block" th:if="${anAnnouncement.attachment != null }" th:href="@{'/images/'+${anAnnouncement.attachment}}">More details</a>
-        </ul>
-        <p />
-      </div>
-    </div>
-    <h3 class="col-6">Course Resources</h3>
-
-    <div class="col-6 d-flex justify-content-end ">
-      <div class="btn-group">
-        <button class="btn border-1 border-danger dropdown-toggle px-4" type="button" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-expanded="false">
-          Options
-        </button>
-        <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-          <li>
-            <button class="dropdown-item" data-bs-toggle="modal" data-bs-target="#topicModal" data-bs-whatever="@mdo">
-              Create new Topic
-            </button>
-          </li>
-          <li>
-            <button class="dropdown-item" data-bs-toggle="modal" data-bs-target="#announcementModal">
-              Create new announcement
-            </button>
-          </li>
-        </ul>
-      </div>
-    </div>
-
-    <!-- <div class=""> -->
-    <div th:each="aTopic : ${topics}">
-      <div class="row" style="padding-left: 11px;">
-        <div class="col-11 card-header mb-2 hanu-button rounded">
-          <strong class="text-white font-bold" th:text="${aTopic.topicName}" />
-
+          <ul th:each="anAnnouncement : ${announcements}">
+            <li class="fs-3 fw-semi-bold" th:text="${anAnnouncement.announcementTitle}" />
+            <p th:text="${anAnnouncement.announcementDescription}" />
+            <a class="d-block" th:if="${anAnnouncement.attachment != null }" th:href="@{'/images/'+${anAnnouncement.attachment}}">More details</a>
+          </ul>
+          <p />
         </div>
-        <div class="col-1 mb-2 btn-group">
+      </div>
+      <h3 class="col-6">Course Resources</h3>
 
-          <button type="button" class="hanu-button btn btn-danger text-white rounded" data-bs-toggle="dropdown" aria-expanded="false" th:data-name="${aTopic.topicId}" th:onclick="chooseTopicId(this.getAttribute('data-name'))">
-            <i class="fs-3 fw-bold bi bi-plus"></i>
+      <div class="col-6 d-flex justify-content-end ">
+        <div class="btn-group">
+          <button class="btn border-1 border-danger dropdown-toggle px-4" type="button" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-expanded="false">
+            Options
           </button>
-          <ul class="dropdown-menu">
+          <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
             <li>
-              <button class="dropdown-item" data-bs-toggle="modal" data-bs-target="#uploadModal" data-bs-whatever="@mdo">
-                Upload file
+              <button class="dropdown-item" data-bs-toggle="modal" data-bs-target="#topicModal" data-bs-whatever="@mdo">
+                Create new Topic
               </button>
             </li>
-            <li><button class="dropdown-item" data-bs-toggle="modal" data-bs-target="#assignmentModal" data-bs-whatever="@mdo">Create assignment</button></li>
-            <li><a class="dropdown-item" href="#">Edit Topic</a></li>
-            <li><a class="dropdown-item" href="#">Remove Topic</a></li>
+            <li>
+              <button class="dropdown-item" data-bs-toggle="modal" data-bs-target="#announcementModal">
+                Create new announcement
+              </button>
+            </li>
           </ul>
         </div>
       </div>
-      <div th:each="aFile : ${aTopic.file}" class="card-body hanu-button ">
-        <!--           List of files -->
-        <ul class="rounded">
-          <li class="list-unstyled d-flex justify-content-between align-items-center" />
-          <div class="">
-            <i th:if="${aFile.type == 'Video'}" class="mx-3 fs-1 text-primary bi bi-file-play"></i>
-            <i th:if="${aFile.type == 'Image'}" class="mx-3 fs-1 text-primary bi bi-image"></i>
-            <i th:if="${aFile.type == 'Document'}" class="mx-3 fs-1 text-primary bi bi-file-earmark-check-fill"></i>
-            <i th:if="${aFile.type == 'File'}" class="mx-3 fs-1 text-primary bi bi-file-zip-fill"></i>
-            <i th:if="${aFile.type == 'Slides'}" class="mx-3 fs-1 text-primary bi bi-file-earmark-ppt-fill"></i>
-            <div class="d-inline-block">
-              <p class="d-block fw-bold hanu-color mb-0" th:text="${aFile.type}" />
-              <a class="d-block fw-bold hanu-color" th:text="${aFile.fileName}" th:href="@{'/images/' + ${aFile.fileLink}}" />
-            </div>
+
+      <!-- <div class=""> -->
+      <div th:each="aTopic : ${topics}">
+        <div class="row" style="padding-left: 11px;">
+          <div class="col-11 card-header mb-2 hanu-button rounded">
+            <strong class="text-white font-bold" th:text="${aTopic.topicName}" />
+
           </div>
-      </div>
+          <div class="col-1 mb-2 btn-group">
 
-      <!-- file functional button  -->
-      <div class="">
-        <button type="button" class="hanu-button rounded p-1 hanu-mark-as-done mx-2" data-bs-toggle="modal" data-bs-target="#editUploadModal" th:data-name="${aFile.fileId}" th:onclick="chooseItemId(this.getAttribute('data-name'))" data-bs-whatever="@mdo">
-          Edit
-        </button>
-        <button type="button" th:if="${aFile != null}" th:data-name="${aFile.fileId}" th:onclick="deleteTopicItem('file',this.getAttribute('data-name'))" class="hanu-button rounded p-1 hanu-mark-as-done">
-          Delete
-        </button>
-
-      </div>
-      </li>
-      </ul>
-      <!-- Edit Upload File Modal-->
-      <div id="editUploadModal" class="modal" tabindex="-1">
-        <div class="modal-dialog">
-          <div class="modal-content">
-            <div class="modal-header">
-              <h5 class="modal-title">Edit file</h5>
-              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <div class="modal-body ">
-              <form id="edit-upload-file-form" enctype="multipart/form-data" class="row g-3" th:object="${fileDTO}" method="post" th:action="'/myCourses/course-details/'+${course.code}">
-                <label class="form-label" for="title">Title</label>
-                <input class="form-control" id="edit-file-title" type="text" th:value="${aFile.fileName}" th:placeholder="${aFile.fileName}" th:field="*{fileTitle}" required />
-                <label class="form-label" for="file">Change file</label>
-                <input class="form-control" id="edit-file-data" type="file" th:field="*{fileData}" required />
-                <select required class="form-select col" id="file-type-input" th:field="*{type}">
-                  <option th:value="${aFile.type}" selected>Select file type</option>
-                  <option value="Image">Image</option>
-                  <option value="Video">Video</option>
-                  <option value="File">Zip</option>
-                  <option value="Document">Doc</option>
-                  <option value="Slides">Slides</option>
-                </select>
-                <div class="modal-footer">
-                  <button type="button" class="btn btn-danger hanu-button" data-bs-dismiss="modal">
-                    Cancel
-                  </button>
-                  <button type="submit" th:onclick="editFileForm(event)" class="btn btn-danger hanu-button">Edit</button>
-                </div>
-              </form>
-            </div>
+            <button type="button" class="hanu-button btn btn-danger text-white rounded" data-bs-toggle="dropdown" aria-expanded="false" th:data-name="${aTopic.topicId}" th:onclick="chooseTopicId(this.getAttribute('data-name'))">
+              <i class="fs-3 fw-bold bi bi-plus"></i>
+            </button>
+            <ul class="dropdown-menu">
+              <li>
+                <button class="dropdown-item" data-bs-toggle="modal" data-bs-target="#uploadModal" data-bs-whatever="@mdo">
+                  Upload file
+                </button>
+              </li>
+              <li><button class="dropdown-item" data-bs-toggle="modal" data-bs-target="#assignmentModal" data-bs-whatever="@mdo">Create assignment</button></li>
+              <li><a class="dropdown-item" href="#">Edit Topic</a></li>
+              <li><a class="dropdown-item" href="#">Remove Topic</a></li>
+            </ul>
           </div>
         </div>
-      </div>
-      <!--    Edit file modal-->
-
-
-    </div>
-    <!--          Assignment File -->
-    <div th:each="anAssignment : ${aTopic.assignments}" class=" card-body hanu-button ">
-      <ul class="rounded">
-        <li class="list-unstyled d-flex justify-content-between align-items-center">
-          <div class="d-flex flex-row">
-            <i class="mx-3 fs-1 text-primary bi bi-file-play"></i>
-            <div class="d-inline-block">
-              <p class="d-block fw-bold hanu-color mb-0" th:text="${anAssignment.assTitle}" />
-              <a class="d-block fw-bold hanu-color" th:text="${anAssignment.assDescription}" th:href="@{'/images/' + ${anAssignment.attachment}}" />
-              <p class="d-block fw-bold hanu-color " th:text="${anAssignment.deadline}" />
+        <div th:each="aFile : ${aTopic.file}" class="card-body hanu-button ">
+          <!--           List of files -->
+          <ul class="rounded">
+            <li class="list-unstyled d-flex justify-content-between align-items-center" />
+            <div class="">
+              <i th:if="${aFile.type == 'Video'}" class="mx-3 fs-1 text-primary bi bi-file-play"></i>
+              <i th:if="${aFile.type == 'Image'}" class="mx-3 fs-1 text-primary bi bi-image"></i>
+              <i th:if="${aFile.type == 'Document'}" class="mx-3 fs-1 text-primary bi bi-file-earmark-check-fill"></i>
+              <i th:if="${aFile.type == 'File'}" class="mx-3 fs-1 text-primary bi bi-file-zip-fill"></i>
+              <i th:if="${aFile.type == 'Slides'}" class="mx-3 fs-1 text-primary bi bi-file-earmark-ppt-fill"></i>
+              <div class="d-inline-block">
+                <p class="d-block fw-bold hanu-color mb-0" th:text="${aFile.type}" />
+                <a class="d-block fw-bold hanu-color" th:text="${aFile.fileName}" th:href="@{'/images/' + ${aFile.fileLink}}" />
+              </div>
             </div>
-          </div>
+          </ul>
+        </div>
 
-          <!-- file functional button  -->
-          <div class="">
-            <button type="button" class="hanu-button rounded p-1 hanu-mark-as-done mx-2" data-bs-toggle="modal" th:data-name="${anAssignment.assignmentId}" th:onclick="chooseItemId(this.getAttribute('data-name'))" data-bs-target="#editAssignmentModal" data-bs-whatever="@mdo">
-              Edit
-            </button>
+        <!-- file functional button  -->
+        <div class="">
+          <button type="button" class="hanu-button rounded p-1 hanu-mark-as-done mx-2" data-bs-toggle="modal" data-bs-target="#editUploadModal" th:data-name="${aFile.fileId}" th:onclick="chooseItemId(this.getAttribute('data-name'))" data-bs-whatever="@mdo">
+            Edit
+          </button>
+          <button type="button" th:if="${aFile != null}" th:data-name="${aFile.fileId}" th:onclick="deleteTopicItem('file',this.getAttribute('data-name'))" class="hanu-button rounded p-1 hanu-mark-as-done">
+            Delete
+          </button>
 
-            <button type="button" th:if="${anAssignment != null || aFile != null}" th:data-name="${anAssignment.assignmentId}" th:onclick="deleteTopicItem('assignment',this.getAttribute('data-name'))" class="hanu-button rounded p-1 hanu-mark-as-done">
-              Delete
-            </button>
-          </div>
-          <!--            Edit Assignment Modal -->
-          <div class="modal fade" id="editAssignmentModal" tabindex="-1" aria-labelledby="editAssignmentModalLabel" aria-hidden="true">
-            <div class="modal-dialog">
-              <div class="modal-content">
-                <div class="modal-header">
-                  <h5 class="modal-title" id="editAssignmentModalLabel">Update Assignment</h5>
-                  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body">
-                  <form id="edit-assignment-form" enctype="multipart/form-data" method="post" th:object="${assignmentDTO}" th:action="'/myCourses/course-details/'+${course.code}">
-                    <div class="mb-3">
-                      <label for="editAssignmentTitle" class="col-form-label">Update Title</label>
-                      <input type="text" class="form-control" id="editAssignmentTitle" th:field="*{assTitle}" />
-                    </div>
-                    <div class="mb-3">
-                      <label for="edit-message-text" class="col-form-label">Update Description</label>
-                      <textarea class="form-control" id="edit-message-text" th:field="*{assDescription}" />
-                    </div>
-                    <div class="mb-3">
-                      <label for="edit-assignment-attachment" class="col-form-label">Update Attachment</label>
-                      <input type="file" class="form-control" id="edit-assignment-attachment" th:field="*{attachment}" required />
-                    </div>
-                    <div class="mb-3">
-                      <label for="edit-assignment-deadline" class="col-form-label">Date</label>
-                      <input type="date" class="form-control" id="edit-assignment-deadline" th:field="*{deadline}" required />
-                    </div>
-                    <div class="modal-footer">
-                      <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                      <button type="submit" th:data-name="${anAssignment.assignmentId}" th:onclick="editAssignmentForm(event, this.getAttribute('data-name'))" class="btn btn-primary">Update</button>
-                    </div>
-                  </form>
-
-                </div>
-
+        </div>
+        </li>
+        </ul>
+        <!-- Edit Upload File Modal-->
+        <div id="editUploadModal" class="modal" tabindex="-1">
+          <div class="modal-dialog">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h5 class="modal-title">Edit file</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+              </div>
+              <div class="modal-body ">
+                <form id="edit-upload-file-form" enctype="multipart/form-data" class="row g-3" th:object="${fileDTO}" method="post" th:action="'/myCourses/course-details/'+${course.code}">
+                  <label class="form-label" for="title">Title</label>
+                  <input class="form-control" id="edit-file-title" type="text" th:value="${aFile.fileName}" th:placeholder="${aFile.fileName}" th:field="*{fileTitle}" required />
+                  <label class="form-label" for="file">Change file</label>
+                  <input class="form-control" id="edit-file-data" type="file" th:field="*{fileData}" required />
+                  <select required class="form-select col" id="file-type-input" th:field="*{type}">
+                    <option th:value="${aFile.type}" selected>Select file type</option>
+                    <option value="Image">Image</option>
+                    <option value="Video">Video</option>
+                    <option value="File">Zip</option>
+                    <option value="Document">Doc</option>
+                    <option value="Slides">Slides</option>
+                  </select>
+                  <div class="modal-footer">
+                    <button type="button" class="btn btn-danger hanu-button" data-bs-dismiss="modal">
+                      Cancel
+                    </button>
+                    <button type="submit" th:onclick="editFileForm(event)" class="btn btn-danger hanu-button">Edit</button>
+                  </div>
+                </form>
               </div>
             </div>
           </div>
-          <!--            End edit assignment modal-->
-        </li>
+        </div>
+        <!--    Edit file modal-->
 
 
-      </ul>
+        <!--          Assignment File -->
+        <div th:each="anAssignment : ${aTopic.assignments}" class=" card-body hanu-button ">
+          <ul class="rounded">
+            <li class="list-unstyled d-flex justify-content-between align-items-center">
+              <div class="d-flex flex-row">
+                <i class="mx-3 fs-1 text-primary bi bi-file-play"></i>
+                <div class="d-inline-block">
+                  <p class="d-block fw-bold hanu-color mb-0" th:text="${anAssignment.assTitle}" />
+                  <a class="d-block fw-bold hanu-color" th:text="${anAssignment.assDescription}" th:href="@{'/images/' + ${anAssignment.attachment}}" />
+                  <p class="d-block fw-bold hanu-color " th:text="${anAssignment.deadline}" />
+                </div>
+              </div>
+
+              <!-- file functional button  -->
+              <div class="">
+                <button type="button" class="hanu-button rounded p-1 hanu-mark-as-done mx-2" data-bs-toggle="modal" th:data-name="${anAssignment.assignmentId}" th:onclick="chooseItemId(this.getAttribute('data-name'))" data-bs-target="#editAssignmentModal" data-bs-whatever="@mdo">
+                  Edit
+                </button>
+
+                <button type="button" th:if="${anAssignment != null || aFile != null}" th:data-name="${anAssignment.assignmentId}" th:onclick="deleteTopicItem('assignment',this.getAttribute('data-name'))" class="hanu-button rounded p-1 hanu-mark-as-done">
+                  Delete
+                </button>
+              </div>
+              <!--            Edit Assignment Modal -->
+              <div class="modal fade" id="editAssignmentModal" tabindex="-1" aria-labelledby="editAssignmentModalLabel" aria-hidden="true">
+                <div class="modal-dialog">
+                  <div class="modal-content">
+                    <div class="modal-header">
+                      <h5 class="modal-title" id="editAssignmentModalLabel">Update Assignment</h5>
+                      <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                      <form id="edit-assignment-form" enctype="multipart/form-data" method="post" th:object="${assignmentDTO}" th:action="'/myCourses/course-details/'+${course.code}">
+                        <div class="mb-3">
+                          <label for="editAssignmentTitle" class="col-form-label">Update Title</label>
+                          <input type="text" class="form-control" id="editAssignmentTitle" th:field="*{assTitle}" />
+                        </div>
+                        <div class="mb-3">
+                          <label for="edit-message-text" class="col-form-label">Update Description</label>
+                          <textarea class="form-control" id="edit-message-text" th:field="*{assDescription}" />
+                        </div>
+                        <div class="mb-3">
+                          <label for="edit-assignment-attachment" class="col-form-label">Update Attachment</label>
+                          <input type="file" class="form-control" id="edit-assignment-attachment" th:field="*{attachment}" required />
+                        </div>
+                        <div class="mb-3">
+                          <label for="edit-assignment-deadline" class="col-form-label">Date</label>
+                          <input type="date" class="form-control" id="edit-assignment-deadline" th:field="*{deadline}" required />
+                        </div>
+                        <div class="modal-footer">
+                          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                          <button type="submit" th:data-name="${anAssignment.assignmentId}" th:onclick="editAssignmentForm(event, this.getAttribute('data-name'))" class="btn btn-primary">Update</button>
+                        </div>
+                      </form>
+
+                    </div>
+
+                  </div>
+                </div>
+              </div>
+              <!--            End edit assignment modal-->
+            </li>
+
+
+          </ul>
+
+        </div>
+      </div>
 
     </div>
-  </div>
-  <!-- </div> -->
-  </div>
+    <!-- </div> -->
 
-  <!-- 
+    <!-- 
       Modal
      -->
-  <!--    Assignment modal-->
-  <div class="modal fade" id="assignmentModal" tabindex="-1" aria-labelledby="assignmentModalLabel" aria-hidden="true">
-    <div class="modal-dialog">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h5 class="modal-title" id="assignmentModalLabel">New message</h5>
-          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-        </div>
-        <div class="modal-body">
-          <form id="assignment-form" enctype="multipart/form-data" method="post" th:object="${assignmentDTO}" th:action="'/myCourses/course-details/'+${course.code}">
-            <h3>Create assignment</h3>
-            <div class="mb-3">
-              <label for="assignmentTitle" class="col-form-label">Title</label>
-              <input type="text" class="form-control" id="assignmentTitle" th:field="*{assTitle}" />
-            </div>
-            <div class="mb-3">
-              <label th:for="*{assDescription}" class="col-form-label">Description</label>
-              <textarea class="form-control" th:id="*{assDescription}" th:field="*{assDescription}" />
-            </div>
-            <div class="mb-3">
-              <label for="attachment-text" class="col-form-label">Attachment</label>
-              <input type="file" class="form-control" id="attachment-text" th:field="*{attachment}" />
-            </div>
-            <div class="mb-3">
-              <label for="date-text" class="col-form-label">Date</label>
-              <input type="date" class="form-control" id="date-text" th:field="*{deadline}" required />
-            </div>
-            <div class="modal-footer">
-              <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-              <button type="submit" onclick="submitAssignmentForm(event)" class="btn btn-primary">Create</button>
-            </div>
-          </form>
+    <!--    Assignment modal-->
+    <div class="modal fade" id="assignmentModal" tabindex="-1" aria-labelledby="assignmentModalLabel" aria-hidden="true">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="assignmentModalLabel">New message</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div class="modal-body">
+            <form id="assignment-form" enctype="multipart/form-data" method="post" th:object="${assignmentDTO}" th:action="'/myCourses/course-details/'+${course.code}">
+              <h3>Create assignment</h3>
+              <div class="mb-3">
+                <label for="assignmentTitle" class="col-form-label">Title</label>
+                <input type="text" class="form-control" id="assignmentTitle" th:field="*{assTitle}" />
+              </div>
+              <div class="mb-3">
+                <label th:for="*{assDescription}" class="col-form-label">Description</label>
+                <textarea class="form-control" th:id="*{assDescription}" th:field="*{assDescription}" />
+              </div>
+              <div class="mb-3">
+                <label for="attachment-text" class="col-form-label">Attachment</label>
+                <input type="file" class="form-control" id="attachment-text" th:field="*{attachment}" />
+              </div>
+              <div class="mb-3">
+                <label for="date-text" class="col-form-label">Date</label>
+                <input type="date" class="form-control" id="date-text" th:field="*{deadline}" required />
+              </div>
+              <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                <button type="submit" onclick="submitAssignmentForm(event)" class="btn btn-primary">Create</button>
+              </div>
+            </form>
+
+          </div>
 
         </div>
-
       </div>
     </div>
-  </div>
-  <!--    End assignment modal-->
-  <!-- Topic -->
-  <div class="modal fade" id="topicModal" tabindex="-1" aria-labelledby="topicModalLabel" aria-hidden="true">
-    <div class="modal-dialog">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h5 class="modal-title" id="topicModalLabel">New Topic</h5>
-          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-        </div>
-        <div class="modal-body">
-          <form id="create-topic-form" method="post" th:object="${topic}" th:action="'/myCourses/course-details/'+${course.code}+'/create-topic'">
-            <div class="mb-3">
-              <label for="topic-recipient-name" class="col-form-label">Title:</label>
-              <input type="text" class="form-control" id="topic-recipient-name" th:field="*{topicName}" required />
-            </div>
-            <div class="mb-3">
-              <label for="topic-message-text" class="col-form-label">Description:</label>
-              <textarea class="form-control" id="topic-message-text" th:field="*{topicDescription}" required></textarea>
-            </div>
+    <!--    End assignment modal-->
+    <!-- Topic -->
+    <div class="modal fade" id="topicModal" tabindex="-1" aria-labelledby="topicModalLabel" aria-hidden="true">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="topicModalLabel">New Topic</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div class="modal-body">
+            <form id="create-topic-form" method="post" th:object="${topic}" th:action="'/myCourses/course-details/'+${course.code}+'/create-topic'">
+              <div class="mb-3">
+                <label for="topic-recipient-name" class="col-form-label">Title:</label>
+                <input type="text" class="form-control" id="topic-recipient-name" th:field="*{topicName}" required />
+              </div>
+              <div class="mb-3">
+                <label for="topic-message-text" class="col-form-label">Description:</label>
+                <textarea class="form-control" id="topic-message-text" th:field="*{topicDescription}" required></textarea>
+              </div>
 
-            <div class="modal-footer">
-              <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
-                Close
+              <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+                  Close
+                </button>
+                <button type="submit" class="btn btn-danger">Submit</button>
+              </div>
+            </form>
+
+          </div>
+
+        </div>
+      </div>
+    </div>
+
+    <!-- Announcement -->
+    <div class="modal fade" id="announcementModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalLabel">New Announcement</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div class="modal-body">
+            <form enctype="multipart/form-data" id="create-announcement-form" th:method="post" th:object="${announcementDTO}" th:action="'/myCourses/course-details/'+${course.code}+'/create-announcement'">
+              <div class="mb-3">
+                <label for="recipient-name" class="col-form-label">Title:</label>
+                <input type="text" class="form-control" id="announcement-recipient-name" th:field="*{announcementTitle}" />
+              </div>
+              <div class="mb-3">
+                <label for="announcement-message-text" class="col-form-label">Description:</label>
+                <textarea class="form-control" id="announcement-message-text" th:field="*{announcementDescription}"></textarea>
+              </div>
+              <div class="mb-3">
+                <label for="recipient-name" class="col-form-label">Image:</label>
+                <input type="file" class="form-control" id="recipient-name" th:field="*{attachment}" accept="image/png, image/jpeg" />
+              </div>
+              <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+                  Close
+                </button>
+                <button type="submit" class="btn btn-danger">Submit</button>
+              </div>
+            </form>
+          </div>
+
+        </div>
+      </div>
+    </div>
+
+    <!-- Type Upload modal -->
+    <div id="uploadModal" class="modal" tabindex="-1">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title">Type of uploaded file</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div class="modal-body d-flex flex-row justify-content-between">
+            <div class="upload-file-container">
+              <button data-bs-toggle="modal" data-bs-target="#createUploadModal" data-bs-whatever="@mdo" onclick="chooseUploadType('Image')" class="btn btn-primary rounded-circle">
+                <i class="bi bi-image"></i>
               </button>
-              <button type="submit" class="btn btn-danger">Submit</button>
+              <span class="d-block text-center">Image</span>
             </div>
-          </form>
-
-        </div>
-
-      </div>
-    </div>
-  </div>
-
-  <!-- Announcement -->
-  <div class="modal fade" id="announcementModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h5 class="modal-title" id="exampleModalLabel">New Announcement</h5>
-          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-        </div>
-        <div class="modal-body">
-          <form enctype="multipart/form-data" id="create-announcement-form" th:method="post" th:object="${announcementDTO}" th:action="'/myCourses/course-details/'+${course.code}+'/create-announcement'">
-            <div class="mb-3">
-              <label for="recipient-name" class="col-form-label">Title:</label>
-              <input type="text" class="form-control" id="announcement-recipient-name" th:field="*{announcementTitle}" />
-            </div>
-            <div class="mb-3">
-              <label for="announcement-message-text" class="col-form-label">Description:</label>
-              <textarea class="form-control" id="announcement-message-text" th:field="*{announcementDescription}"></textarea>
-            </div>
-            <div class="mb-3">
-              <label for="recipient-name" class="col-form-label">Image:</label>
-              <input type="file" class="form-control" id="recipient-name" th:field="*{attachment}" accept="image/png, image/jpeg" />
-            </div>
-            <div class="modal-footer">
-              <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
-                Close
+            <div class="upload-file-container">
+              <button data-bs-toggle="modal" data-bs-target="#createUploadModal" data-bs-whatever="@mdo" onclick="chooseUploadType('Document')" class="btn btn-danger rounded-circle">
+                <i class="bi bi-file-earmark-check-fill"></i>
               </button>
-              <button type="submit" class="btn btn-danger">Submit</button>
+              <span class="d-block text-center">doc</span>
             </div>
-          </form>
-        </div>
-
-      </div>
-    </div>
-  </div>
-
-  <!-- Type Upload modal -->
-  <div id="uploadModal" class="modal" tabindex="-1">
-    <div class="modal-dialog">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h5 class="modal-title">Type of uploaded file</h5>
-          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-        </div>
-        <div class="modal-body d-flex flex-row justify-content-between">
-          <div class="upload-file-container">
-            <button data-bs-toggle="modal" data-bs-target="#createUploadModal" data-bs-whatever="@mdo" onclick="chooseUploadType('Image')" class="btn btn-primary rounded-circle">
-              <i class="bi bi-image"></i>
-            </button>
-            <span class="d-block text-center">Image</span>
-          </div>
-          <div class="upload-file-container">
-            <button data-bs-toggle="modal" data-bs-target="#createUploadModal" data-bs-whatever="@mdo" onclick="chooseUploadType('Document')" class="btn btn-danger rounded-circle">
-              <i class="bi bi-file-earmark-check-fill"></i>
-            </button>
-            <span class="d-block text-center">doc</span>
-          </div>
-          <div class="upload-file-container">
-            <button data-bs-toggle="modal" data-bs-target="#createUploadModal" data-bs-whatever="@mdo" onclick="chooseUploadType('Video')" class="btn btn-secondary rounded-circle">
-              <i class="bi bi-file-play"></i>
-            </button>
-            <span class="d-block text-center">video</span>
-          </div>
-          <div class="upload-file-container">
-            <button data-bs-toggle="modal" data-bs-target="#createUploadModal" data-bs-whatever="@mdo" onclick="chooseUploadType('File')" class="btn btn-success rounded-circle">
-              <i class="bi bi-file-zip-fill"></i>
-            </button>
-            <span class="d-block text-center">zip</span>
-          </div>
-          <div class="upload-file-container">
-            <button data-bs-toggle="modal" data-bs-target="#createUploadModal" data-bs-whatever="@mdo" onclick="chooseUploadType('Slides')" class="btn btn-warning rounded-circle">
-              <i class="bi bi-file-earmark-ppt-fill"></i>
-            </button>
-            <span class="d-block text-center">slides</span>
-          </div>
-        </div>
-
-        <div class="modal-footer">
-          <button type="button" class="btn btn-danger hanu-button" data-bs-dismiss="modal">
-            Cancel
-          </button>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <!-- End Type Upload Modal -->
-  <!--    Upload modal-->
-  <div id="createUploadModal" class="modal" tabindex="-1">
-    <div class="modal-dialog">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h5 class="modal-title">uploaded file</h5>
-          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-        </div>
-        <div class="modal-body ">
-          <form id="upload-file-form" enctype="multipart/form-data" class="row g-3" th:object="${fileDTO}" method="post" th:action="'/myCourses/course-details/'+${course.code}">
-            <label class="form-label" for="title">Title</label>
-            <input class="form-control" type="text" id="title" placeholder="Topic item title" th:field="*{fileTitle}" required />
-            <label class="form-label" for="file">Upload</label>
-            <input class="form-control" type="file" id="file" th:field="*{fileData}" required />
-            <div class="modal-footer">
-              <button type="button" class="btn btn-danger hanu-button" data-bs-dismiss="modal">
-                Cancel
+            <div class="upload-file-container">
+              <button data-bs-toggle="modal" data-bs-target="#createUploadModal" data-bs-whatever="@mdo" onclick="chooseUploadType('Video')" class="btn btn-secondary rounded-circle">
+                <i class="bi bi-file-play"></i>
               </button>
-              <button type="submit" onclick="uploadForm(event)" class="btn btn-danger hanu-button">Submit</button>
+              <span class="d-block text-center">video</span>
             </div>
-          </form>
+            <div class="upload-file-container">
+              <button data-bs-toggle="modal" data-bs-target="#createUploadModal" data-bs-whatever="@mdo" onclick="chooseUploadType('File')" class="btn btn-success rounded-circle">
+                <i class="bi bi-file-zip-fill"></i>
+              </button>
+              <span class="d-block text-center">zip</span>
+            </div>
+            <div class="upload-file-container">
+              <button data-bs-toggle="modal" data-bs-target="#createUploadModal" data-bs-whatever="@mdo" onclick="chooseUploadType('Slides')" class="btn btn-warning rounded-circle">
+                <i class="bi bi-file-earmark-ppt-fill"></i>
+              </button>
+              <span class="d-block text-center">slides</span>
+            </div>
+          </div>
+
+          <div class="modal-footer">
+            <button type="button" class="btn btn-danger hanu-button" data-bs-dismiss="modal">
+              Cancel
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- End Type Upload Modal -->
+    <!--    Upload modal-->
+    <div id="createUploadModal" class="modal" tabindex="-1">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title">uploaded file</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div class="modal-body ">
+            <form id="upload-file-form" enctype="multipart/form-data" class="row g-3" th:object="${fileDTO}" method="post" th:action="'/myCourses/course-details/'+${course.code}">
+              <label class="form-label" for="title">Title</label>
+              <input class="form-control" type="text" id="title" placeholder="Topic item title" th:field="*{fileTitle}" required />
+              <label class="form-label" for="file">Upload</label>
+              <input class="form-control" type="file" id="file" th:field="*{fileData}" required />
+              <div class="modal-footer">
+                <button type="button" class="btn btn-danger hanu-button" data-bs-dismiss="modal">
+                  Cancel
+                </button>
+                <button type="submit" onclick="uploadForm(event)" class="btn btn-danger hanu-button">Submit</button>
+              </div>
+            </form>
+          </div>
         </div>
       </div>
     </div>
   </div>
+  </div>
+
   <!--    End Upload Modal-->
 
   <!-- End Upload File modal -->
@@ -686,7 +675,6 @@
       editForm.submit();
     }
   </script>
-  </div>
 
 </body>
 

@@ -53,8 +53,8 @@ public class TopicController {
         AssignmentDTO assignmentDTO = new AssignmentDTO();
         AnnouncementDTO announcementDTO = new AnnouncementDTO();
         model.addAttribute("assignmentDTO", assignmentDTO);
-        // model.addAttribute("assignments", assignments);
-        // model.addAttribute("files", files);
+         model.addAttribute("assignments", assignments);
+         model.addAttribute("files", files);
         model.addAttribute("fileDTO", fileDTO);
         model.addAttribute("announcements", announcements);
         model.addAttribute("announcementDTO", announcementDTO);
