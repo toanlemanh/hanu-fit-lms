@@ -215,4 +215,57 @@ public class TopicItemController {
             return "redirect:/myCourses/course-details/" + code;
         }
     }
+
+    @PostMapping(value="/{code}/edit-assignment/{id}")
+    public String editAssignment (@PathVariable(value="code") String code,@PathVariable(value = "id") Long fileId,@Valid AssignmentDTO assignmentDTO, BindingResult result) {
+
+        if (result.hasErrors()) {
+            System.out.println(result.getAllErrors());
+            String errors = "Bad editing an assignment";
+            System.out.println("Errors :" + errors);
+            return "redirect:/myCourses/course-details/" + code + "?error=" + errors;
+        } else {
+            Assignment assignment = assignmentRepository.getReferenceById(fileId);
+            MultipartFile attachment = assignmentDTO.getAttachment();
+            System.out.println("dto"+ assignmentDTO.getAssDescription() + "title:" + assignmentDTO.getAssTitle() + "attachment:" + assignmentDTO.getAttachment());
+            if (!attachment.isEmpty()) {
+                System.out.println("Not null");
+                Date createdAt = new Date();
+                String storageFileName = createdAt.getTime() + "_" + attachment.getOriginalFilename();
+
+                try {
+                    String uploadDir = "src/main/resources/static/images/";
+                    Path uploadPath = Paths.get(uploadDir);
+
+                    if (!Files.exists(uploadPath)) {
+                        Files.createDirectories(uploadPath);
+                    }
+                    try (InputStream inputStream = attachment.getInputStream()) {
+                        Files.copy(inputStream, Paths.get(uploadDir + storageFileName),
+                                StandardCopyOption.REPLACE_EXISTING);
+                    }
+                } catch (Exception e) {
+                    String errors = e.getMessage();
+                    System.out.println("Errors :"+ errors);
+                    return "redirect:/myCourses/course-details/"+ code+"?error="+ errors;
+                }
+                assignment.setAttachment(storageFileName);
+            }
+
+            if (assignmentDTO.getDeadline() != null){
+                assignment.setDeadline(assignmentDTO.getDeadline());
+            }
+
+            if (!assignmentDTO.getAssTitle().isEmpty()){
+                assignment.setAssTitle(assignmentDTO.getAssTitle());
+            }
+
+            if (!assignmentDTO.getAssDescription().isEmpty()){
+                assignment.setAssDescription(assignmentDTO.getAssDescription());
+            }
+            assignmentRepository.save(assignment);
+
+            return "redirect:/myCourses/course-details/" + code;
+        }
+    }
 }

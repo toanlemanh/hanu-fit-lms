@@ -6,7 +6,6 @@ import org.springframework.web.multipart.MultipartFile;
 import java.sql.Date;
 
 public class AssignmentDTO {
-    @NotEmpty(message="You have to enter the title")
     private String assTitle;
 
     private String assDescription;

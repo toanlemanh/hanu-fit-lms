@@ -252,6 +252,8 @@
                         class="hanu-button rounded p-1 hanu-mark-as-done mx-2"
                         data-bs-toggle="modal"
                         data-bs-target="#editUploadModal"
+                        th:data-name="${aFile.fileId}"
+                        th:onclick="chooseItemId(this.getAttribute('data-name'))"
                         data-bs-whatever="@mdo">
                   Edit
                 </button>
@@ -284,9 +286,9 @@
                   <div class="modal-body ">
                     <form id="edit-upload-file-form" enctype="multipart/form-data" class="row g-3" th:object="${fileDTO}" method="post" th:action="'/myCourses/course-details/'+${course.code}"  >
                       <label class="form-label" for="title">Title</label>
-                      <input class="form-control" type="text" th:value="${aFile.fileName}" th:placeholder="${aFile.fileName}" th:field="*{fileTitle}" required/>
+                      <input class="form-control" id="edit-file-title" type="text" th:value="${aFile.fileName}" th:placeholder="${aFile.fileName}" th:field="*{fileTitle}" required/>
                       <label class="form-label" for="file">Change file</label>
-                      <input class="form-control" type="file" th:field="*{fileData}" required/>
+                      <input class="form-control" id="edit-file-data"  type="file" th:field="*{fileData}" required/>
                       <select required class="form-select col" id="file-type-input" th:field="*{type}" >
                         <option th:value="${aFile.type}" selected >Select file type</option>
                         <option value="Image" >Image</option>
@@ -304,8 +306,7 @@
                           Cancel
                         </button>
                         <button type="submit"
-                                th:data-name="${aFile.fileId}"
-                                th:onclick="editFileForm(event, this.getAttribute('data-name'))"
+                                th:onclick="editFileForm(event)"
                                 class="btn btn-danger hanu-button">Edit</button>
                       </div>
                     </form>
@@ -314,6 +315,7 @@
               </div>
             </div>
   <!--    Edit file modal-->
+
 
           </div>
 <!--          Assignment File -->
@@ -333,10 +335,11 @@
               <div class="">
                 <button
                         type="button"
-                        onclick="editTopicItem(this)"
                         class="hanu-button rounded p-1 hanu-mark-as-done mx-2"
                         data-bs-toggle="modal"
-                        data-bs-target="#topicModal"
+                        th:data-name="${anAssignment.assignmentId}"
+                        th:onclick="chooseItemId(this.getAttribute('data-name'))"
+                        data-bs-target="#editAssignmentModal"
                         data-bs-whatever="@mdo">
                   Edit
                 </button>
@@ -351,8 +354,52 @@
                   Delete
                 </button>
               </div>
+                <!--            Edit Assignment Modal -->
+                <div class="modal fade" id="editAssignmentModal" tabindex="-1" aria-labelledby="editAssignmentModalLabel" aria-hidden="true">
+                  <div class="modal-dialog">
+                    <div class="modal-content">
+                      <div class="modal-header">
+                        <h5 class="modal-title" id="editAssignmentModalLabel">Update Assignment</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                      </div>
+                      <div class="modal-body">
+                        <form id="edit-assignment-form" enctype="multipart/form-data" method="post" th:object="${assignmentDTO}" th:action="'/myCourses/course-details/'+${course.code}">
+                          <div class="mb-3">
+                            <label for="editAssignmentTitle" class="col-form-label">Update Title</label>
+                            <input type="text" class="form-control" id="editAssignmentTitle" th:field="*{assTitle}" />
+                          </div>
+                          <div class="mb-3">
+                            <label for="edit-message-text" class="col-form-label">Update Description</label>
+                            <textarea class="form-control" id="edit-message-text" th:field="*{assDescription}" />
+                          </div>
+                          <div class="mb-3">
+                            <label for="edit-assignment-attachment" class="col-form-label">Update Attachment</label>
+                            <input type="file" class="form-control" id="edit-assignment-attachment" th:field="*{attachment}" required/>
+                          </div>
+                          <div class="mb-3">
+                            <label for="edit-assignment-deadline" class="col-form-label">Date</label>
+                            <input type="date" class="form-control" id="edit-assignment-deadline" th:field="*{deadline}" required/>
+                          </div>
+                          <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                            <button type="submit"
+                                    th:data-name="${anAssignment.assignmentId}"
+                                    th:onclick="editAssignmentForm(event, this.getAttribute('data-name'))"
+                                    class="btn btn-primary">Update</button>
+                          </div>
+                        </form>
+
+                      </div>
+
+                    </div>
+                  </div>
+                </div>
+                <!--            End edit assignment modal-->
               </li>
+
+
             </ul>
+
           </div>
       </div>
       <!-- </div> -->
@@ -377,8 +424,8 @@
                 <input type="text" class="form-control" id="assignmentTitle" th:field="*{assTitle}" />
               </div>
               <div class="mb-3">
-                <label for="message-text" class="col-form-label">Description</label>
-                <textarea class="form-control" id="message-text"  th:field="*{assDescription}" />
+                <label th:for="*{assDescription}" class="col-form-label">Description</label>
+                <textarea class="form-control" th:id="*{assDescription}"  th:field="*{assDescription}" />
               </div>
               <div class="mb-3">
                 <label for="attachment-text" class="col-form-label">Attachment</label>
@@ -386,7 +433,7 @@
               </div>
               <div class="mb-3">
                 <label for="date-text" class="col-form-label">Date</label>
-                <input type="date" class="form-control" id="date-text" th:field="*{deadline}" />
+                <input type="date" class="form-control" id="date-text" th:field="*{deadline}" required/>
               </div>
               <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
@@ -431,7 +478,6 @@
                   id="topic-recipient-name"
                   th:field="*{topicName}"
                   required
-
                 />
               </div>
               <div class="mb-3">
@@ -663,6 +709,7 @@
     <!-- End Modal -->
     <script th:inline="javascript">
      let uploadedType = "";
+     let itemId = "";
     let topicId = "";
       document.addEventListener("DOMContentLoaded", (event) => {
             let error = /*[[${error}]]*/ "default";
@@ -676,8 +723,18 @@
                }
         })
 
-        function uploadForm (event) {
+function uploadForm (event) {
            event.preventDefault();
+            let title = document.getElementById('title');
+            let file = document.getElementById('file');
+            if (title.value == null || title.value.trim() == "") {
+                alert("You have to enter the title!");
+                return;
+            }
+             if (file.value == '') {
+                alert("You have to choose a file!")
+                return;
+            }
             let uploadedForm = document.getElementById('upload-file-form');
             let input = document.createElement("input");
             input.setAttribute("type","text");
@@ -688,27 +745,48 @@
             uploadedForm.action = current;
             alert(current);
             uploadedForm.submit();
-            alert("uploaded");
         }
 
         function chooseTopicId(id){
           topicId = id;
          }
 
+         function chooseItemId(id){
+          itemId = id;
+         }
+
        function chooseUploadType (type) {
             uploadedType = type;
 
        }
-        function submitAssignmentForm (event){
+  function submitAssignmentForm (event){
          event.preventDefault();
+         let assTitle = document.getElementById('assignmentTitle');
+         let assDescription = document.getElementById('assDescription');
+         let attachment = document.getElementById('attachment-text');
+         let date = document.getElementById('date-text');
+         if (assTitle.value.trim() == '') {
+              alert('You have to enter the title');
+              return;
+         }
+         if (assDescription.value.trim() == '') {
+              alert('You have to enter the description');
+              return;
+         }
+         if (attachment.value.trim() == '') {
+              alert('You have to choose a file');
+              return;
+         }
+         if (date.value == '') {
+              alert('You have to enter the deadline');
+              return;
+         }
             let assForm = document.getElementById('assignment-form');
             let current = window.location.href;
             current = current + "/" + topicId + "/createAssignment";
             assForm.action = current;
             alert(current);
-
             assForm.submit();
-            alert("uploaded");
        }
 
        function deleteTopicItem (type,id) {
@@ -730,19 +808,46 @@
               alert(current);
                window.location.href = current;
        }
-       function editFileForm(event, id){
+
+ function editFileForm(event){
             event.preventDefault();
+          let editTitle = document.getElementById("edit-file-title");
+          let editData = document.getElementById("edit-file-data");
+          if (editTitle.value == '') {
+              alert("You have to enter the title");
+              return;
+          }
+            if (editData.value == '') {
+              alert("You have to choose a file");
+              return;
+          }
           let editForm = document.getElementById('edit-upload-file-form');
           let current = window.location.href;
-           current = current + "/edit-file/"+ id;
+           current = current + "/edit-file/"+ itemId;
            editForm.action = current;
            alert(current);
             editForm.submit();
-            alert("uploaded");
        }
+
        function selectType() {
           let selectType = document.getElementById("file-type-input");
           chooseUploadType(selectType.value);
+       }
+
+       function editAssignmentForm(event) {
+            event.preventDefault();
+          let editForm = document.getElementById('edit-assignment-form');
+          let deadline = document.getElementById('edit-assignment-deadline');
+
+          if ( deadline.value == '' ) {
+             alert("You have to change the deadline !");
+             return;
+          }
+          let current = window.location.href;
+           current = current + "/edit-assignment/"+ itemId;
+           editForm.action = current;
+           alert(current);
+            editForm.submit();
        }
     </script>
   </div>

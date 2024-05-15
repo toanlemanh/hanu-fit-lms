@@ -1,6 +1,7 @@
 package fit.se2.hanulms.model;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotEmpty;
 
 import java.sql.Date;
 
