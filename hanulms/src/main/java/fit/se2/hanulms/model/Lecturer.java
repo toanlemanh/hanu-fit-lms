@@ -1,6 +1,7 @@
 package fit.se2.hanulms.model;
 
 import jakarta.persistence.*;
+import org.springframework.security.crypto.password.PasswordEncoder;
 
 import java.util.List;
 
@@ -18,6 +19,22 @@ public class Lecturer {
     private String username;
 
     private String password;
+    private String role;
+    public Lecturer() {}
+    public Lecturer(UserTemplate userTemplate, PasswordEncoder passwordEncoder) {
+        this.name = userTemplate.getName();
+        this.email = userTemplate.getEmail();
+        this.faculty = userTemplate.getFaculty();
+        this.username = userTemplate.getUsername();
+        this.password = passwordEncoder.encode(userTemplate.getPassword()); // Encode pw
+        this.role = "LECTURER";
+    }
+    public String getRole() {
+        return role;
+    }
+    public void setRole(String role) {
+        this.role = role;
+    }
 
     public String getUsername() {
         return username;

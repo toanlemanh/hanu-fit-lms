@@ -2,10 +2,13 @@ package fit.se2.hanulms.controller;
 
 import fit.se2.hanulms.Repository.*;
 import fit.se2.hanulms.model.*;
+import jakarta.servlet.http.HttpServletRequest;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -27,19 +30,28 @@ public class LecturerController {
     FacultyRepository facultyRepository;
     @Autowired
     LecturerRepository lecturerRepository;
-
     @Autowired
     TopicRepository topicRepository;
-
+    @Autowired
+    StudentRepository studentRepository;
     @Autowired
     AnnouncementRepository announcementRepository;
+    @Autowired
+    FileRepository fileRepository;
+    @Autowired
+    AssignmentRepository assignmentRepository;
 
     @GetMapping(value = "/myCourses")
-    public String myCourses(Model model) {
+    public String myCourses(Model model, @AuthenticationPrincipal UserDetails userDetails) {
         List<Course> courses = courseRepository.findAll();
         model.addAttribute("courses", courses);
         model.addAttribute("message", "");
-        return "/lecturer/course/myCourses";
+        if (userDetails.getAuthorities().stream().anyMatch(authority -> authority.getAuthority().equals("LECTURER"))) {
+            return "/lecturer/course/myCourses";
+        } else if (userDetails.getAuthorities().stream().anyMatch(authority -> authority.getAuthority().equals("STUDENT"))) {
+            return "/student/myCourses";
+        }
+        return "redirect:/";
     }
     @GetMapping(value = "/myCourses/{messageType}/{courseCode}")
     public String myCoursesSuccess(@PathVariable(value = "messageType") String messageType,
@@ -113,16 +125,16 @@ public class LecturerController {
                 }
             }
         }
-        if (mode.equals("edit")) {
-            for (Course course : allCourses) {
-                if (courseRepository.getReferenceById(courseCode).equals(course)) {
-                    continue;
-                }
-                if (courseCode.equals(course.getCode())) {
-                    errorMessages.add("The entered course code already exists!");
-                }
-            }
-        }
+//        if (mode.equals("edit")) {
+//            for (Course course : allCourses) {
+//                if (courseRepository.getReferenceById(courseCode).equals(course)) {
+//                    continue;
+//                }
+//                if (courseCode.equals(course.getCode())) {
+//                    errorMessages.add("The entered course code already exists!");
+//                }
+//            }
+//        }
         if (courseCode != null && courseCode.length() > 10) {
             errorMessages.add("The maximum length for course code is 10 characters!");
         }
@@ -339,12 +351,34 @@ public class LecturerController {
             System.out.println("Courses: " + lecturer.getCourses());
             lecturerRepository.save(lecturer); // Save to ensure changes are persisted
         }
+//        List<Topic> allTopics = topicRepository.findAll();
+//        for (Topic topic : allTopics) {
+//            if (topic.getCourse().equals(course)) {
+//                topicRepository.delete(topic);
+//            }
+//        }
         List<Topic> allTopics = topicRepository.findAll();
         for (Topic topic : allTopics) {
+            List<File> allFiles = fileRepository.findAll();
+            for (File f : allFiles) {
+                if (f.getTopic().equals(topic)) {
+                    fileRepository.delete(f);
+                }
+            }
+            List<Assignment> allAssignments = assignmentRepository.findAll();
+            for (Assignment a : allAssignments) {
+                if (a.getTopic().equals(topic)) {
+                    assignmentRepository.delete(a);
+                }
+            }
             if (topic.getCourse().equals(course)) {
+                topic.getFile().clear();
+                topic.getAssignments().clear();
+                topicRepository.save(topic);
                 topicRepository.delete(topic);
             }
         }
+
         List<Announcement> allAnnouncements = announcementRepository.findAll();
         for (Announcement announcement : allAnnouncements) {
             if (announcement.getCourse().equals(course)) {
@@ -389,5 +423,23 @@ public class LecturerController {
         model.addAttribute("searchPhrase", "");
         model.addAttribute("numberOfFoundCourses", foundCourses.size());
         return "searchResult";
+    }
+    @PostMapping(value = "/enrol")
+    public String enrol(HttpServletRequest request, Model model) {
+        String enrolmentKey = request.getParameter("enrolmentKey");
+        String courseCode = request.getParameter("courseCode");
+        Long studentId = Long.valueOf(request.getParameter("studentId"));
+        System.out.println("EnrolKey: " + enrolmentKey);
+        System.out.println("CourseCode: " + courseCode);
+        System.out.println("StudentID: " + studentId);
+        Course thisCourse = courseRepository.getReferenceById(courseCode);
+        Student thisStudent = studentRepository.getReferenceById(studentId);
+        if (thisCourse.getEnrolmentKey().equals(enrolmentKey)) {
+            thisStudent.getCourses().add(thisCourse);
+            studentRepository.save(thisStudent);
+            thisCourse.getStudents().add(thisStudent);
+            courseRepository.save(thisCourse);
+        }
+        return "redirect:/myCourses/course-details/" + courseCode;
     }
 }

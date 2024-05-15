@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="_layout">
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="_layout-admin">
 
 <head>
   <meta charset="UTF-8">
@@ -19,10 +19,10 @@
     <div class="list-accounts container">
       <div class="row path-container mt-3">
         <a href="" class="path">Home</a> /
-        <a href="" class="path">Accounts Management</a>
+        <a href="" class="path">Lecturer List</a>
       </div>
       <div class="row title-container my-2">
-        <h3 class="title">ACCOUNTS MANAGEMENT</h3>
+        <h3 class="title">LECTURER LIST</h3>
       </div>
 
 
@@ -36,22 +36,21 @@
             <input type="text" class="form-control" placeholder="Search...">
           </div>
           <div class="px-0 d-flex justify-content-center col-4 col-sm-4 col-md-4 col-lg-4 col-xl-4 col-xxl-4 ">
-            <button class="btn create-btn" type="button" id="createAcc-btn">Create new
-              Account</button>
+            <button th:attr="onclick=|window.location.href = '/admin/createLecturer'|" class="btn create-btn" type="button" id="createAcc-btn">Create New Lecturer</button>
           </div>
         </div>
         <div class="row">
           <table class="table table-hover" border="1">
             <tr class="properties">
-              <th>Name</th>
               <th>ID</th>
+              <th>Name</th>
               <th>Faculty</th>
               <th>Email</th>
               <th>Role</th>
               <th>Update</th>
               <th>Delete</th>
             </tr>
-            <tr th:each="account : ${accounts}">
+            <tr th:each="lecturer : ${allLecturers}">
               <!-- <td th:text="${account.id}" />
                         <td>
                             <a th:href="'/account/' + ${account.id}" th:text="${account.name}" />
@@ -60,43 +59,43 @@
                         <td th:text="${account.email}" />
                         <td th:text="${account.role}" /> -->
               <td>
-                <p>Tran Van A</p>
+                <p th:text="${lecturer.id}"></p>
               </td>
               <td>
-                <p>2101040159</p>
+                <p th:text="${lecturer.name}"></p>
               </td>
               <td>
-                <p>Information and Technology</p>
+                <p th:text="${lecturer.faculty.name}"></p>
               </td>
               <td>
-                <p>tranvana@gmail.com</p>
+                <p th:text="${lecturer.email}"></p>
               </td>
               <td>
-                <p>Student</p>
+                <p th:text="${lecturer.role}"></p>
               </td>
-              <td><a th:href="'/account/update/' + ${account.id}">UPDATE</a></td>
+              <td><a th:href="'/admin/editLecturer/' + ${lecturer.id}">UPDATE</a></td>
 
               <td>
-                <a href="#" data-toggle="modal" data-target="#deleteConfirmModal" data-account-id="${account.id}">DELETE</a>
+                <a href="#" data-toggle="modal" th:data-target="'#deleteConfirmModal-' + ${lecturer.id}">DELETE</a>
               </td>
 
 
-              <div class="modal fade" id="deleteConfirmModal" tabindex="-1" role="dialog" aria-labelledby="deleteConfirmModalLabel" aria-hidden="true">
+              <div class="modal fade" th:id="'deleteConfirmModal-' + ${lecturer.id}" tabindex="-1" role="dialog" aria-labelledby="deleteConfirmModalLabel" aria-hidden="true">
                 <div class="modal-dialog" role="document">
                   <div class="modal-content">
                     <div class="modal-header">
-                      <h5 class="modal-title" id="deleteConfirmModalLabel">Confirm Account
+                      <h5 class="modal-title" id="deleteConfirmModalLabel">Confirm Lecturer
                         Deletion</h5>
                       <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                       </button>
                     </div>
                     <div class="modal-body">
-                      Are you sure you want to delete this account?
+                      Are you sure you want to delete this lecturer?
                     </div>
                     <div class="modal-footer">
                       <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
-                      <a href="#" class="btn delete-btn" id="deleteAccountBtn">Delete Account</a>
+                      <a th:href="'/admin/deleteLecturer/' + ${lecturer.id}" class="btn delete-btn" id="deleteAccountBtn">Delete Lecturer</a>
                     </div>
                   </div>
                 </div>
